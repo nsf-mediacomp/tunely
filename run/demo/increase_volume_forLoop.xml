@@ -1,0 +1,103 @@
+<xml>
+  <block type="mediacomp_run" id="22" x="6" y="8">
+    <statement name="DO">
+      <block type="synth_blockPlaySound" id="23" inline="true">
+        <value name="SOUND">
+          <block type="synth_defaultInstruments" id="24">
+            <field name="NAME">piano</field>
+          </block>
+        </value>
+        <next>
+          <block type="controls_repeat_ext" id="25" inline="true">
+            <field name="RUN_FAST">FALSE</field>
+            <value name="TIMES">
+              <block type="math_number" id="26">
+                <field name="NUM">3</field>
+              </block>
+            </value>
+            <statement name="DO">
+              <block type="procedures_callnoreturn" id="27" inline="false">
+                <mutation name="increase volume">
+                  <arg name="sound"></arg>
+                </mutation>
+                <value name="ARG0">
+                  <block type="synth_defaultInstruments" id="28">
+                    <field name="NAME">piano</field>
+                  </block>
+                </value>
+                <next>
+                  <block type="synth_blockPlaySound" id="29" inline="true">
+                    <value name="SOUND">
+                      <block type="synth_defaultInstruments" id="30">
+                        <field name="NAME">piano</field>
+                      </block>
+                    </value>
+                  </block>
+                </next>
+              </block>
+            </statement>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+  <block type="procedures_defnoreturn" id="31" x="18" y="288">
+    <mutation>
+      <arg name="sound"></arg>
+    </mutation>
+    <field name="NAME">increase volume</field>
+    <statement name="STACK">
+      <block type="controls_forEach" id="32" inline="false">
+        <field name="VAR">sample</field>
+        <field name="RUN_FAST">TRUE</field>
+        <value name="LIST">
+          <block type="synth_getSamples" id="33" inline="false">
+            <value name="SOUND">
+              <block type="synth_defaultInstruments" id="34">
+                <field name="NAME">piano</field>
+              </block>
+            </value>
+          </block>
+        </value>
+        <statement name="DO">
+          <block type="variables_set" id="35" inline="true">
+            <field name="VAR">value</field>
+            <value name="VALUE">
+              <block type="synth_getSampleValue" id="36" inline="false">
+                <value name="SAMPLE">
+                  <block type="variables_get" id="37">
+                    <field name="VAR">sample</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <next>
+              <block type="synth_setSampleValue" id="38" inline="true">
+                <value name="SAMPLE">
+                  <block type="variables_get" id="39">
+                    <field name="VAR">sample</field>
+                  </block>
+                </value>
+                <value name="VALUE">
+                  <block type="math_arithmetic" id="40" inline="true">
+                    <field name="OP">MULTIPLY</field>
+                    <value name="A">
+                      <block type="variables_get" id="41">
+                        <field name="VAR">value</field>
+                      </block>
+                    </value>
+                    <value name="B">
+                      <block type="math_number" id="42">
+                        <field name="NUM">2</field>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+              </block>
+            </next>
+          </block>
+        </statement>
+      </block>
+    </statement>
+  </block>
+</xml>

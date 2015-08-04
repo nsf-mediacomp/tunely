@@ -1,0 +1,6 @@
+Media Computation in Visual Programming for Early Learners using Blockly
+
+Introducing programming concepts to children early in their education can be beneficial because the type of problem solving that encompasses computational thinking is becoming increasingly dominant in our technology-driven society. A new breed of programming environments is being developed for students first learning to program. These environments use intuitive visual drag-and-drop blocks that can express a program, such as MIT's Scratch, Berkeley's SNAP!, or the open source Blockly. One such feature that is lacking from these environments is the ability to perform media computation: for example, image manipulation through pixel manipulation, or audio generation. The proposed research will investigate the design and implementation of a block language (using Blockly) that will allow media computation in an easy and intuitive to understand way, in order to allow K-8 students to grasp the concept and create their own expressive media.
+
+https://code.google.com/p/blockly/
+http://coweb.cc.gatech.edu/mediaComp-teach

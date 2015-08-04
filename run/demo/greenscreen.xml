@@ -1,0 +1,118 @@
+<xml>
+  <block type="mediacomp_run" id="202" x="19" y="48">
+    <statement name="DO">
+      <block type="controls_for" id="203" inline="true">
+        <field name="VAR">x</field>
+        <field name="RUN_FAST">TRUE</field>
+        <value name="FROM">
+          <block type="math_number" id="204">
+            <field name="NUM">0</field>
+          </block>
+        </value>
+        <value name="TO">
+          <block type="math_number" id="205">
+            <field name="NUM">399</field>
+          </block>
+        </value>
+        <value name="BY">
+          <block type="math_number" id="206">
+            <field name="NUM">1</field>
+          </block>
+        </value>
+        <statement name="DO">
+          <block type="controls_for" id="207" inline="true">
+            <field name="VAR">y</field>
+            <field name="RUN_FAST">TRUE</field>
+            <value name="FROM">
+              <block type="math_number" id="208">
+                <field name="NUM">0</field>
+              </block>
+            </value>
+            <value name="TO">
+              <block type="math_number" id="209">
+                <field name="NUM">399</field>
+              </block>
+            </value>
+            <value name="BY">
+              <block type="math_number" id="210">
+                <field name="NUM">1</field>
+              </block>
+            </value>
+            <statement name="DO">
+              <block type="variables_set" id="211" inline="true">
+                <field name="VAR">pixel</field>
+                <value name="VALUE">
+                  <block type="mediacomp_getPixelAt" id="212" inline="true">
+                    <value name="X">
+                      <block type="variables_get" id="213">
+                        <field name="VAR">x</field>
+                      </block>
+                    </value>
+                    <value name="Y">
+                      <block type="variables_get" id="214">
+                        <field name="VAR">y</field>
+                      </block>
+                    </value>
+                    <value name="CANVAS">
+                      <block type="mediacomp_canvas" id="263">
+                        <field name="CANVAS">1</field>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <next>
+                  <block type="controls_if" id="216" inline="false">
+                    <value name="IF0">
+                      <block type="logic_compare" id="217" inline="true">
+                        <field name="OP">LT</field>
+                        <value name="A">
+                          <block type="mediacomp_getPixelRGBIntensity" id="218" inline="true">
+                            <field name="RGB">g</field>
+                            <value name="PIXEL">
+                              <block type="variables_get" id="219">
+                                <field name="VAR">pixel</field>
+                              </block>
+                            </value>
+                          </block>
+                        </value>
+                        <value name="B">
+                          <block type="math_number" id="220">
+                            <field name="NUM">5</field>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                    <statement name="DO0">
+                      <block type="mediacomp_setPixelAt" id="221" inline="true">
+                        <value name="X">
+                          <block type="variables_get" id="222">
+                            <field name="VAR">x</field>
+                          </block>
+                        </value>
+                        <value name="Y">
+                          <block type="variables_get" id="223">
+                            <field name="VAR">y</field>
+                          </block>
+                        </value>
+                        <value name="CANVAS">
+                          <block type="mediacomp_canvas" id="264">
+                            <field name="CANVAS">3</field>
+                          </block>
+                        </value>
+                        <value name="PIXEL">
+                          <block type="variables_get" id="224">
+                            <field name="VAR">pixel</field>
+                          </block>
+                        </value>
+                      </block>
+                    </statement>
+                  </block>
+                </next>
+              </block>
+            </statement>
+          </block>
+        </statement>
+      </block>
+    </statement>
+  </block>
+</xml>

@@ -1,0 +1,100 @@
+<xml>
+  <block type="mediacomp_run" id="244" x="32" y="21">
+    <statement name="DO">
+      <block type="controls_forEach" id="245" inline="false">
+        <field name="VAR">pixel</field>
+        <field name="RUN_FAST">TRUE</field>
+        <value name="LIST">
+          <block type="mediacomp_getPixels" id="246" inline="true">
+            <value name="CANVAS">
+              <block type="mediacomp_selected_canvas" id="247"></block>
+            </value>
+          </block>
+        </value>
+        <statement name="DO">
+          <block type="variables_set" id="248" inline="true">
+            <field name="VAR">color list</field>
+            <value name="VALUE">
+              <block type="lists_create_with" id="249" inline="false">
+                <mutation items="3"></mutation>
+                <value name="ADD0">
+                  <block type="mediacomp_getPixelRGB" id="250" inline="true">
+                    <field name="RGB">r</field>
+                    <value name="PIXEL">
+                      <block type="variables_get" id="251">
+                        <field name="VAR">pixel</field>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <value name="ADD1">
+                  <block type="mediacomp_getPixelRGB" id="252" inline="true">
+                    <field name="RGB">g</field>
+                    <value name="PIXEL">
+                      <block type="variables_get" id="253">
+                        <field name="VAR">pixel</field>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <value name="ADD2">
+                  <block type="mediacomp_getPixelRGB" id="254" inline="true">
+                    <field name="RGB">b</field>
+                    <value name="PIXEL">
+                      <block type="variables_get" id="255">
+                        <field name="VAR">pixel</field>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <next>
+              <block type="variables_set" id="256" inline="true">
+                <field name="VAR">color average</field>
+                <value name="VALUE">
+                  <block type="math_on_list" id="257" inline="false">
+                    <field name="OP">AVERAGE</field>
+                    <value name="LIST">
+                      <block type="variables_get" id="258">
+                        <field name="VAR">color list</field>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <next>
+                  <block type="mediacomp_setPixel" id="259" inline="true">
+                    <value name="PIXEL">
+                      <block type="variables_get" id="260">
+                        <field name="VAR">pixel</field>
+                      </block>
+                    </value>
+                    <value name="PIXEL2">
+                      <block type="colour_rgb" id="261" inline="false">
+                        <value name="RED">
+                          <block type="variables_get" id="262">
+                            <field name="VAR">color average</field>
+                          </block>
+                        </value>
+                        <value name="GREEN">
+                          <block type="variables_get" id="263">
+                            <field name="VAR">color average</field>
+                          </block>
+                        </value>
+                        <value name="BLUE">
+                          <block type="variables_get" id="264">
+                            <field name="VAR">color average</field>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </statement>
+      </block>
+    </statement>
+  </block>
+</xml>

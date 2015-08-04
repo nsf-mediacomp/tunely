@@ -1,0 +1,16 @@
+PIXLY::
+--------------
+1. Project Management
+
+0. forfor loop not working!!
+1. Spinning Progress wheel
+2. Resizable Canvii
+3. Levels?
+
+TUNELY::
+--------------
+no main program?
+
+Spherly::
+--------------
+1. Reupload jars (with assets/www working with Windows)

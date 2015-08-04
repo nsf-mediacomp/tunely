@@ -1,0 +1,148 @@
+<xml xmlns="http://www.w3.org/1999/xhtml">
+  <block type="mediacomp_run" id="958" x="144" y="74">
+    <statement name="DO">
+      <block type="procedures_callnoreturn" id="1147" inline="false">
+        <mutation name="fill square">
+          <arg name="x1"></arg>
+          <arg name="y1"></arg>
+          <arg name="size"></arg>
+          <arg name="colour"></arg>
+          <arg name="canvas"></arg>
+        </mutation>
+        <value name="ARG0">
+          <block type="math_number" id="1170">
+            <field name="NUM">200</field>
+          </block>
+        </value>
+        <value name="ARG1">
+          <block type="math_number" id="1171">
+            <field name="NUM">200</field>
+          </block>
+        </value>
+        <value name="ARG2">
+          <block type="math_number" id="1172">
+            <field name="NUM">140</field>
+          </block>
+        </value>
+        <value name="ARG3">
+          <block type="colour_picker" id="1196">
+            <field name="COLOUR">#ff0000</field>
+          </block>
+        </value>
+        <value name="ARG4">
+          <block type="math_number" id="1197">
+            <field name="NUM">4</field>
+          </block>
+        </value>
+      </block>
+    </statement>
+  </block>
+  <block type="procedures_defnoreturn" id="985" x="149" y="497">
+    <mutation>
+      <arg name="x1"></arg>
+      <arg name="y1"></arg>
+      <arg name="size"></arg>
+      <arg name="colour"></arg>
+      <arg name="canvas"></arg>
+    </mutation>
+    <field name="NAME">fill square</field>
+    <statement name="STACK">
+      <block type="controls_for" id="1016" inline="true">
+        <field name="VAR">x</field>
+        <value name="FROM">
+          <block type="variables_get" id="1047">
+            <field name="VAR">x1</field>
+          </block>
+        </value>
+        <value name="TO">
+          <block type="math_arithmetic" id="1066" inline="true">
+            <field name="OP">ADD</field>
+            <value name="A">
+              <block type="variables_get" id="1067">
+                <field name="VAR">x1</field>
+              </block>
+            </value>
+            <value name="B">
+              <block type="variables_get" id="1068">
+                <field name="VAR">size</field>
+              </block>
+            </value>
+          </block>
+        </value>
+        <value name="BY">
+          <block type="math_number" id="1019">
+            <field name="NUM">1</field>
+          </block>
+        </value>
+        <statement name="DO">
+          <block type="controls_for" id="1020" inline="true">
+            <field name="VAR">y</field>
+            <value name="FROM">
+              <block type="variables_get" id="1069">
+                <field name="VAR">y1</field>
+              </block>
+            </value>
+            <value name="TO">
+              <block type="math_arithmetic" id="1070" inline="true">
+                <field name="OP">ADD</field>
+                <value name="A">
+                  <block type="variables_get" id="1071">
+                    <field name="VAR">y1</field>
+                  </block>
+                </value>
+                <value name="B">
+                  <block type="variables_get" id="1072">
+                    <field name="VAR">size</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <value name="BY">
+              <block type="math_number" id="1023">
+                <field name="NUM">1</field>
+              </block>
+            </value>
+            <statement name="DO">
+              <block type="variables_set" id="1024" inline="true">
+                <field name="VAR">p</field>
+                <value name="VALUE">
+                  <block type="mediacomp_getPixelAt" id="1025" inline="true">
+                    <value name="X">
+                      <block type="variables_get" id="1026">
+                        <field name="VAR">x</field>
+                      </block>
+                    </value>
+                    <value name="Y">
+                      <block type="variables_get" id="1027">
+                        <field name="VAR">y</field>
+                      </block>
+                    </value>
+                    <value name="CANVAS">
+                      <block type="variables_get" id="1121">
+                        <field name="VAR">canvas</field>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <next>
+                  <block type="mediacomp_setPixel" id="1117" inline="true">
+                    <value name="PIXEL">
+                      <block type="variables_get" id="1118">
+                        <field name="VAR">p</field>
+                      </block>
+                    </value>
+                    <value name="PIXEL2">
+                      <block type="variables_get" id="1120">
+                        <field name="VAR">colour</field>
+                      </block>
+                    </value>
+                  </block>
+                </next>
+              </block>
+            </statement>
+          </block>
+        </statement>
+      </block>
+    </statement>
+  </block>
+</xml>

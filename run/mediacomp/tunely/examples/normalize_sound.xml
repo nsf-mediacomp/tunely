@@ -1,0 +1,272 @@
+<xml xmlns="http://www.w3.org/1999/xhtml">
+  <block type="synth_main" id="840" x="3" y="12">
+    <statement name="DO">
+      <block type="synth_blockPlaySound" id="841" inline="true">
+        <value name="SOUND">
+          <block type="synth_defaultInstruments" id="842">
+            <field name="NAME">piano</field>
+          </block>
+        </value>
+        <next>
+          <block type="procedures_callnoreturn" id="843" inline="false">
+            <mutation name="multiply pitch">
+              <arg name="amount"></arg>
+            </mutation>
+            <value name="ARG0">
+              <block type="math_number" id="844">
+                <field name="NUM">2</field>
+              </block>
+            </value>
+            <next>
+              <block type="synth_blockPlaySound" id="845" inline="true">
+                <value name="SOUND">
+                  <block type="synth_defaultInstruments" id="846">
+                    <field name="NAME">piano</field>
+                  </block>
+                </value>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+  <block type="procedures_defnoreturn" id="847" x="362" y="5">
+    <mutation>
+      <arg name="amount"></arg>
+    </mutation>
+    <field name="NAME">multiply pitch</field>
+    <statement name="STACK">
+      <block type="variables_set" id="848" inline="true">
+        <field name="VAR">samples</field>
+        <value name="VALUE">
+          <block type="synth_getSamples" id="849" inline="false">
+            <value name="SOUND">
+              <block type="synth_defaultInstruments" id="850">
+                <field name="NAME">piano</field>
+              </block>
+            </value>
+          </block>
+        </value>
+        <next>
+          <block type="controls_for" id="851" inline="true">
+            <field name="VAR">i</field>
+            <field name="RUN_FAST">TRUE</field>
+            <value name="FROM">
+              <block type="math_number" id="852">
+                <field name="NUM">1</field>
+              </block>
+            </value>
+            <value name="TO">
+              <block type="lists_length" id="853" inline="false">
+                <value name="VALUE">
+                  <block type="variables_get" id="854">
+                    <field name="VAR">samples</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <value name="BY">
+              <block type="variables_get" id="855">
+                <field name="VAR">amount</field>
+              </block>
+            </value>
+            <statement name="DO">
+              <block type="variables_set" id="856" inline="true">
+                <field name="VAR">curr_sample</field>
+                <value name="VALUE">
+                  <block type="lists_getIndex" id="857" inline="true">
+                    <mutation statement="false" at="true"></mutation>
+                    <field name="MODE">GET</field>
+                    <field name="WHERE">FROM_START</field>
+                    <value name="VALUE">
+                      <block type="variables_get" id="858">
+                        <field name="VAR">samples</field>
+                      </block>
+                    </value>
+                    <value name="AT">
+                      <block type="procedures_callreturn" id="859" inline="false">
+                        <mutation name="index divided by">
+                          <arg name="i"></arg>
+                          <arg name="x"></arg>
+                        </mutation>
+                        <value name="ARG0">
+                          <block type="variables_get" id="860">
+                            <field name="VAR">i</field>
+                          </block>
+                        </value>
+                        <value name="ARG1">
+                          <block type="variables_get" id="861">
+                            <field name="VAR">amount</field>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <next>
+                  <block type="variables_set" id="862" inline="true">
+                    <field name="VAR">sample value</field>
+                    <value name="VALUE">
+                      <block type="synth_getSampleValue" id="863" inline="false">
+                        <value name="SAMPLE">
+                          <block type="lists_getIndex" id="864" inline="true">
+                            <mutation statement="false" at="true"></mutation>
+                            <field name="MODE">GET</field>
+                            <field name="WHERE">FROM_START</field>
+                            <value name="VALUE">
+                              <block type="variables_get" id="865">
+                                <field name="VAR">samples</field>
+                              </block>
+                            </value>
+                            <value name="AT">
+                              <block type="variables_get" id="866">
+                                <field name="VAR">i</field>
+                              </block>
+                            </value>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                    <next>
+                      <block type="synth_setSampleValue" id="867" inline="true">
+                        <value name="SAMPLE">
+                          <block type="variables_get" id="868">
+                            <field name="VAR">curr_sample</field>
+                          </block>
+                        </value>
+                        <value name="VALUE">
+                          <block type="variables_get" id="869">
+                            <field name="VAR">sample value</field>
+                          </block>
+                        </value>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </statement>
+            <next>
+              <block type="controls_for" id="870" inline="true">
+                <field name="VAR">i</field>
+                <field name="RUN_FAST">TRUE</field>
+                <comment pinned="false" h="80" w="160">erase the values of samples that aren't part of the pitch shifted sound</comment>
+                <value name="FROM">
+                  <block type="math_arithmetic" id="871" inline="true">
+                    <field name="OP">DIVIDE</field>
+                    <value name="A">
+                      <block type="lists_length" id="872" inline="false">
+                        <value name="VALUE">
+                          <block type="variables_get" id="873">
+                            <field name="VAR">samples</field>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                    <value name="B">
+                      <block type="variables_get" id="874">
+                        <field name="VAR">amount</field>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <value name="TO">
+                  <block type="lists_length" id="875" inline="false">
+                    <value name="VALUE">
+                      <block type="variables_get" id="876">
+                        <field name="VAR">samples</field>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <value name="BY">
+                  <block type="math_number" id="877">
+                    <field name="NUM">1</field>
+                  </block>
+                </value>
+                <statement name="DO">
+                  <block type="variables_set" id="878" inline="true">
+                    <field name="VAR">curr_sample</field>
+                    <value name="VALUE">
+                      <block type="lists_getIndex" id="879" inline="true">
+                        <mutation statement="false" at="true"></mutation>
+                        <field name="MODE">GET</field>
+                        <field name="WHERE">FROM_START</field>
+                        <value name="VALUE">
+                          <block type="variables_get" id="880">
+                            <field name="VAR">samples</field>
+                          </block>
+                        </value>
+                        <value name="AT">
+                          <block type="variables_get" id="881">
+                            <field name="VAR">i</field>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                    <next>
+                      <block type="synth_setSampleValue" id="882" inline="true">
+                        <value name="SAMPLE">
+                          <block type="variables_get" id="883">
+                            <field name="VAR">curr_sample</field>
+                          </block>
+                        </value>
+                        <value name="VALUE">
+                          <block type="math_number" id="884">
+                            <field name="NUM">0</field>
+                          </block>
+                        </value>
+                      </block>
+                    </next>
+                  </block>
+                </statement>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+  <block type="procedures_defreturn" id="885" inline="false" x="16" y="499">
+    <mutation statements="false">
+      <arg name="i"></arg>
+      <arg name="x"></arg>
+    </mutation>
+    <field name="NAME">index divided by</field>
+    <value name="RETURN">
+      <block type="math_arithmetic" id="886" inline="true">
+        <field name="OP">ADD</field>
+        <value name="A">
+          <block type="math_arithmetic" id="887" inline="true">
+            <field name="OP">DIVIDE</field>
+            <value name="A">
+              <block type="math_arithmetic" id="888" inline="true">
+                <field name="OP">MINUS</field>
+                <value name="A">
+                  <block type="variables_get" id="889">
+                    <field name="VAR">i</field>
+                  </block>
+                </value>
+                <value name="B">
+                  <block type="math_number" id="890">
+                    <field name="NUM">1</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <value name="B">
+              <block type="variables_get" id="891">
+                <field name="VAR">x</field>
+              </block>
+            </value>
+          </block>
+        </value>
+        <value name="B">
+          <block type="math_number" id="892">
+            <field name="NUM">1</field>
+          </block>
+        </value>
+      </block>
+    </value>
+  </block>
+</xml>

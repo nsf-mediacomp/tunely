@@ -1,0 +1,418 @@
+<xml>
+  <block type="mediacomp_run" id="1" deletable="false" x="48" y="17">
+    <statement name="DO">
+      <block type="variables_set" id="707" inline="true">
+        <field name="VAR">game_canvas</field>
+        <value name="VALUE">
+          <block type="math_number" id="708">
+            <field name="NUM">4</field>
+          </block>
+        </value>
+        <next>
+          <block type="variables_set" id="18" inline="true">
+            <field name="VAR">x</field>
+            <value name="VALUE">
+              <block type="math_number" id="46">
+                <field name="NUM">0</field>
+              </block>
+            </value>
+            <next>
+              <block type="variables_set" id="533" inline="true">
+                <field name="VAR">y</field>
+                <value name="VALUE">
+                  <block type="math_number" id="534">
+                    <field name="NUM">100</field>
+                  </block>
+                </value>
+                <next>
+                  <block type="variables_set" id="228" inline="true">
+                    <field name="VAR">x_inc</field>
+                    <value name="VALUE">
+                      <block type="math_number" id="229">
+                        <field name="NUM">1</field>
+                      </block>
+                    </value>
+                    <next>
+                      <block type="variables_set" id="255" inline="true">
+                        <field name="VAR">size</field>
+                        <value name="VALUE">
+                          <block type="math_number" id="256">
+                            <field name="NUM">100</field>
+                          </block>
+                        </value>
+                        <next>
+                          <block type="variables_set" id="51" inline="true">
+                            <field name="VAR">player_color</field>
+                            <value name="VALUE">
+                              <block type="colour_hsv" id="84" inline="false">
+                                <value name="HUE">
+                                  <block type="math_number" id="85">
+                                    <field name="NUM">0</field>
+                                  </block>
+                                </value>
+                                <value name="SATURATION">
+                                  <block type="math_number" id="86">
+                                    <field name="NUM">100</field>
+                                  </block>
+                                </value>
+                                <value name="VALUE">
+                                  <block type="math_number" id="87">
+                                    <field name="NUM">100</field>
+                                  </block>
+                                </value>
+                              </block>
+                            </value>
+                            <next>
+                              <block type="controls_whileUntil" id="97" inline="false">
+                                <field name="MODE">WHILE</field>
+                                <value name="BOOL">
+                                  <block type="logic_boolean" id="151">
+                                    <field name="BOOL">TRUE</field>
+                                  </block>
+                                </value>
+                                <statement name="DO">
+                                  <block type="procedures_callnoreturn" id="160">
+                                    <mutation name="update game"></mutation>
+                                    <next>
+                                      <block type="procedures_callnoreturn" id="734">
+                                        <mutation name="render game"></mutation>
+                                      </block>
+                                    </next>
+                                  </block>
+                                </statement>
+                              </block>
+                            </next>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+  <block type="procedures_defnoreturn" id="155" x="658" y="24">
+    <mutation></mutation>
+    <field name="NAME">update game</field>
+    <statement name="STACK">
+      <block type="variables_set" id="185" inline="true">
+        <field name="VAR">x</field>
+        <value name="VALUE">
+          <block type="math_arithmetic" id="204" inline="true">
+            <field name="OP">ADD</field>
+            <value name="A">
+              <block type="variables_get" id="212">
+                <field name="VAR">x</field>
+              </block>
+            </value>
+            <value name="B">
+              <block type="variables_get" id="219">
+                <field name="VAR">x_inc</field>
+              </block>
+            </value>
+          </block>
+        </value>
+        <next>
+          <block type="controls_if" id="246" inline="false">
+            <mutation elseif="1"></mutation>
+            <value name="IF0">
+              <block type="logic_compare" id="264" inline="true">
+                <field name="OP">GTE</field>
+                <value name="A">
+                  <block type="math_arithmetic" id="266" inline="true">
+                    <field name="OP">ADD</field>
+                    <value name="A">
+                      <block type="variables_get" id="267">
+                        <field name="VAR">x</field>
+                      </block>
+                    </value>
+                    <value name="B">
+                      <block type="variables_get" id="268">
+                        <field name="VAR">size</field>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <value name="B">
+                  <block type="math_number" id="269">
+                    <field name="NUM">399</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <statement name="DO0">
+              <block type="variables_set" id="274" inline="true">
+                <field name="VAR">x_inc</field>
+                <value name="VALUE">
+                  <block type="math_number" id="275">
+                    <field name="NUM">-1</field>
+                  </block>
+                </value>
+              </block>
+            </statement>
+            <value name="IF1">
+              <block type="logic_compare" id="276" inline="true">
+                <field name="OP">LTE</field>
+                <value name="A">
+                  <block type="variables_get" id="278">
+                    <field name="VAR">x</field>
+                  </block>
+                </value>
+                <value name="B">
+                  <block type="math_number" id="280">
+                    <field name="NUM">0</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <statement name="DO1">
+              <block type="variables_set" id="281" inline="true">
+                <field name="VAR">x_inc</field>
+                <value name="VALUE">
+                  <block type="math_number" id="282">
+                    <field name="NUM">1</field>
+                  </block>
+                </value>
+              </block>
+            </statement>
+            <next>
+              <block type="variables_set" id="671" inline="true">
+                <field name="VAR">player_color</field>
+                <value name="VALUE">
+                  <block type="colour_hsv" id="686" inline="false">
+                    <value name="HUE">
+                      <block type="variables_get" id="690">
+                        <field name="VAR">x</field>
+                      </block>
+                    </value>
+                    <value name="SATURATION">
+                      <block type="math_number" id="688">
+                        <field name="NUM">100</field>
+                      </block>
+                    </value>
+                    <value name="VALUE">
+                      <block type="math_number" id="689">
+                        <field name="NUM">100</field>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+  <block type="procedures_defnoreturn" id="287" x="633" y="400">
+    <mutation></mutation>
+    <field name="NAME">render game</field>
+    <statement name="STACK">
+      <block type="procedures_callnoreturn" id="444" inline="false">
+        <mutation name="clear screen">
+          <arg name="colour"></arg>
+        </mutation>
+        <value name="ARG0">
+          <block type="colour_picker" id="459">
+            <field name="COLOUR">#000000</field>
+          </block>
+        </value>
+        <next>
+          <block type="procedures_callnoreturn" id="474">
+            <mutation name="render player"></mutation>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+  <block type="procedures_defnoreturn" id="466" x="5" y="485">
+    <mutation></mutation>
+    <field name="NAME">render player</field>
+    <statement name="STACK">
+      <block type="controls_for" id="512" inline="true">
+        <field name="VAR">x</field>
+        <value name="FROM">
+          <block type="variables_get" id="531">
+            <field name="VAR">x</field>
+          </block>
+        </value>
+        <value name="TO">
+          <block type="math_arithmetic" id="525" inline="true">
+            <field name="OP">ADD</field>
+            <value name="A">
+              <block type="variables_get" id="526">
+                <field name="VAR">x</field>
+              </block>
+            </value>
+            <value name="B">
+              <block type="variables_get" id="527">
+                <field name="VAR">size</field>
+              </block>
+            </value>
+          </block>
+        </value>
+        <value name="BY">
+          <block type="math_number" id="515">
+            <field name="NUM">1</field>
+          </block>
+        </value>
+        <statement name="DO">
+          <block type="controls_for" id="516" inline="true">
+            <field name="VAR">y</field>
+            <value name="FROM">
+              <block type="variables_get" id="532">
+                <field name="VAR">y</field>
+              </block>
+            </value>
+            <value name="TO">
+              <block type="math_arithmetic" id="528" inline="true">
+                <field name="OP">ADD</field>
+                <value name="A">
+                  <block type="variables_get" id="529">
+                    <field name="VAR">x</field>
+                  </block>
+                </value>
+                <value name="B">
+                  <block type="variables_get" id="530">
+                    <field name="VAR">size</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <value name="BY">
+              <block type="math_number" id="519">
+                <field name="NUM">1</field>
+              </block>
+            </value>
+            <statement name="DO">
+              <block type="variables_set" id="520" inline="true">
+                <field name="VAR">p</field>
+                <value name="VALUE">
+                  <block type="mediacomp_getPixelAt" id="521" inline="true">
+                    <value name="X">
+                      <block type="variables_get" id="522">
+                        <field name="VAR">x</field>
+                      </block>
+                    </value>
+                    <value name="Y">
+                      <block type="variables_get" id="523">
+                        <field name="VAR">y</field>
+                      </block>
+                    </value>
+                    <value name="CANVAS">
+                      <block type="variables_get" id="754">
+                        <field name="VAR">game_canvas</field>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <next>
+                  <block type="mediacomp_setPixel" id="556" inline="true">
+                    <value name="PIXEL">
+                      <block type="variables_get" id="557">
+                        <field name="VAR">p</field>
+                      </block>
+                    </value>
+                    <value name="PIXEL2">
+                      <block type="variables_get" id="589">
+                        <field name="VAR">player_color</field>
+                      </block>
+                    </value>
+                  </block>
+                </next>
+              </block>
+            </statement>
+          </block>
+        </statement>
+      </block>
+    </statement>
+  </block>
+  <block type="procedures_defnoreturn" id="364" x="654" y="547">
+    <mutation>
+      <arg name="colour"></arg>
+    </mutation>
+    <field name="NAME">clear screen</field>
+    <statement name="STACK">
+      <block type="controls_for" id="384" inline="true">
+        <field name="VAR">x</field>
+        <value name="FROM">
+          <block type="math_number" id="385">
+            <field name="NUM">0</field>
+          </block>
+        </value>
+        <value name="TO">
+          <block type="math_number" id="386">
+            <field name="NUM">399</field>
+          </block>
+        </value>
+        <value name="BY">
+          <block type="math_number" id="387">
+            <field name="NUM">1</field>
+          </block>
+        </value>
+        <statement name="DO">
+          <block type="controls_for" id="388" inline="true">
+            <field name="VAR">y</field>
+            <value name="FROM">
+              <block type="math_number" id="389">
+                <field name="NUM">0</field>
+              </block>
+            </value>
+            <value name="TO">
+              <block type="math_number" id="390">
+                <field name="NUM">399</field>
+              </block>
+            </value>
+            <value name="BY">
+              <block type="math_number" id="391">
+                <field name="NUM">1</field>
+              </block>
+            </value>
+            <statement name="DO">
+              <block type="variables_set" id="392" inline="true">
+                <field name="VAR">p</field>
+                <value name="VALUE">
+                  <block type="mediacomp_getPixelAt" id="393" inline="true">
+                    <value name="X">
+                      <block type="variables_get" id="394">
+                        <field name="VAR">x</field>
+                      </block>
+                    </value>
+                    <value name="Y">
+                      <block type="variables_get" id="395">
+                        <field name="VAR">y</field>
+                      </block>
+                    </value>
+                    <value name="CANVAS">
+                      <block type="variables_get" id="753">
+                        <field name="VAR">game_canvas</field>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <next>
+                  <block type="mediacomp_setPixel" id="418" inline="true">
+                    <value name="PIXEL">
+                      <block type="variables_get" id="419">
+                        <field name="VAR">p</field>
+                      </block>
+                    </value>
+                    <value name="PIXEL2">
+                      <block type="variables_get" id="437">
+                        <field name="VAR">colour</field>
+                      </block>
+                    </value>
+                  </block>
+                </next>
+              </block>
+            </statement>
+          </block>
+        </statement>
+      </block>
+    </statement>
+  </block>
+</xml>

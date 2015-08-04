@@ -1,0 +1,70 @@
+#hoverMessage{
+	border: 1px solid black;
+	background: #eeeeee;
+	font-size: 14px;
+	width: 200px;
+	padding: 3px;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	display: none;
+}
+
+/*DIalog*/
+#dialog{
+	position:absolute;
+	top: 25%;
+    left: 25%;
+	min-width: 500px;
+	min-height: 120px;
+    /*margin-left: -250px;
+    margin-top: -150px;*/
+	
+	border: 1px solid black;
+	background: #ffffff;
+}
+#dialogTitle{
+	border-bottom: 1px solid black;
+	font-size: 24px;
+	padding: 5px;
+	height: 28px;
+}
+#closeDialogButton{
+	position:absolute; 
+	right: 3px; 
+	top: 3px; 
+	height: 22px; 
+	width:22px; 
+	padding: 0px;
+	cursor: pointer;
+}
+#dialogBody{
+	padding-top: 10px;
+	padding-left: 10px;
+	padding-right:10px;
+	font-size: 20px;
+	margin-bottom: 64px;
+}
+#dialogButton{
+	position:absolute; 
+	right: 180px; 
+	bottom: 10px; 
+	width: 130px;
+	text-align: center;
+	font-size: 24px;
+	padding: 3px;
+	border: 1px solid black;
+	cursor: pointer;
+}
+#dialogConfirm{
+	position:absolute; 
+	right: 20px; 
+	bottom: 10px; 
+	width: 130px;
+	text-align: center;
+	font-size: 24px;
+	padding: 3px;
+	border: 1px solid black;
+	cursor: pointer;
+	background-color: #aaaaaa;
+}

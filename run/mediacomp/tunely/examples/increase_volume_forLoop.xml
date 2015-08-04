@@ -1,0 +1,99 @@
+<xml xmlns="http://www.w3.org/1999/xhtml">
+  <block type="synth_main" id="26" deletable="false" movable="false" editable="false" x="63" y="4">
+    <statement name="DO">
+      <block type="synth_blockPlaySound" id="27" inline="true" deletable="false" movable="false" editable="false">
+        <value name="SOUND">
+          <block type="synth_defaultInstruments" id="28" deletable="false" movable="false" editable="false">
+            <field name="NAME">piano</field>
+          </block>
+        </value>
+        <next>
+          <block type="controls_repeat" id="29" deletable="false" movable="false" editable="false">
+            <field name="TIMES">3</field>
+            <field name="RUN_FAST">FALSE</field>
+            <statement name="DO">
+              <block type="procedures_callnoreturn" id="30" inline="false" deletable="false" movable="false" editable="false">
+                <mutation name="increase volume">
+                  <arg name="sound"></arg>
+                </mutation>
+                <value name="ARG0">
+                  <block type="synth_defaultInstruments" id="31" deletable="false" movable="false" editable="false">
+                    <field name="NAME">piano</field>
+                  </block>
+                </value>
+                <next>
+                  <block type="synth_blockPlaySound" id="32" inline="true" deletable="false" movable="false" editable="false">
+                    <value name="SOUND">
+                      <block type="synth_defaultInstruments" id="33" deletable="false" movable="false" editable="false">
+                        <field name="NAME">piano</field>
+                      </block>
+                    </value>
+                  </block>
+                </next>
+              </block>
+            </statement>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+  <block type="procedures_defnoreturn" id="34" deletable="false" movable="false" editable="false" x="62" y="233">
+    <mutation>
+      <arg name="sound"></arg>
+    </mutation>
+    <field name="NAME">increase volume</field>
+    <statement name="STACK">
+      <block type="controls_forEach" id="35" inline="false" deletable="false" movable="false" editable="false">
+        <field name="VAR">sample</field>
+        <field name="RUN_FAST">TRUE</field>
+        <value name="LIST">
+          <block type="synth_getSamples" id="36" inline="false" deletable="false" movable="false" editable="false">
+            <value name="SOUND">
+              <block type="variables_get" id="37" deletable="false" movable="false" editable="false">
+                <field name="VAR">sound</field>
+              </block>
+            </value>
+          </block>
+        </value>
+        <statement name="DO">
+          <block type="variables_set" id="38" inline="true" deletable="false" movable="false" editable="false">
+            <field name="VAR">value</field>
+            <value name="VALUE">
+              <block type="synth_getSampleValue" id="39" inline="false" deletable="false" movable="false" editable="false">
+                <value name="SAMPLE">
+                  <block type="variables_get" id="40" deletable="false" movable="false" editable="false">
+                    <field name="VAR">sample</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <next>
+              <block type="synth_setSampleValue" id="41" inline="true" deletable="false" movable="false" editable="false">
+                <value name="SAMPLE">
+                  <block type="variables_get" id="42" deletable="false" movable="false" editable="false">
+                    <field name="VAR">sample</field>
+                  </block>
+                </value>
+                <value name="VALUE">
+                  <block type="math_arithmetic" id="43" inline="true" deletable="false" movable="false" editable="false">
+                    <field name="OP">MULTIPLY</field>
+                    <value name="A">
+                      <block type="variables_get" id="44" deletable="false" movable="false" editable="false">
+                        <field name="VAR">value</field>
+                      </block>
+                    </value>
+                    <value name="B">
+                      <block type="math_number" id="45" deletable="false" movable="false" editable="false">
+                        <field name="NUM">2</field>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+              </block>
+            </next>
+          </block>
+        </statement>
+      </block>
+    </statement>
+  </block>
+</xml>

@@ -1,0 +1,309 @@
+<xml xmlns="http://www.w3.org/1999/xhtml">
+  <block type="mediacomp_run" id="1" x="46" y="7">
+    <statement name="DO">
+      <block type="controls_for" id="806" inline="true">
+        <field name="VAR">i</field>
+        <value name="FROM">
+          <block type="math_number" id="807">
+            <field name="NUM">10</field>
+          </block>
+        </value>
+        <value name="TO">
+          <block type="math_number" id="808">
+            <field name="NUM">390</field>
+          </block>
+        </value>
+        <value name="BY">
+          <block type="math_number" id="809">
+            <field name="NUM">10</field>
+          </block>
+        </value>
+        <statement name="DO">
+          <block type="procedures_callnoreturn" id="796" inline="false">
+            <mutation name="draw horizontal line">
+              <arg name="x1"></arg>
+              <arg name="y1"></arg>
+              <arg name="width"></arg>
+              <arg name="colour"></arg>
+              <arg name="canvas_no"></arg>
+            </mutation>
+            <value name="ARG0">
+              <block type="math_number" id="879">
+                <field name="NUM">10</field>
+              </block>
+            </value>
+            <value name="ARG1">
+              <block type="variables_get" id="860">
+                <field name="VAR">i</field>
+              </block>
+            </value>
+            <value name="ARG2">
+              <block type="math_number" id="880">
+                <field name="NUM">380</field>
+              </block>
+            </value>
+            <value name="ARG3">
+              <block type="colour_picker" id="895">
+                <field name="COLOUR">#33ffff</field>
+              </block>
+            </value>
+            <value name="ARG4">
+              <block type="math_number" id="896">
+                <field name="NUM">4</field>
+              </block>
+            </value>
+            <next>
+              <block type="procedures_callnoreturn" id="929" inline="false">
+                <mutation name="draw vertical line">
+                  <arg name="x1"></arg>
+                  <arg name="y1"></arg>
+                  <arg name="height"></arg>
+                  <arg name="colour"></arg>
+                  <arg name="canvas_no"></arg>
+                </mutation>
+                <value name="ARG0">
+                  <block type="variables_get" id="931">
+                    <field name="VAR">i</field>
+                  </block>
+                </value>
+                <value name="ARG1">
+                  <block type="math_number" id="930">
+                    <field name="NUM">10</field>
+                  </block>
+                </value>
+                <value name="ARG2">
+                  <block type="math_number" id="932">
+                    <field name="NUM">380</field>
+                  </block>
+                </value>
+                <value name="ARG3">
+                  <block type="colour_picker" id="933">
+                    <field name="COLOUR">#33ffff</field>
+                  </block>
+                </value>
+                <value name="ARG4">
+                  <block type="math_number" id="934">
+                    <field name="NUM">4</field>
+                  </block>
+                </value>
+              </block>
+            </next>
+          </block>
+        </statement>
+      </block>
+    </statement>
+  </block>
+  <block type="procedures_defnoreturn" id="543" collapsed="true" x="60" y="499">
+    <mutation>
+      <arg name="x1"></arg>
+      <arg name="y1"></arg>
+      <arg name="width"></arg>
+      <arg name="colour"></arg>
+      <arg name="canvas_no"></arg>
+    </mutation>
+    <field name="NAME">draw horizontal line</field>
+    <statement name="STACK">
+      <block type="procedures_callnoreturn" id="582" inline="false">
+        <mutation name="draw a line">
+          <arg name="x1"></arg>
+          <arg name="y1"></arg>
+          <arg name="x2"></arg>
+          <arg name="y2"></arg>
+          <arg name="colour"></arg>
+          <arg name="canvas_no"></arg>
+        </mutation>
+        <value name="ARG0">
+          <block type="variables_get" id="646">
+            <field name="VAR">x1</field>
+          </block>
+        </value>
+        <value name="ARG1">
+          <block type="variables_get" id="691">
+            <field name="VAR">y1</field>
+          </block>
+        </value>
+        <value name="ARG2">
+          <block type="math_arithmetic" id="712" inline="true">
+            <field name="OP">ADD</field>
+            <value name="A">
+              <block type="variables_get" id="693">
+                <field name="VAR">x1</field>
+              </block>
+            </value>
+            <value name="B">
+              <block type="variables_get" id="737">
+                <field name="VAR">width</field>
+              </block>
+            </value>
+          </block>
+        </value>
+        <value name="ARG3">
+          <block type="variables_get" id="692">
+            <field name="VAR">y1</field>
+          </block>
+        </value>
+        <value name="ARG4">
+          <block type="variables_get" id="738">
+            <field name="VAR">colour</field>
+          </block>
+        </value>
+        <value name="ARG5">
+          <block type="variables_get" id="739">
+            <field name="VAR">canvas_no</field>
+          </block>
+        </value>
+      </block>
+    </statement>
+  </block>
+  <block type="procedures_defnoreturn" id="569" collapsed="true" x="321" y="500">
+    <mutation>
+      <arg name="x1"></arg>
+      <arg name="y1"></arg>
+      <arg name="height"></arg>
+      <arg name="colour"></arg>
+      <arg name="canvas_no"></arg>
+    </mutation>
+    <field name="NAME">draw vertical line</field>
+    <statement name="STACK">
+      <block type="procedures_callnoreturn" id="740" inline="false">
+        <mutation name="draw a line">
+          <arg name="x1"></arg>
+          <arg name="y1"></arg>
+          <arg name="x2"></arg>
+          <arg name="y2"></arg>
+          <arg name="colour"></arg>
+          <arg name="canvas_no"></arg>
+        </mutation>
+        <value name="ARG0">
+          <block type="variables_get" id="741">
+            <field name="VAR">x1</field>
+          </block>
+        </value>
+        <value name="ARG1">
+          <block type="variables_get" id="742">
+            <field name="VAR">y1</field>
+          </block>
+        </value>
+        <value name="ARG2">
+          <block type="variables_get" id="746">
+            <field name="VAR">x1</field>
+          </block>
+        </value>
+        <value name="ARG3">
+          <block type="math_arithmetic" id="743" inline="true">
+            <field name="OP">ADD</field>
+            <value name="A">
+              <block type="variables_get" id="744">
+                <field name="VAR">y1</field>
+              </block>
+            </value>
+            <value name="B">
+              <block type="variables_get" id="745">
+                <field name="VAR">height</field>
+              </block>
+            </value>
+          </block>
+        </value>
+        <value name="ARG4">
+          <block type="variables_get" id="747">
+            <field name="VAR">colour</field>
+          </block>
+        </value>
+        <value name="ARG5">
+          <block type="variables_get" id="748">
+            <field name="VAR">canvas_no</field>
+          </block>
+        </value>
+      </block>
+    </statement>
+  </block>
+  <block type="procedures_defnoreturn" id="95" collapsed="true" x="63" y="568">
+    <mutation>
+      <arg name="x1"></arg>
+      <arg name="y1"></arg>
+      <arg name="x2"></arg>
+      <arg name="y2"></arg>
+      <arg name="colour"></arg>
+      <arg name="canvas_no"></arg>
+    </mutation>
+    <field name="NAME">draw a line</field>
+    <statement name="STACK">
+      <block type="controls_for" id="153" inline="true">
+        <field name="VAR">x</field>
+        <value name="FROM">
+          <block type="variables_get" id="194">
+            <field name="VAR">x1</field>
+          </block>
+        </value>
+        <value name="TO">
+          <block type="variables_get" id="215">
+            <field name="VAR">x2</field>
+          </block>
+        </value>
+        <value name="BY">
+          <block type="math_number" id="156">
+            <field name="NUM">1</field>
+          </block>
+        </value>
+        <statement name="DO">
+          <block type="controls_for" id="157" inline="true">
+            <field name="VAR">y</field>
+            <value name="FROM">
+              <block type="variables_get" id="261">
+                <field name="VAR">y1</field>
+              </block>
+            </value>
+            <value name="TO">
+              <block type="variables_get" id="282">
+                <field name="VAR">y2</field>
+              </block>
+            </value>
+            <value name="BY">
+              <block type="math_number" id="160">
+                <field name="NUM">1</field>
+              </block>
+            </value>
+            <statement name="DO">
+              <block type="variables_set" id="161" inline="true">
+                <field name="VAR">p</field>
+                <value name="VALUE">
+                  <block type="mediacomp_getPixelAt" id="162" inline="true">
+                    <value name="X">
+                      <block type="variables_get" id="163">
+                        <field name="VAR">x</field>
+                      </block>
+                    </value>
+                    <value name="Y">
+                      <block type="variables_get" id="164">
+                        <field name="VAR">y</field>
+                      </block>
+                    </value>
+                    <value name="CANVAS">
+                      <block type="variables_get" id="303">
+                        <field name="VAR">canvas_no</field>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <next>
+                  <block type="mediacomp_setPixel" id="325" inline="true">
+                    <value name="PIXEL">
+                      <block type="variables_get" id="326">
+                        <field name="VAR">p</field>
+                      </block>
+                    </value>
+                    <value name="PIXEL2">
+                      <block type="variables_get" id="348">
+                        <field name="VAR">colour</field>
+                      </block>
+                    </value>
+                  </block>
+                </next>
+              </block>
+            </statement>
+          </block>
+        </statement>
+      </block>
+    </statement>
+  </block>
+</xml>

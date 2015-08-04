@@ -1,0 +1,287 @@
+<xml>
+  <block type="mediacomp_run" id="846" x="6" y="8">
+    <statement name="DO">
+      <block type="synth_blockPlaySound" id="847" inline="true">
+        <value name="SOUND">
+          <block type="synth_defaultInstruments" id="848">
+            <field name="NAME">piano</field>
+          </block>
+        </value>
+        <next>
+          <block type="procedures_callnoreturn" id="849" inline="false">
+            <mutation name="multiply pitch">
+              <arg name="sound"></arg>
+              <arg name="multiplier"></arg>
+            </mutation>
+            <value name="ARG0">
+              <block type="synth_defaultInstruments" id="850">
+                <field name="NAME">piano</field>
+              </block>
+            </value>
+            <value name="ARG1">
+              <block type="math_number" id="851">
+                <field name="NUM">2</field>
+              </block>
+            </value>
+            <next>
+              <block type="synth_blockPlaySound" id="852" inline="true">
+                <value name="SOUND">
+                  <block type="synth_defaultInstruments" id="853">
+                    <field name="NAME">piano</field>
+                  </block>
+                </value>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+  <block type="procedures_defnoreturn" id="854" x="1" y="219">
+    <mutation>
+      <arg name="sound"></arg>
+      <arg name="multiplier"></arg>
+    </mutation>
+    <field name="NAME">multiply pitch</field>
+    <statement name="STACK">
+      <block type="variables_set" id="855" inline="true">
+        <field name="VAR">samples</field>
+        <value name="VALUE">
+          <block type="synth_getSamples" id="856" inline="false">
+            <value name="SOUND">
+              <block type="variables_get" id="857">
+                <field name="VAR">sound</field>
+              </block>
+            </value>
+          </block>
+        </value>
+        <next>
+          <block type="controls_for" id="858" inline="true">
+            <field name="VAR">i</field>
+            <field name="RUN_FAST">TRUE</field>
+            <value name="FROM">
+              <block type="math_number" id="859">
+                <field name="NUM">1</field>
+              </block>
+            </value>
+            <value name="TO">
+              <block type="lists_length" id="860" inline="false">
+                <value name="VALUE">
+                  <block type="variables_get" id="861">
+                    <field name="VAR">samples</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <value name="BY">
+              <block type="variables_get" id="862">
+                <field name="VAR">multiplier</field>
+              </block>
+            </value>
+            <statement name="DO">
+              <block type="variables_set" id="914" inline="true">
+                <field name="VAR">index</field>
+                <comment pinned="false" h="80" w="160">have to subtract 1 to make the 1, 2, 3 index counting 0, 1, 2 (helps index values line up for next step)</comment>
+                <value name="VALUE">
+                  <block type="math_arithmetic" id="895" inline="true">
+                    <field name="OP">MINUS</field>
+                    <value name="A">
+                      <block type="variables_get" id="896">
+                        <field name="VAR">i</field>
+                      </block>
+                    </value>
+                    <value name="B">
+                      <block type="math_number" id="897">
+                        <field name="NUM">1</field>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <next>
+                  <block type="variables_set" id="931" inline="true">
+                    <field name="VAR">index</field>
+                    <comment pinned="false" h="80" w="160">divide 0-counting normalized index by the pitch multiplier. If we double the pitch, we are smooshing together every other sample value so that the sound plays "faster" and so sounds twice the pitch</comment>
+                    <value name="VALUE">
+                      <block type="math_arithmetic" id="932" inline="true">
+                        <field name="OP">DIVIDE</field>
+                        <value name="A">
+                          <block type="variables_get" id="933">
+                            <field name="VAR">index</field>
+                          </block>
+                        </value>
+                        <value name="B">
+                          <block type="variables_get" id="935">
+                            <field name="VAR">multiplier</field>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                    <next>
+                      <block type="variables_set" id="936" inline="true">
+                        <field name="VAR">index</field>
+                        <comment pinned="false" h="80" w="160">add 1 back to index after dividing to move back to 1, 2, 3 counting (blockly standard)</comment>
+                        <value name="VALUE">
+                          <block type="math_arithmetic" id="937" inline="true">
+                            <field name="OP">ADD</field>
+                            <value name="A">
+                              <block type="variables_get" id="938">
+                                <field name="VAR">index</field>
+                              </block>
+                            </value>
+                            <value name="B">
+                              <block type="math_number" id="940">
+                                <field name="NUM">1</field>
+                              </block>
+                            </value>
+                          </block>
+                        </value>
+                        <next>
+                          <block type="variables_set" id="863" inline="true">
+                            <field name="VAR">current sample</field>
+                            <value name="VALUE">
+                              <block type="lists_getIndex" id="864" inline="true">
+                                <mutation statement="false" at="true"></mutation>
+                                <field name="MODE">GET</field>
+                                <field name="WHERE">FROM_START</field>
+                                <value name="VALUE">
+                                  <block type="variables_get" id="865">
+                                    <field name="VAR">samples</field>
+                                  </block>
+                                </value>
+                                <value name="AT">
+                                  <block type="variables_get" id="941">
+                                    <field name="VAR">index</field>
+                                  </block>
+                                </value>
+                              </block>
+                            </value>
+                            <next>
+                              <block type="variables_set" id="869" inline="true">
+                                <field name="VAR">value</field>
+                                <value name="VALUE">
+                                  <block type="synth_getSampleValue" id="870" inline="false">
+                                    <value name="SAMPLE">
+                                      <block type="lists_getIndex" id="871" inline="true">
+                                        <mutation statement="false" at="true"></mutation>
+                                        <field name="MODE">GET</field>
+                                        <field name="WHERE">FROM_START</field>
+                                        <value name="VALUE">
+                                          <block type="variables_get" id="872">
+                                            <field name="VAR">samples</field>
+                                          </block>
+                                        </value>
+                                        <value name="AT">
+                                          <block type="variables_get" id="873">
+                                            <field name="VAR">i</field>
+                                          </block>
+                                        </value>
+                                      </block>
+                                    </value>
+                                  </block>
+                                </value>
+                                <next>
+                                  <block type="synth_setSampleValue" id="874" inline="true">
+                                    <value name="SAMPLE">
+                                      <block type="variables_get" id="875">
+                                        <field name="VAR">current sample</field>
+                                      </block>
+                                    </value>
+                                    <value name="VALUE">
+                                      <block type="variables_get" id="876">
+                                        <field name="VAR">value</field>
+                                      </block>
+                                    </value>
+                                  </block>
+                                </next>
+                              </block>
+                            </next>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </statement>
+            <next>
+              <block type="controls_for" id="877" inline="true">
+                <field name="VAR">i</field>
+                <field name="RUN_FAST">TRUE</field>
+                <comment pinned="false" h="80" w="160">erase the values of samples that aren't part of the pitch shifted sound</comment>
+                <value name="FROM">
+                  <block type="math_arithmetic" id="878" inline="true">
+                    <field name="OP">DIVIDE</field>
+                    <value name="A">
+                      <block type="lists_length" id="879" inline="false">
+                        <value name="VALUE">
+                          <block type="variables_get" id="880">
+                            <field name="VAR">samples</field>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                    <value name="B">
+                      <block type="variables_get" id="881">
+                        <field name="VAR">multiplier</field>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <value name="TO">
+                  <block type="lists_length" id="882" inline="false">
+                    <value name="VALUE">
+                      <block type="variables_get" id="883">
+                        <field name="VAR">samples</field>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <value name="BY">
+                  <block type="math_number" id="884">
+                    <field name="NUM">1</field>
+                  </block>
+                </value>
+                <statement name="DO">
+                  <block type="variables_set" id="885" inline="true">
+                    <field name="VAR">current sample</field>
+                    <value name="VALUE">
+                      <block type="lists_getIndex" id="886" inline="true">
+                        <mutation statement="false" at="true"></mutation>
+                        <field name="MODE">GET</field>
+                        <field name="WHERE">FROM_START</field>
+                        <value name="VALUE">
+                          <block type="variables_get" id="887">
+                            <field name="VAR">samples</field>
+                          </block>
+                        </value>
+                        <value name="AT">
+                          <block type="variables_get" id="888">
+                            <field name="VAR">i</field>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                    <next>
+                      <block type="synth_setSampleValue" id="889" inline="true">
+                        <value name="SAMPLE">
+                          <block type="variables_get" id="890">
+                            <field name="VAR">current sample</field>
+                          </block>
+                        </value>
+                        <value name="VALUE">
+                          <block type="math_number" id="891">
+                            <field name="NUM">0</field>
+                          </block>
+                        </value>
+                      </block>
+                    </next>
+                  </block>
+                </statement>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+</xml>

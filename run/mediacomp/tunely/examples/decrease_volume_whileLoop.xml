@@ -1,0 +1,189 @@
+<xml xmlns="http://www.w3.org/1999/xhtml">
+  <block type="synth_main" id="217" x="20" y="-10">
+    <statement name="DO">
+      <block type="variables_set" id="218" inline="true">
+        <field name="VAR">sound</field>
+        <value name="VALUE">
+          <block type="synth_defaultInstruments" id="219">
+            <field name="NAME">piano</field>
+          </block>
+        </value>
+        <next>
+          <block type="synth_blockPlaySound" id="220" inline="true">
+            <value name="SOUND">
+              <block type="variables_get" id="221">
+                <field name="VAR">sound</field>
+              </block>
+            </value>
+            <next>
+              <block type="controls_repeat_ext" id="222" inline="true">
+                <field name="RUN_FAST">FALSE</field>
+                <value name="TIMES">
+                  <block type="math_number" id="223">
+                    <field name="NUM">3</field>
+                  </block>
+                </value>
+                <statement name="DO">
+                  <block type="procedures_callnoreturn" id="224" inline="false">
+                    <mutation name="decrease volume">
+                      <arg name="sound"></arg>
+                    </mutation>
+                    <value name="ARG0">
+                      <block type="variables_get" id="225">
+                        <field name="VAR">sound</field>
+                      </block>
+                    </value>
+                    <next>
+                      <block type="synth_blockPlaySound" id="226" inline="true">
+                        <value name="SOUND">
+                          <block type="variables_get" id="227">
+                            <field name="VAR">sound</field>
+                          </block>
+                        </value>
+                      </block>
+                    </next>
+                  </block>
+                </statement>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+  <block type="procedures_defnoreturn" id="228" x="401" y="-4">
+    <mutation>
+      <arg name="sound"></arg>
+    </mutation>
+    <field name="NAME">decrease volume</field>
+    <statement name="STACK">
+      <block type="variables_set" id="229" inline="true">
+        <field name="VAR">samples</field>
+        <value name="VALUE">
+          <block type="synth_getSamples" id="230" inline="false">
+            <value name="SOUND">
+              <block type="variables_get" id="231">
+                <field name="VAR">sound</field>
+              </block>
+            </value>
+          </block>
+        </value>
+        <next>
+          <block type="variables_set" id="232" inline="true">
+            <field name="VAR">index</field>
+            <value name="VALUE">
+              <block type="math_number" id="233">
+                <field name="NUM">1</field>
+              </block>
+            </value>
+            <next>
+              <block type="controls_whileUntil" id="234" inline="false">
+                <field name="MODE">WHILE</field>
+                <field name="RUN_FAST">TRUE</field>
+                <value name="BOOL">
+                  <block type="logic_compare" id="235" inline="true">
+                    <field name="OP">LTE</field>
+                    <value name="A">
+                      <block type="variables_get" id="236">
+                        <field name="VAR">index</field>
+                      </block>
+                    </value>
+                    <value name="B">
+                      <block type="lists_length" id="237" inline="false">
+                        <value name="VALUE">
+                          <block type="variables_get" id="238">
+                            <field name="VAR">samples</field>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <statement name="DO">
+                  <block type="variables_set" id="239" inline="true">
+                    <field name="VAR">sample</field>
+                    <value name="VALUE">
+                      <block type="lists_getIndex" id="240" inline="true">
+                        <mutation statement="false" at="true"></mutation>
+                        <field name="MODE">GET</field>
+                        <field name="WHERE">FROM_START</field>
+                        <value name="VALUE">
+                          <block type="variables_get" id="241">
+                            <field name="VAR">samples</field>
+                          </block>
+                        </value>
+                        <value name="AT">
+                          <block type="variables_get" id="242">
+                            <field name="VAR">index</field>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                    <next>
+                      <block type="variables_set" id="243" inline="true">
+                        <field name="VAR">value</field>
+                        <value name="VALUE">
+                          <block type="synth_getSampleValue" id="244" inline="false">
+                            <value name="SAMPLE">
+                              <block type="variables_get" id="245">
+                                <field name="VAR">sample</field>
+                              </block>
+                            </value>
+                          </block>
+                        </value>
+                        <next>
+                          <block type="synth_setSampleValue" id="246" inline="true">
+                            <value name="SAMPLE">
+                              <block type="variables_get" id="247">
+                                <field name="VAR">sample</field>
+                              </block>
+                            </value>
+                            <value name="VALUE">
+                              <block type="math_arithmetic" id="248" inline="true">
+                                <field name="OP">DIVIDE</field>
+                                <value name="A">
+                                  <block type="variables_get" id="249">
+                                    <field name="VAR">value</field>
+                                  </block>
+                                </value>
+                                <value name="B">
+                                  <block type="math_number" id="250">
+                                    <field name="NUM">2</field>
+                                  </block>
+                                </value>
+                              </block>
+                            </value>
+                            <next>
+                              <block type="variables_set" id="251" inline="true">
+                                <field name="VAR">index</field>
+                                <value name="VALUE">
+                                  <block type="math_arithmetic" id="252" inline="true">
+                                    <field name="OP">ADD</field>
+                                    <value name="A">
+                                      <block type="variables_get" id="253">
+                                        <field name="VAR">index</field>
+                                      </block>
+                                    </value>
+                                    <value name="B">
+                                      <block type="math_number" id="254">
+                                        <field name="NUM">1</field>
+                                      </block>
+                                    </value>
+                                  </block>
+                                </value>
+                              </block>
+                            </next>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </statement>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+</xml>

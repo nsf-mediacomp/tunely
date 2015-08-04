@@ -1,0 +1,4 @@
+Post Demo:: 
+----------------------
+1. TUTORIALS::
+	-for students: tutorial on how to begin playing around with mediacomp should be included on the page itself

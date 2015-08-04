@@ -1,0 +1,97 @@
+<xml xmlns="http://www.w3.org/1999/xhtml">
+  <block type="mediacomp_run" id="34" x="19" y="48">
+    <statement name="DO">
+      <block type="controls_forfor" id="81" inline="true">
+        <field name="VAR">x</field>
+        <field name="VAR2">y</field>
+        <value name="FROM">
+          <block type="math_number" id="82">
+            <field name="NUM">0</field>
+          </block>
+        </value>
+        <value name="TO">
+          <block type="math_number" id="83">
+            <field name="NUM">400</field>
+          </block>
+        </value>
+        <value name="BY">
+          <block type="math_number" id="84">
+            <field name="NUM">1</field>
+          </block>
+        </value>
+        <statement name="DO">
+          <block type="variables_set" id="43" inline="true">
+            <field name="VAR">pixel</field>
+            <value name="VALUE">
+              <block type="mediacomp_getPixelAt" id="44" inline="true">
+                <value name="X">
+                  <block type="variables_get" id="45">
+                    <field name="VAR">x</field>
+                  </block>
+                </value>
+                <value name="Y">
+                  <block type="variables_get" id="46">
+                    <field name="VAR">y</field>
+                  </block>
+                </value>
+                <value name="CANVAS">
+                  <block type="math_number" id="47">
+                    <field name="NUM">1</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <next>
+              <block type="controls_if" id="48" inline="false">
+                <value name="IF0">
+                  <block type="logic_compare" id="49" inline="true">
+                    <field name="OP">LT</field>
+                    <value name="A">
+                      <block type="mediacomp_getPixelRGBIntensity" id="50" inline="true">
+                        <field name="RGB">g</field>
+                        <value name="PIXEL">
+                          <block type="variables_get" id="51">
+                            <field name="VAR">pixel</field>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                    <value name="B">
+                      <block type="math_number" id="52">
+                        <field name="NUM">5</field>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <statement name="DO0">
+                  <block type="mediacomp_setPixelAt" id="53" inline="true">
+                    <value name="X">
+                      <block type="variables_get" id="54">
+                        <field name="VAR">x</field>
+                      </block>
+                    </value>
+                    <value name="Y">
+                      <block type="variables_get" id="55">
+                        <field name="VAR">y</field>
+                      </block>
+                    </value>
+                    <value name="PIXEL">
+                      <block type="variables_get" id="56">
+                        <field name="VAR">pixel</field>
+                      </block>
+                    </value>
+                    <value name="CANVAS">
+                      <block type="math_number" id="57">
+                        <field name="NUM">3</field>
+                      </block>
+                    </value>
+                  </block>
+                </statement>
+              </block>
+            </next>
+          </block>
+        </statement>
+      </block>
+    </statement>
+  </block>
+</xml>
