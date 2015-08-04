@@ -96,7 +96,7 @@ Blockly.JavaScript['mediacomp_run'] = function(block) {
   var do_branch = Blockly.JavaScript.statementToCode(block, 'DO');
   var funcName = Blockly.JavaScript.variableDB_.getDistinctName(
       'sphero_run', Blockly.Variables.NAME_TYPE);
-  var code = 'function pixly_runProgram(){\n' + 
+  var code = 'function tunely_runProgram(){\n' + 
       do_branch +
 	  '}\n';
   return code;

@@ -17,7 +17,7 @@ Blockly.Msg.EXAMPLE_MANDELBROT_ZOOM = "Mandelbrot Zoom";
 Blockly.Msg.SAVE_PROJECT = "Export Project";
 Blockly.Msg.SAVE_PROJECT_DOWNLOAD_BLOCKS = "Save Project / Download Blocks";
 Blockly.Msg.FILENAME = "Filename: ";
-Blockly.Msg.PIXLYPROJECT_JSON = "PixlyProject.json";
+Blockly.Msg.TUNELYPROJECT_JSON = "TunelyProject.json";
 
 
 /**PIXLY MESSAGES**/

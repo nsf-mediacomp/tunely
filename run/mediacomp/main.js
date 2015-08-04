@@ -1,5 +1,5 @@
 Drawr.imagePath = "mediacomp/images/"
-Drawr.image_paths = [Drawr.imagePath+"redeye.png", Drawr.imagePath+"greenscreen.png", Drawr.imagePath+"tokyo.png", Drawr.imagePath+"beach.png", Drawr.imagePath+"blank.png"];
+Drawr.image_paths = [Drawr.imagePath+"redeye.png"];
 
 function Main(){}
 Main.DOUBLE_CLICK_TIME = 100;
@@ -13,18 +13,20 @@ Main.init = function(){
 	
     // Connect canvases
 	//canvas_select.js
-    CanvasSelect.init(Drawr.image_paths);
+    //CanvasSelect.init(Drawr.image_paths);
 	//canvas_popout.js
-	CanvasSelect.setupCanvasPopout();
+	//CanvasSelect.setupCanvasPopout();
 	
 	//////////////////////////////////////////////////////////
 	//SET UP TUNELY
-	Synth.EXPLORER.initContainer(document.getElementById("explore_mainContainer"));
+	//////////////////////////////////////////////////////////
 	
 	//load the sound samples
 	var default_sounds = ["piano"];
 	Synth.default_sound_names = default_sounds;
-	Synth.loadFileIntoVoiceBuffer("mediacomp/tunely/samples/piano.wav", "piano");
+	Synth.loadFileIntoVoiceBuffer("mediacomp/tunely/samples/piano.wav", "piano", 
+		function(){Synth.EXPLORER.OpenExploreWindow(Synth.GetSound('piano'))}
+	);
 	Synth.Reset();
 	
 	var uploadSound = document.getElementById("uploadSound");
@@ -82,7 +84,7 @@ Main.init = function(){
 		BlockIt.DisableFloatingBlocks();
 		
 		var generated_code = Blockly.JavaScript.workspaceToCode();
-			generated_code += "pixly_runProgram();\n";
+			generated_code += "tunely_runProgram();\n";
 		var content = "<pre>" + generated_code + "</pre>";
 		
 		BlockIt.EnableFloatingBlocks();
@@ -99,21 +101,20 @@ Main.init = function(){
 	$("#captureButton").click(function(){
 		var canvas = Drawr.getCtx(CanvasSelect.selected).canvas;
 		$("#downloadImageLink")[0].href = canvas.toDataURL();
-		$("#downloadImageLink")[0].download = "pixly_canvas_"+CanvasSelect.selected+".png"
+		$("#downloadImageLink")[0].download = "tunely_sound_"+CanvasSelect.selected+".png"
 		$("#downloadImageLink")[0].click();
 	});
 	
-	$("#uploadcanvas")[0].addEventListener("change", CanvasSelect.upload, false);
+	/*$("#uploadcanvas")[0].addEventListener("change", CanvasSelect.upload, false);
 	$("#uploadImageButton")[0].addEventListener("click", 
 		function(){$("#uploadcanvas")[0].click(); }, 
 		false
-	);
+	);*/
 	
 	//LOAD UP EVERYTHING	
 	Main.loadWorkspaceFromLocalStorage();
-	Drawr.RememberImagesFromMemory();
+	//Drawr.RememberImagesFromMemory();
 	Synth.RememberSoundsFromMemory();
-	
 	setInterval(Main.saveWorkspaceToLocalStorage, 10000);
 	window.addEventListener('beforeunload', function(e){
 		Main.saveWorkspaceToLocalStorage();
@@ -145,7 +146,7 @@ Main.setupBlockly = function(){
 	var onresize = function(e){
 		var top = visualization.offsetTop;
 		blocklyDiv.style.top = Math.max(10, top - window.pageYOffset) + 'px';
-		blocklyDiv.style.left = rtl ? '10px' : '420px';
+		blocklyDiv.style.left = rtl ? '10px' : '460px';
 		blocklyDiv.style.width = (window.innerWidth - 440) + 'px';
 	};
 	window.addEventListener('scroll', function(){
@@ -251,7 +252,7 @@ Main.RunCode = function(){
 	window.setTimeout(function(){
 		document.getElementById("spinner").style.visibility = "";
 		if (!BlockIt.IterateThroughBlocks(function(){
-			Drawr.flushCache();
+			//Drawr.flushCache();
 			Synth.Reset();
 			Main.RunButton();
 		})){
@@ -261,7 +262,7 @@ Main.RunCode = function(){
 }
 Main.StopCode = function(){	
 	BlockIt.StopIteration();
-	Drawr.flushCache();
+	//Drawr.flushCache();
 	Synth.Reset();
 
 	document.getElementById('spinner').style.visibility = 'hidden';

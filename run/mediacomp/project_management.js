@@ -1,7 +1,7 @@
 Main.example_projects = {};
 
 Main.loaded_xml = "";
-Main.loaded_images = [];
+//Main.loaded_images = [];
 Main.loaded_sounds = [];
 Main.loaded_selected = 0;
 Main.loaded_json = "";
@@ -29,7 +29,7 @@ Main.openProject = function(){
 				var obj = JSON.parse(data);
 				$(textarea).html(obj.xml);
 				Main.loaded_xml = obj.xml;
-				Main.loaded_images = obj.images;
+				//Main.loaded_images = obj.images;
 				Main.loaded_sounds = obj.sounds;
 				Main.loaded_selected = obj.selected;
 			}catch(e){
@@ -47,12 +47,12 @@ Main.openProject = function(){
 	var example_select = $(document.createElement("select"));
 	var options_array = [
 		["", ""],
-		[Blockly.Msg.EXAMPLE_REDEYE, "redeye_removal"],
+		/*[Blockly.Msg.EXAMPLE_REDEYE, "redeye_removal"],
 		[Blockly.Msg.EXAMPLE_NEGATIVE, "negative_canvas"],
 		[Blockly.Msg.EXAMPLE_GRAYSCALE, "grayscale_canvas"],
 		[Blockly.Msg.EXAMPLE_GREENSCREEN, "greenscreen"],
 		[Blockly.Msg.EXAMPLE_LINES, "simple_lines"],
-		[Blockly.Msg.EXAMPLE_MANDELBROT, "mandelbrot"],
+		[Blockly.Msg.EXAMPLE_MANDELBROT, "mandelbrot"],*/
 		
 		[Blockly.Msg.EXAMPLE_INCREASE_VOLUME, "increase_volume_forLoop"],
 		[Blockly.Msg.EXAMPLE_DECREASE_VOLUME, "decrease_volume_whileLoop"],
@@ -71,7 +71,7 @@ Main.openProject = function(){
 			xml = Main.example_projects[value]
 			$(textarea).html(xml);
 			Main.loaded_xml = xml;
-			Main.loaded_images = [];
+			//Main.loaded_images = [];
 			Main.loaded_sounds = [];
 			Main.loaded_selected = CanvasSelect.selected;
 		}else{
@@ -82,7 +82,7 @@ Main.openProject = function(){
 				
 				$(textarea).html(xml);
 				Main.loaded_xml = xml;
-				Main.loaded_images = [];
+				//Main.loaded_images = [];
 				Main.loaded_sounds = [];
 				Main.loaded_selected = CanvasSelect.selected;
 			});
@@ -105,12 +105,12 @@ Main.openProject = function(){
 		Blockly.mainWorkspace.clear();
 		Main.loadBlocks(xml);
 		
-		if (Main.loaded_images.length > 0){
+		/*if (Main.loaded_images.length > 0){
 			CanvasSelect.clearUploadedImages();
 			for (var i = 0; i < Main.loaded_images.length; i++){
 				CanvasSelect.restoreUploadedImage(Main.loaded_images[i]);
 			}
-		}
+		}*/
 		if (Main.loaded_sounds.length > 0){
 			Synth.clearUploadedSounds();
 			for (var i = 0; i < Main.loaded_sounds.length; i++){
@@ -133,7 +133,7 @@ Main.saveProject = function(){
 	var filename = $(document.createElement("input"));
 	filename.attr("type", "text");
 	filename.attr("id", "filename_filename");
-	filename.val(Blockly.Msg.PIXLYPROJECT_JSON);
+	filename.val(Blockly.Msg.TUNELYPROJECT_JSON);
 	Main.json_filename = filename.val();
 	filename.on("change", function(e){
 		Main.json_filename = filename.val();
@@ -150,7 +150,7 @@ Main.saveProject = function(){
 	message.append(textarea);
 	
 	Dialog.Confirm('', function(e){
-		var obj = {xml: Main.saved_xml, images: CanvasSelect.uploaded_images, selected: CanvasSelect.selected, sounds: Synth.uploaded_sounds};
+		var obj = {xml: Main.saved_xml, /*images: CanvasSelect.uploaded_images,*/ selected: CanvasSelect.selected, sounds: Synth.uploaded_sounds};
 		var json = JSON.stringify(obj);
 		
 		createDownloadLink("#export", json, Main.json_filename);

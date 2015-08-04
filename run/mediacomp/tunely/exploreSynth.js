@@ -1,7 +1,6 @@
 Synth.EXPLORER = function(){	
 	this.sound = null;
 	this.samples = [];
-	this.container = null;
 	
 	this.playSoundButton = null;
 	this.playBeforeButton = null;
@@ -32,9 +31,6 @@ Synth.EXPLORER = function(){
 	this.scale_y = 2.0;
 };
 Synth.EXPLORER.counter = 0;
-Synth.EXPLORER.initContainer = function(container){
-	Synth.EXPLORER.container = container;
-}
 
 Synth.EXPLORER.prototype.init = function(sound, playSoundButton, playBeforeButton, playAfterButton, stopButton, playSelectionButton, clearSelectionButton, startIndexField, stopIndexField, canvas, arrowIndexImg, selectionHighlighter, firstIndexButton, prevIndexButton, currIndexField, sampleValueField, nextIndexButton, lastIndexButton, samplesPerPixelField, zoomOutButton, zoomInButton){	
 	this.sound = sound;
@@ -70,7 +66,7 @@ Synth.EXPLORER.prototype.init = function(sound, playSoundButton, playBeforeButto
 	this.arrowIndexImg.onmousemove = this.CanvasMouseMove.bind(this);
 	this.arrowIndexImg.onmouseup = this.CanvasMouseUp.bind(this);
 	this.arrowIndexImg.onselectstart = function(){ return false; }
-	
+
 	this.selectionHighlighter = selectionHighlighter;
 	this.selectionHighlighter.onmousedown = this.CanvasMouseDown.bind(this);
 	this.selectionHighlighter.onmousemove = this.CanvasMouseMove.bind(this);
@@ -102,44 +98,216 @@ Synth.EXPLORER.prototype.init = function(sound, playSoundButton, playBeforeButto
 Synth.EXPLORER.OpenExploreWindow = function(sound){
 	if (sound === undefined || sound === null) return;
 	
-	var exploreWindow = window.open("", ++Synth.EXPLORER.counter, "width=850, height=600");
+	/*var exploreWindow = window.open("", ++Synth.EXPLORER.counter, "width=850, height=600");
 	exploreWindow.document.write(Synth.EXPLORER.container.innerHTML);
-	exploreWindow.document.title = "Explore: " + sound.name;
+	exploreWindow.document.title = "Explore: " + sound.name;*/
+	var id = 0;
+	var exploreCanvas = document.getElementById("canvas_"+id);
+	exploreCanvas.className = "explorer_canvas_container";
+	exploreCanvas.innerHTML = "";
 	
+	//CREATE THE TITLE
+	var title_title = document.createElement("span");
+	title_title.textContent = "Explore: ";
+	title_title.style.position = "relative";
+	title_title.style.left = "-60px";
+	var title = document.createElement("b");
+	title.textContent = sound.name;
+	title.style.position = "relative";
+	title.style.left = "-64px";
+	title.style.fontSize = "24px";
+	var center = document.createElement("center");
+	center.style.fontFamily = "\"Lucida Console\", Monaco, monospace";
+	center.style.marginBottom = "-10px";
+	center.style.marginTop = "-15px";
+	center.style.paddingLeft = "45px";
+	center.style.paddingTop = "10px";
+	center.style.position = "relative";
+	center.style.left = "-30px";
+	center.style.width = "100%"
+	center.style.backgroundColor = "#99B382";
+	center.style.height = "32px";
+	center.appendChild(title_title);
+	center.appendChild(title);
+	exploreCanvas.appendChild(center);
+	
+	//CREATE THE FIRST SET OF INPUTS: SOUND PLAYING
+	var explore_inputs = document.createElement("center");
+	explore_inputs.className = "explore_inputs";
+	
+	var p = document.createElement("p");
+	var explore_playSound = document.createElement("input");
+	explore_playSound.type="submit";
+	explore_playSound.value="Play Entire Sound";
+	var explore_playBefore = document.createElement("input");
+	explore_playBefore.type="submit";
+	explore_playBefore.value = "Play Before";
+	var explore_playAfter = document.createElement("input");
+	explore_playAfter.type="submit";
+	explore_playAfter.value="Play After";
+	var explore_stop = document.createElement("input");
+	explore_stop.type = "submit";
+	explore_stop.value = "Stop";
+	p.appendChild(explore_playSound);
+	p.appendChild(document.createTextNode(" "));
+	p.appendChild(explore_stop);
+	p.appendChild(document.createTextNode(" "));
+	p.appendChild(explore_playBefore);
+	p.appendChild(document.createTextNode(" "));
+	p.appendChild(explore_playAfter);
+	p.appendChild(document.createElement("br"));
+	
+	//CREATE THE SECOND SET OF INPUTS: SELECTION PLAYING
+	var explore_playSelection = document.createElement("input");
+	explore_playSelection.type = "submit";
+	explore_playSelection.value = "Play Selection";
+	var explore_clearSelection = document.createElement("input");
+	explore_clearSelection.type = "submit";
+	explore_clearSelection.value = "Clear Selection";
+	p.appendChild(explore_playSelection);
+	p.appendChild(document.createTextNode(" "));
+	p.appendChild(explore_clearSelection);
+	p.appendChild(document.createElement("br"));
+	var b = document.createElement("b");
+	b.textContent = "Start Index: ";
+	var explore_startIndex = document.createElement("input");
+	explore_startIndex.type = "text";
+	explore_startIndex.value = "N/A";
+	explore_startIndex.disabled = true;
+	explore_startIndex.style.width = "100px";
+	p.appendChild(b);
+	p.appendChild(explore_startIndex);
+	p.appendChild(document.createTextNode("  "));
+	var b = document.createElement("b");
+	b.textContent = "Stop Index: ";
+	var explore_stopIndex = document.createElement("input");
+	explore_stopIndex.type = "text";
+	explore_stopIndex.value = "N/A";
+	explore_stopIndex.disabled = true;
+	explore_stopIndex.style.width = "100px";
+	p.appendChild(b);
+	p.appendChild(explore_stopIndex);
+	explore_inputs.appendChild(p);
+	
+	exploreCanvas.appendChild(explore_inputs);
+	
+	//CREATE THE BIG CANVAS TO DISPLAY THE SOUND SAMPLES!!!
+	var div = document.createElement("div");
+	div.style.position = "relative";
+	var explore_canvasContainer = document.createElement("div");
+	explore_canvasContainer.className = "explore_canvasContainer";
+	var explore_selectionHighlighter = document.createElement("div");
+	explore_selectionHighlighter.className = "explore_selectionHighlighter";
+	var explore_indexArrow = document.createElement("img");
+	explore_indexArrow.className = "explore_indexArrow";
+	explore_indexArrow.src = "mediacomp/tunely/arrow.png";
+	explore_canvasContainer.appendChild(explore_selectionHighlighter);
+	explore_canvasContainer.appendChild(explore_indexArrow);
+	div.appendChild(explore_canvasContainer);
+	exploreCanvas.appendChild(div);
+	exploreCanvas.appendChild(document.createElement("br"));
+	
+	//CREATE THE THIRD SET OF INPUTS!!: SAMPLE SELECTION
+	var explore_inputs = document.createElement("center");
+	explore_inputs.style.marginTop = "-15px";
+	explore_inputs.className = "explore_inputs";
+	var p = document.createElement("span");
+	var explore_firstIndex = document.createElement("input");
+	explore_firstIndex.type = "submit";
+	explore_firstIndex.value = "<<";
+	var explore_prevIndex = document.createElement("input");
+	explore_prevIndex.type = "submit";
+	explore_prevIndex.value = " <";
+	p.appendChild(explore_firstIndex);
+	p.appendChild(document.createTextNode(" "));
+	p.appendChild(explore_prevIndex);
+	p.appendChild(document.createTextNode("  "));
+	
+	var b = document.createElement("b");
+	b.textContent = "Index: ";
+	var explore_currIndex = document.createElement("input");
+	explore_currIndex.type = "text";
+	explore_currIndex.value = "1";
+	explore_currIndex.style.width = "80px";
+	p.appendChild(b);
+	p.appendChild(explore_currIndex);
+	p.appendChild(document.createTextNode("   "));
+	var b = document.createElement("b");
+	b.textContent = "Sample Value: ";
+	var explore_sampleValue = document.createElement("input");
+	explore_sampleValue.type = "text";
+	explore_sampleValue.value = "0";
+	explore_sampleValue.disabled = true;
+	
+	var explore_nextIndex = document.createElement("input");
+	explore_nextIndex.type = "submit";
+	explore_nextIndex.value = " >";
+	var explore_lastIndex = document.createElement("input");
+	explore_lastIndex.type = "submit";
+	explore_lastIndex.value = ">>";
+	p.appendChild(explore_nextIndex);
+	p.appendChild(document.createTextNode(" "));
+	p.appendChild(explore_lastIndex);
+	p.appendChild(document.createElement("br"));
+	p.appendChild(b);
+	p.appendChild(explore_sampleValue);
+	explore_inputs.appendChild(p);
+	
+	var p = document.createElement("p");
+	p.style.marginTop = "5px";
+	var b = document.createElement("b");
+	b.textContent = "# Samples between pixels: ";
+	var explore_numSamplesPerPixel = document.createElement("input");
+	explore_numSamplesPerPixel.type = "text";
+	explore_numSamplesPerPixel.value = "1";
+	explore_numSamplesPerPixel.disabled = true;
+	explore_numSamplesPerPixel.style.width = "80px";
+	p.appendChild(b);
+	p.appendChild(explore_numSamplesPerPixel);
+	p.appendChild(document.createElement("br"));
+	
+	var explore_zoomOut = document.createElement("input");
+	explore_zoomOut.type = "submit";
+	explore_zoomOut.value = "Zoom Out";
+	var explore_zoomIn = document.createElement("input");
+	explore_zoomIn.type = "submit";
+	explore_zoomIn.value = "Zoom In";
+	p.appendChild(explore_zoomOut);
+	p.appendChild(document.createTextNode(" "));
+	p.appendChild(explore_zoomIn);
+	explore_inputs.appendChild(p);
+	exploreCanvas.appendChild(explore_inputs);
+	
+	exploreCanvas.style.backgroundColor = "#C4E1B7";
+	exploreCanvas.style.padding = "15px";
+	
+	
+	//NOW SET UP EVENT HANDLERS FOR THE NEW SYNTH EXPLORER
 	var explorer = new Synth.EXPLORER();
 	explorer.init(
 		sound,
-		exploreWindow.document.getElementById("explore_playSound"),
-		exploreWindow.document.getElementById("explore_playBefore"),
-		exploreWindow.document.getElementById("explore_playAfter"),
-		exploreWindow.document.getElementById("explore_stop"),
-		exploreWindow.document.getElementById("explore_playSelection"),
-		exploreWindow.document.getElementById("explore_clearSelection"),
-		exploreWindow.document.getElementById("explore_startIndex"),
-		exploreWindow.document.getElementById("explore_stopIndex"),
-		exploreWindow.document.getElementById("explore_canvasContainer"),
-		exploreWindow.document.getElementById("explore_indexArrow"),
-		exploreWindow.document.getElementById("explore_selectionHighlighter"),
-		exploreWindow.document.getElementById("explore_firstIndex"),
-		exploreWindow.document.getElementById("explore_prevIndex"),
-		exploreWindow.document.getElementById("explore_currIndex"),
-		exploreWindow.document.getElementById("explore_sampleValue"),
-		exploreWindow.document.getElementById("explore_nextIndex"),
-		exploreWindow.document.getElementById("explore_lastIndex"),
-		exploreWindow.document.getElementById("explore_numSamplesPerPixel"),
-		exploreWindow.document.getElementById("explore_zoomOut"),
-		exploreWindow.document.getElementById("explore_zoomIn")
+		explore_playSound,
+		explore_playBefore,
+		explore_playAfter,
+		explore_stop,
+		explore_playSelection,
+		explore_clearSelection,
+		explore_startIndex,
+		explore_stopIndex,
+		explore_canvasContainer,
+		explore_indexArrow,
+		explore_selectionHighlighter,
+		explore_firstIndex,
+		explore_prevIndex,
+		explore_currIndex,
+		explore_sampleValue,
+		explore_nextIndex,
+		explore_lastIndex,
+		explore_numSamplesPerPixel,
+		explore_zoomOut,
+		explore_zoomIn
 	);
 	explorer.ExploreMySound();
-	exploreWindow.explorer = explorer;
-	exploreWindow.Synth = Synth;
-	exploreWindow.focus();
-	
-	var timer = setInterval(function(){
-		if (exploreWindow.closed){
-			clearInterval(timer);			
-		}
-	}, 1000);
 }
 Synth.EXPLORER.prototype.ExploreMySound = function(){
 	var samples = this.samples;
@@ -156,7 +324,7 @@ Synth.EXPLORER.prototype.ExploreMySound = function(){
 	canvas.ctx.fillStyle = "#000000";
 	canvas.fillRect(0, 0, width, height, true);
 	//now start drawing the samples of the sound
-	canvas.ctx.fillStyle = "#00ffff";
+	canvas.ctx.fillStyle = "#00ff00";
 	//canvas.ctx.strokeStyle = "#00ffff";
 	//canvas.ctx.beginPath();
 	//canvas.ctx.moveTo(0, base_y);
@@ -221,8 +389,8 @@ Synth.EXPLORER.prototype.UpdateSampleIndexSection = function(){
 	//move the 'selection highlighter' div by absolute positioning and also set its width
 	var selection_x1 = ~~(this.curr_selection_start * this.scale_x);
 	var selection_x2 = ~~(this.curr_selection_end * this.scale_x);
-	this.selectionHighlighter.style.left = selection_x1;
-	this.selectionHighlighter.style.width = selection_x2 - selection_x1;
+	this.selectionHighlighter.style.left = selection_x1 + "px";
+	this.selectionHighlighter.style.width = selection_x2 - selection_x1 + "px";
 	
 	
 	//relocate the scroll position of the canvas container to the appropriate index value

@@ -27,6 +27,14 @@ h1 {
   overflow: auto;
   max-height: 400px;
 }
+#codeButton{
+  position: relative;
+  top: 3px;
+}
+#captureButton{
+  position: relative;
+  top: 3px;
+}
 
 button.primary {
   /* Can't use "text-align: start" due to IE. */
@@ -176,19 +184,27 @@ button.notext {
 }
 
 #visualization{
-	min-width: 416px;
-	max-width: 416px;
-	min-height: 416px;
-	max-height: 416px;
+	min-width: 460px;
+	max-width: 460px;
+	min-height: 480px;
+	max-height: 480px;
+	margin-left: -10px;
+	padding-right: 10px;
 	
 	overflow: auto;
+	overflow-y: hidden;
+}
+
+.explore_canvas{
+  font-size: 14px;
+  overflow-x: hidden;
 }
 
 /* canvas selector */
 
 #canvas_select_controls{
     display: inline-block;
-    width: 380px; /* 400 - 10 - 10 */
+    width: 420px; /* 440 - 10 - 10 */
     background: rgb(238,238,255);
     padding: 5px 10px;
     border-style: solid;
@@ -198,7 +214,7 @@ button.notext {
 
 #canvas_select{
     display: inline-block;
-    width: 400px;
+    width: 440px;
 	/*min-height: 200px;*/
     overflow-x: hidden;
     overflow-y: auto;
@@ -219,4 +235,54 @@ button.notext {
     margin: 5px 0px 5px 0px;
     margin-left: 10px;
     padding: 5px;
+}
+
+#uploadSound{
+	display:none;
+}
+
+b{
+  font-size: 14px;
+}
+/*EXPLORER CSS*/
+input[type=submit]{
+	font-weight: bold;
+	background-color: #aaaaaa;
+}
+input[type=submit]:disabled{
+	color: #bbbbbb;
+	background-color: #eeeeee;
+}
+.explore_inputs > *{
+	line-height: 24px;
+}
+.explore_inputs > p{
+	line-height: 28px;
+}
+
+.explore_canvasContainer{
+  width: 440px;
+  height:220px;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  position: relative;
+  display: inline-block;
+  border: 2px solid #e0e0e0;
+  margin-top: -15px;
+}
+.explore_selectionHighlighter{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 0px;
+  height: 220px;
+  z-index: 50;
+  background-color: #ffffff;
+  opacity: 0.5;
+}
+.explore_indexArrow{
+  position:absolute;
+  top:0px;
+  left:0px;
+  z-index: 99;
 }
