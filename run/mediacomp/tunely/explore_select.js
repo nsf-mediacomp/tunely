@@ -113,17 +113,15 @@ Synth.EXPLORER.Selector.updateSelectBoxCanvases = function(){
 	//TODO
     var boxes = document.getElementsByClassName("canvas_select_box");
     for(var i=0; i<boxes.length; ++i){
-		try{
+		//try{
 			if (boxes[i].style.display === "none") continue;
 			var ctx = boxes[i].getElementsByTagName("canvas")[0].getContext('2d');
 			var w = ctx.canvas.width;
 			var h = ctx.canvas.height;
-			ctx.drawImage(Drawr.getCtx(i).canvas, 0, 0, w, h);
-		}catch(e){}
-		
-		try{
+			
 			Synth.EXPLORER.Selector.explorers[i].explorer.ExploreMySound();
-		}catch(e){}
+			Synth.EXPLORER.Selector.explorers[i].explorer.bigCanvas.drawToCanvas(ctx, 0, 0, w, h);
+		//}catch(e){}
     }
 };
 

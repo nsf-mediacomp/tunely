@@ -17,6 +17,20 @@ function BigCanvas(canvas_container, width, height){
 	//using this so user can set the fillstyle and stuff and i'll just grab it from this main ctx and set it to all the individual canvases ctx's when doing fillrect on the bigcanvas and such
 	this.ctx = document.createElement("canvas").getContext("2d");
 }
+BigCanvas.prototype.drawToCanvas = function(ctx, x, y, width, height){
+	var yy = y;
+	var xx = x;
+	var h = height / this.canvases.length;
+	var w = width / this.canvases[0].length;
+	for (var i = 0; i < this.canvases.length; i++){
+		xx = x;
+		for (var j = 0; j < this.canvases[i].length; j++){
+			ctx.drawImage(this.canvases[i][j], xx, yy, w, h);
+			xx += w;
+		}
+		yy += h;
+	}
+}
 BigCanvas.prototype.setContainer = function(canvas_container){
 	this.container = canvas_container;
 	//this.container.innerHTML = "";
