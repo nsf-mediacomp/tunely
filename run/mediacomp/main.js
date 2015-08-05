@@ -25,7 +25,6 @@ Main.init = function(){
 	Synth.loadFileIntoVoiceBuffer("mediacomp/tunely/samples/piano.wav", "piano", function(){
 		Synth.RememberSoundsFromMemory();
 	});
-	Synth.Reset();
 	
 	var uploadSound = document.getElementById("uploadSound");
 	document.getElementById("uploadSoundButton").onclick = function(e){
@@ -222,7 +221,7 @@ Main.loadBlocks = function(defaultXml){
 
 
 Main.Reset = function(){
-	CanvasSelect.reset();
+	Synth.EXPLORER.Selector.reset();
 }
 	
 Main.runButton = true;
@@ -249,8 +248,6 @@ Main.RunCode = function(){
 	window.setTimeout(function(){
 		document.getElementById("spinner").style.visibility = "";
 		if (!BlockIt.IterateThroughBlocks(function(){
-			//Drawr.flushCache();
-			Synth.Reset();
 			Main.RunButton();
 		})){
 			document.getElementById("runButton").click();
@@ -259,8 +256,7 @@ Main.RunCode = function(){
 }
 Main.StopCode = function(){	
 	BlockIt.StopIteration();
-	//Drawr.flushCache();
-	Synth.Reset();
+	Synth.Stop();
 
 	document.getElementById('spinner').style.visibility = 'hidden';
 }

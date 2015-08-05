@@ -15,12 +15,14 @@ Synth.ResetSound = function(name){
 	}catch(e){}
 	
 	delete Synth.samples_collection[name]; //???
-	delete Synth.indexed_samples_collection[name]; //???
+	delete Synth.indexed_samples_collection[name]; //??
+	
 	Synth.sounds[name] = Synth.CloneSound(Synth.originalSounds[name]);
 	Synth.sounds[name].name = name;
+	Synth.GetSamples(Synth.sounds[name]);
 }
 
-Synth.Reset = function(){
+Synth.Stop = function(){
 	for (var key in Synth.playing_sounds){
 		if (Synth.playing_sounds.hasOwnProperty(key)){
 			var source = Synth.playing_sounds[key];
@@ -32,19 +34,6 @@ Synth.Reset = function(){
 		}
 	}
 	Synth.playing_sounds = {};
-	
-	Synth.samples_collection = {};
-	Synth.indexed_samples_collection = {};
-	Synth.sounds = {};
-	for (var name in Synth.originalSounds){
-		if (Synth.originalSounds.hasOwnProperty(name)){
-			Synth.sounds[name] = Synth.CloneSound(Synth.originalSounds[name]);
-			//xzibit
-			Synth.sounds[name].name = name; 
-		}
-	}
-	
-	Synth.curr_sound = Synth.sounds["piano"];
 }
 
 Synth.SetInstrument = function(sound){

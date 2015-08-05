@@ -1,0 +1,176 @@
+<xml>
+  <block type="mediacomp_run" id="685" x="62" y="18">
+    <statement name="DO">
+      <block type="synth_blockPlaySound" id="686" inline="true">
+        <value name="SOUND">
+          <block type="synth_defaultInstruments" id="687">
+            <field name="NAME">piano</field>
+          </block>
+        </value>
+        <next>
+          <block type="variables_set" id="688" inline="true">
+            <field name="VAR">sinewave</field>
+            <value name="VALUE">
+              <block type="synth_defaultInstruments" id="689">
+                <field name="NAME">piano</field>
+              </block>
+            </value>
+            <next>
+              <block type="variables_set" id="690" inline="true">
+                <field name="VAR">i</field>
+                <value name="VALUE">
+                  <block type="math_number" id="691">
+                    <field name="NUM">0</field>
+                  </block>
+                </value>
+                <next>
+                  <block type="variables_set" id="692" inline="true">
+                    <field name="VAR">sample rate</field>
+                    <value name="VALUE">
+                      <block type="math_number" id="693">
+                        <field name="NUM">772</field>
+                      </block>
+                    </value>
+                    <next>
+                      <block type="variables_set" id="694" inline="true">
+                        <field name="VAR">frequency</field>
+                        <value name="VALUE">
+                          <block type="math_number" id="695">
+                            <field name="NUM">440</field>
+                          </block>
+                        </value>
+                        <next>
+                          <block type="variables_set" id="696" inline="true">
+                            <field name="VAR">amplitude</field>
+                            <value name="VALUE">
+                              <block type="math_number" id="697">
+                                <field name="NUM">0.5</field>
+                              </block>
+                            </value>
+                            <next>
+                              <block type="controls_forEach" id="698" inline="false">
+                                <field name="VAR">sample</field>
+                                <field name="RUN_FAST">TRUE</field>
+                                <value name="LIST">
+                                  <block type="synth_getSamples" id="699" inline="false">
+                                    <value name="SOUND">
+                                      <block type="variables_get" id="700">
+                                        <field name="VAR">sinewave</field>
+                                      </block>
+                                    </value>
+                                  </block>
+                                </value>
+                                <statement name="DO">
+                                  <block type="synth_setSampleValue" id="701" inline="true">
+                                    <value name="SAMPLE">
+                                      <block type="variables_get" id="702">
+                                        <field name="VAR">sample</field>
+                                      </block>
+                                    </value>
+                                    <value name="VALUE">
+                                      <block type="math_arithmetic" id="703" inline="true">
+                                        <field name="OP">MULTIPLY</field>
+                                        <value name="A">
+                                          <block type="variables_get" id="704">
+                                            <field name="VAR">amplitude</field>
+                                          </block>
+                                        </value>
+                                        <value name="B">
+                                          <block type="math_trig" id="705" inline="false">
+                                            <field name="OP">SIN</field>
+                                            <value name="NUM">
+                                              <block type="math_arithmetic" id="706" inline="true">
+                                                <field name="OP">MULTIPLY</field>
+                                                <value name="A">
+                                                  <block type="math_arithmetic" id="707" inline="true">
+                                                    <field name="OP">MULTIPLY</field>
+                                                    <value name="A">
+                                                      <block type="math_arithmetic" id="708" inline="true">
+                                                        <field name="OP">MULTIPLY</field>
+                                                        <value name="A">
+                                                          <block type="math_number" id="709">
+                                                            <field name="NUM">2</field>
+                                                          </block>
+                                                        </value>
+                                                        <value name="B">
+                                                          <block type="math_constant" id="710">
+                                                            <field name="CONSTANT">PI</field>
+                                                          </block>
+                                                        </value>
+                                                      </block>
+                                                    </value>
+                                                    <value name="B">
+                                                      <block type="math_arithmetic" id="711" inline="true">
+                                                        <field name="OP">DIVIDE</field>
+                                                        <value name="A">
+                                                          <block type="variables_get" id="712">
+                                                            <field name="VAR">frequency</field>
+                                                          </block>
+                                                        </value>
+                                                        <value name="B">
+                                                          <block type="variables_get" id="713">
+                                                            <field name="VAR">sample rate</field>
+                                                          </block>
+                                                        </value>
+                                                      </block>
+                                                    </value>
+                                                  </block>
+                                                </value>
+                                                <value name="B">
+                                                  <block type="variables_get" id="714">
+                                                    <field name="VAR">i</field>
+                                                  </block>
+                                                </value>
+                                              </block>
+                                            </value>
+                                          </block>
+                                        </value>
+                                      </block>
+                                    </value>
+                                    <next>
+                                      <block type="variables_set" id="715" inline="true">
+                                        <field name="VAR">i</field>
+                                        <value name="VALUE">
+                                          <block type="math_arithmetic" id="716" inline="true">
+                                            <field name="OP">ADD</field>
+                                            <value name="A">
+                                              <block type="variables_get" id="717">
+                                                <field name="VAR">i</field>
+                                              </block>
+                                            </value>
+                                            <value name="B">
+                                              <block type="math_number" id="718">
+                                                <field name="NUM">1</field>
+                                              </block>
+                                            </value>
+                                          </block>
+                                        </value>
+                                      </block>
+                                    </next>
+                                  </block>
+                                </statement>
+                                <next>
+                                  <block type="synth_blockPlaySound" id="719" inline="true">
+                                    <value name="SOUND">
+                                      <block type="variables_get" id="720">
+                                        <field name="VAR">sinewave</field>
+                                      </block>
+                                    </value>
+                                  </block>
+                                </next>
+                              </block>
+                            </next>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+</xml>

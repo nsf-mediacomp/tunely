@@ -27,7 +27,7 @@ Synth.EXPLORER = function(){
 	this.zoomInButton = null;
 	this.zoomOutButton = null;
 
-	this.scale_x = 0.25;
+	this.scale_x = 0.0625;
 	this.scale_y = 2.0;
 };
 Synth.EXPLORER.counter = 0;
@@ -316,6 +316,8 @@ Synth.EXPLORER.CreateSoundExploration = function(sound){
 	Synth.EXPLORER.CreateSelector(explorer);
 }
 Synth.EXPLORER.prototype.ExploreMySound = function(){
+	this.sound = Synth.GetSound(this.sound.name);
+	this.samples = Synth.GetSamples(this.sound);
 	var samples = this.samples;
 	
 	var canvas = this.bigCanvas;

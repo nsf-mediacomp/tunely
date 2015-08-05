@@ -54,9 +54,10 @@ Main.openProject = function(){
 		[Blockly.Msg.EXAMPLE_LINES, "simple_lines"],
 		[Blockly.Msg.EXAMPLE_MANDELBROT, "mandelbrot"],*/
 		
-		[Blockly.Msg.EXAMPLE_INCREASE_VOLUME, "increase_volume_forLoop"],
-		[Blockly.Msg.EXAMPLE_DECREASE_VOLUME, "decrease_volume_whileLoop"],
-		[Blockly.Msg.EXAMPLE_DOUBLE_PITCH, "double_pitch"],
+		[Blockly.Msg.EXAMPLE_INCREASE_VOLUME, "increase_volume_forLoop.xml"],
+		[Blockly.Msg.EXAMPLE_DECREASE_VOLUME, "decrease_volume_whileLoop.xml"],
+		[Blockly.Msg.EXAMPLE_DOUBLE_PITCH, "double_pitch.xml"],
+		[Blockly.Msg.EXAMPLE_SINE_WAVE, "SineWave.xml"],
 	];
 	for (var i = 0; i < options_array.length; i++){
 		var option = $(document.createElement("option"));
@@ -75,7 +76,7 @@ Main.openProject = function(){
 			Main.loaded_sounds = [];
 			Main.loaded_selected = CanvasSelect.selected;
 		}else{
-			$.get("./demo/"+value+".xml", function(data){
+			$.get("./demo/"+value, function(data){
 				data = xmlToString(data);
 				Main.example_projects[value] = data;
 				xml = data;
@@ -150,7 +151,7 @@ Main.saveProject = function(){
 	message.append(textarea);
 	
 	Dialog.Confirm('', function(e){
-		var obj = {xml: Main.saved_xml, /*images: CanvasSelect.uploaded_images,*/ selected: CanvasSelect.selected, sounds: Synth.uploaded_sounds};
+		var obj = {xml: Main.saved_xml, /*images: CanvasSelect.uploaded_images,*/ selected: Synth.EXPLORER.Selector.selected, sounds: Synth.uploaded_sounds};
 		var json = JSON.stringify(obj);
 		
 		createDownloadLink("#export", json, Main.json_filename);

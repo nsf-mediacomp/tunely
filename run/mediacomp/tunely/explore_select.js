@@ -120,6 +120,10 @@ Synth.EXPLORER.Selector.updateSelectBoxCanvases = function(){
 			var h = ctx.canvas.height;
 			ctx.drawImage(Drawr.getCtx(i).canvas, 0, 0, w, h);
 		}catch(e){}
+		
+		try{
+			Synth.EXPLORER.Selector.explorers[i].explorer.ExploreMySound();
+		}catch(e){}
     }
 };
 

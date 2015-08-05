@@ -10,3 +10,5 @@ Blockly.Msg.SAVE_PROJECT = "Save Project";
 Blockly.Msg.SAVE_PROJECT_DOWNLOAD_BLOCKS = "Save Project / Download Blocks";
 Blockly.Msg.FILENAME = "Filename: ";
 Blockly.Msg.PROJECT_XML = "TunelyProject.xml";
+
+Blockly.Msg.EXAMPLE_SINE_WAVE = "Sine wave";
