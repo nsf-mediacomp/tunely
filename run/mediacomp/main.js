@@ -1,6 +1,3 @@
-Drawr.imagePath = "mediacomp/images/"
-Drawr.image_paths = [Drawr.imagePath+"redeye.png"];
-
 function Main(){}
 Main.DOUBLE_CLICK_TIME = 100;
 
@@ -20,13 +17,14 @@ Main.init = function(){
 	//////////////////////////////////////////////////////////
 	//SET UP TUNELY
 	//////////////////////////////////////////////////////////
+	Synth.EXPLORER.Selector.init();
 	
 	//load the sound samples
 	var default_sounds = ["piano"];
 	Synth.default_sound_names = default_sounds;
-	Synth.loadFileIntoVoiceBuffer("mediacomp/tunely/samples/piano.wav", "piano", 
-		function(){Synth.EXPLORER.OpenExploreWindow(Synth.GetSound('piano'))}
-	);
+	Synth.loadFileIntoVoiceBuffer("mediacomp/tunely/samples/piano.wav", "piano", function(){
+		Synth.RememberSoundsFromMemory();
+	});
 	Synth.Reset();
 	
 	var uploadSound = document.getElementById("uploadSound");
@@ -113,8 +111,7 @@ Main.init = function(){
 	
 	//LOAD UP EVERYTHING	
 	Main.loadWorkspaceFromLocalStorage();
-	//Drawr.RememberImagesFromMemory();
-	Synth.RememberSoundsFromMemory();
+
 	setInterval(Main.saveWorkspaceToLocalStorage, 10000);
 	window.addEventListener('beforeunload', function(e){
 		Main.saveWorkspaceToLocalStorage();
@@ -151,15 +148,15 @@ Main.setupBlockly = function(){
 	};
 	window.addEventListener('scroll', function(){
 		onresize();
-        CanvasSelect.onresize();
+        Synth.EXPLORER.Selector.onresize();
 		Blockly.fireUiEvent(window, 'resize');
 	});
 	window.addEventListener('resize', function(){
         onresize();
-        CanvasSelect.onresize();
+        Synth.EXPLORER.Selector.onresize();
     });
 	onresize();
-    CanvasSelect.onresize();
+    Synth.EXPLORER.Selector.onresize();
 	
 	//Inject Blockly into the webpage
 	var toolbox = document.getElementById('toolbox');
@@ -174,7 +171,7 @@ Main.saveWorkspaceToLocalStorage = function(){
 	xml = Blockly.Xml.domToPrettyText(xml);
 	localStorage.setItem("xml", xml);
 	
-	localStorage.setItem("selected", CanvasSelect.selected);
+	localStorage.setItem("selected", Synth.EXPLORER.Selector.selected);
 }
 
 Main.loadWorkspaceFromLocalStorage = function(){

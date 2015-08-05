@@ -1,5 +1,24 @@
 //built on top of wad.min.js (https://github.com/rserota/wad)
 Synth.playing_sounds = {};
+Synth.samples_collection = {};
+Synth.indexed_samples_collection = {};
+Synth.sounds = {};
+
+Synth.ResetSound = function(name){
+	try{
+		var source = Synth.playing_sounds[name];
+		if (!source.start)
+			source.noteOff(0);
+		else
+			source.stop(0);
+		delete Synth.playing_sounds[name];
+	}catch(e){}
+	
+	delete Synth.samples_collection[name]; //???
+	delete Synth.indexed_samples_collection[name]; //???
+	Synth.sounds[name] = Synth.CloneSound(Synth.originalSounds[name]);
+	Synth.sounds[name].name = name;
+}
 
 Synth.Reset = function(){
 	for (var key in Synth.playing_sounds){
@@ -17,7 +36,6 @@ Synth.Reset = function(){
 	Synth.samples_collection = {};
 	Synth.indexed_samples_collection = {};
 	Synth.sounds = {};
-	Synth.name_counter = 1;
 	for (var name in Synth.originalSounds){
 		if (Synth.originalSounds.hasOwnProperty(name)){
 			Synth.sounds[name] = Synth.CloneSound(Synth.originalSounds[name]);
@@ -27,12 +45,7 @@ Synth.Reset = function(){
 	}
 	
 	Synth.curr_sound = Synth.sounds["piano"];
-	Synth.curr_volume = 1.0;
-	Synth.command_queue = [];
-	if (Synth.execute_id !== undefined && Synth.execute_id !== null)
-		window.clearTimeout(Synth.execute_id);
 }
-Synth.Reset();
 
 Synth.SetInstrument = function(sound){
 	Synth.curr_sound = sound;

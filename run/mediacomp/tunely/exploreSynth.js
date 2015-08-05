@@ -95,14 +95,17 @@ Synth.EXPLORER.prototype.init = function(sound, playSoundButton, playBeforeButto
 	this.UpdateSampleIndexSection();
 }
 
-Synth.EXPLORER.OpenExploreWindow = function(sound){
+Synth.EXPLORER.CreateSoundExploration = function(sound){
 	if (sound === undefined || sound === null) return;
 	
+	var id = Synth.EXPLORER.Selector.canvas_id;
 	/*var exploreWindow = window.open("", ++Synth.EXPLORER.counter, "width=850, height=600");
 	exploreWindow.document.write(Synth.EXPLORER.container.innerHTML);
 	exploreWindow.document.title = "Explore: " + sound.name;*/
-	var id = 0;
-	var exploreCanvas = document.getElementById("canvas_"+id);
+	//<div id="canvas_0" class="explore_canvas"></div>
+	var exploreCanvas = document.createElement("div");
+	exploreCanvas.id = "canvas_" + id;
+	exploreCanvas.className = "explore_canvas";
 	exploreCanvas.className = "explorer_canvas_container";
 	exploreCanvas.innerHTML = "";
 	
@@ -281,6 +284,8 @@ Synth.EXPLORER.OpenExploreWindow = function(sound){
 	exploreCanvas.style.backgroundColor = "#C4E1B7";
 	exploreCanvas.style.padding = "15px";
 	
+	document.getElementById("visualization").appendChild(exploreCanvas);
+	
 	
 	//NOW SET UP EVENT HANDLERS FOR THE NEW SYNTH EXPLORER
 	var explorer = new Synth.EXPLORER();
@@ -308,6 +313,7 @@ Synth.EXPLORER.OpenExploreWindow = function(sound){
 		explore_zoomIn
 	);
 	explorer.ExploreMySound();
+	Synth.EXPLORER.CreateSelector(explorer);
 }
 Synth.EXPLORER.prototype.ExploreMySound = function(){
 	var samples = this.samples;
@@ -476,6 +482,7 @@ Synth.EXPLORER.prototype.PlayBefore = function(){
 	
 	this.UpdatePlayButtons(false);
 }
+//TODO:: why not working??
 Synth.EXPLORER.prototype.PlayAfter = function(){
 	var sound = Synth.CloneSound(this.sound);
 	var samples = Synth.GetSamples(sound);

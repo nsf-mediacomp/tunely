@@ -2,12 +2,13 @@ function Synth(){}
 
 Synth.appstart_time = new Date().getTime();
 
+Synth.default_sounds_count = 0;
+Synth.defaultSounds = {};
 Synth.originalSounds = {};
 Synth.sounds = {};
 
 Synth.uploaded_sounds = [];
 
-Synth.name_counter = 1;
 Synth.GetSound = function(sound_name){
 	var buffer = Synth.sounds[sound_name];
 	if (buffer === undefined || buffer === null) return;
@@ -22,6 +23,8 @@ Synth.UploadSound = function(e){
 		var name = file.name;
 		var reader = new FileReader();
 		reader.onload = (function(ev){
+			console.log(name);
+			console.log(ev.target.result);
 			Synth.addToOriginalSounds(ev.target.result, name,
 				function(sound){
 					Synth.StoreSoundMemory(name, sound);
@@ -124,15 +127,14 @@ Synth.loadFileIntoVoiceBuffer = function(url, name, callback){
 	request.open('GET', url, true);
 	request.responseType = 'arraybuffer';
 	request.onload = function(){
-		Synth.addToOriginalSounds(request.response, name, callback);
+		Synth.default_sounds_count++;
+		Synth.addToOriginalSounds(request.response, name, function(buffer){
+			Synth.defaultSounds[name] = Synth.originalSounds[name];
+			if (callback !== undefined)
+				callback(buffer);
+		});
 	}
 	request.send();
-}
-
-Synth.clearUploadedSounds = function(){
-	var piano = Synth.sounds.piano;
-	Synth.sounds = {};
-	Synth.sounds.piano = piano;
 }
 
 Synth.StoreSoundMemory = function(name, sound){
@@ -190,8 +192,12 @@ Synth.LoadSound = function(obj){
 		channel.set(mem_channel);
 	}
 	
+	sound.name = name;
 	Synth.originalSounds[name] = sound;
 	Synth.sounds[name] = Synth.CloneSound(sound);
+	
+	//OPEN UP THE EXPLORER WINDOW (should add to canvas select as well)
+	Synth.EXPLORER.CreateSoundExploration(sound);
 	
 	//refresh blocks
 	BlockIt.RefreshWorkspace();
@@ -202,6 +208,11 @@ Synth.addToOriginalSounds = function(audiobuffer, name, callback){
 		Synth.distributeSampleValuesEvenlyAcrossChannels(buffer);
 		Synth.originalSounds[name] = buffer;
 		Synth.sounds[name] = Synth.CloneSound(buffer);
+		Synth.sounds[name].name = name;
+		
+		//OPEN UP THE EXPLORER WINDOW (should add to canvas select as well)
+		Synth.EXPLORER.CreateSoundExploration(Synth.sounds[name]);
+		
 		if (callback !== undefined)
 			callback(buffer);
 	}, function(err){

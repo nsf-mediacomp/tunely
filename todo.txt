@@ -1,3 +1,7 @@
-0. Explore isn't working!!!
+0. EXPLORATION PLAY AFTER NOT WORKING (sounds like play all)
+    -zoom in exploration should still focus on arrow
+    -make them be updated real time based on sample manipulation??
 1. Add Synthesizing (Sine wave? midi)?
 2. update landing page to be tunely...
+3. should have error messages for incorrectly uploading sounds (or images as sounds)
+4. needs to have a clone sound block (also clone canvas for pixly)

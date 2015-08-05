@@ -44,22 +44,16 @@
 	<script src="mediacomp/tunely/lib/pitchshift_lib/pitchshiftBundle.js"></script>
   <script src="mediacomp/tunely/Synth.js"></script>
   <script src="mediacomp/tunely/exploreSynth.js"></script>
-	<!--tunely blockly block definitions/javascript generators-->
-	<script src="mediacomp/tunely/audio_blocks.js"></script>
+  <script src="mediacomp/tunely/explore_select.js"></script>
   
   <!--Custom block definitions-->
-  <script type="text/javascript" src="mediacomp/mediacomp_blocks.js"></script>
-  <script type="text/javascript" src="mediacomp/pixel_blocks.js"></script>
+  <script src="mediacomp/mediacomp_blocks.js"></script>
+  	<!--tunely blockly block definitions/javascript generators-->
+	<script src="mediacomp/tunely/audio_blocks.js"></script>
   
-  <script type="text/javascript" src="mediacomp/utils.js"></script>
-  
-  <!--okay actually inject blockly and initialize the pixel mediacomp-->
-  <script type="text/javascript" src="mediacomp/drawr/Drawr.js"></script>
-  <script type="text/javascript" src="mediacomp/drawr/canvas_select.js"></script>
-  <script type="text/javascript" src="mediacomp/drawr/canvas_popout.js"></script>
-  
-  <script type="text/javascript" src="mediacomp/main.js"></script>
-  <script type="text/javascript" src="mediacomp/project_management.js"></script>  
+  <script src="mediacomp/utils.js"></script>
+  <script src="mediacomp/main.js"></script>
+  <script src="mediacomp/project_management.js"></script>  
  
   <link rel="stylesheet" type="text/css" href="mediacomp/css/style.css">
 </head>
@@ -76,8 +70,7 @@
 	</button>
 	</td></tr></table>
     
-    <div id="visualization" title="click to pop out">
-        <div id="canvas_0" class="explore_canvas"></div>
+    <div id="visualization">
     </div>
     
     <table>
