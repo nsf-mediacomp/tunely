@@ -465,7 +465,7 @@ Synth.EXPLORER.prototype.PlaySound = function(){
 }
 Synth.EXPLORER.prototype.PlayBefore = function(){
 	var sound = Synth.CloneSound(this.sound);
-	var samples = Synth.GetSamples(sound);
+	var samples = Synth.GetSamples(sound, true);
 	var sample_length = Array.prototype.slice.call(samples).length;
 	var before_index = this.curr_index_value;
 	if (this.curr_selection_start < this.curr_selection_end)
@@ -484,23 +484,25 @@ Synth.EXPLORER.prototype.PlayBefore = function(){
 	
 	this.UpdatePlayButtons(false);
 }
-//TODO:: why not working??
+//TODO:: why not working after more than one play??
 Synth.EXPLORER.prototype.PlayAfter = function(){
 	var sound = Synth.CloneSound(this.sound);
-	var samples = Synth.GetSamples(sound);
+	var samples = Synth.GetSamples(sound, true);
 	var sample_length = Array.prototype.slice.call(samples).length;
 	var after_index = this.curr_index_value + 1;
 	if (this.curr_selection_start < this.curr_selection_end)
 		after_index = this.curr_selection_end + 1;
+		
+	console.log(after_index);
 	//offset the samples over to the correct position
 	for (var i = after_index; i < sample_length; i++){
 		samples[i-after_index].setValue(samples[i].getValue());
 	}
 	//erase the values of the samples we dont wanna play
-	for (var i = sample_length - after_index; i < sample_length; i++){
+	for (var i = after_index; i < sample_length; i++){
 		samples[i].setValue(0.0);
 	}
-	
+
 	this.play_sound_source = Synth.PlaySound(sound);
 	var duration = (this.play_sound_source.buffer.duration / sample_length) * (sample_length - after_index);
 	this.play_sound_timeout = window.setTimeout(
@@ -528,7 +530,7 @@ Synth.EXPLORER.prototype.StopSound = function(){
 }
 Synth.EXPLORER.prototype.PlaySelection = function(){
 	var sound = Synth.CloneSound(this.sound);
-	var samples = Synth.GetSamples(sound);
+	var samples = Synth.GetSamples(sound, true);
 	var sample_length = Array.prototype.slice.call(samples).length;
 	//offset the samples over to the correct position
 	for (var i = this.curr_selection_start; i < this.curr_selection_end; i++){

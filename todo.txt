@@ -1,5 +1,4 @@
-0. EXPLORATION PLAY AFTER NOT WORKING (sounds like play all)
-    -zoom in exploration should still focus on arrow
+0. zoom in exploration should still focus on arrow
 2. update landing page to be tunely...
 3. should have error messages for incorrectly uploading sounds (or images as sounds)
 4. needs to have a clone sound block (also clone canvas for pixly)

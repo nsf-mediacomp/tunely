@@ -41,10 +41,11 @@ Synth.SetInstrument = function(sound){
 }
 
 Synth.samples_collection = {};
-Synth.GetSamples = function(sound){	
+Synth.GetSamples = function(sound, ignore_cache){	
+	if (ignore_cache === undefined) ignore_cache = false;
 	if (sound === null || sound === undefined) return null;
 	var name = sound.name;
-	if (Synth.samples_collection[name] !== undefined)
+	if (Synth.samples_collection[name] !== undefined && !ignore_cache)
 		return Synth.samples_collection[name].samples;
 	
 	var raw_samples = sound.getChannelData(0);
@@ -58,6 +59,7 @@ Synth.GetSamples = function(sound){
 	for (var j = 0; j < raw_samples.length; j++){					
 		//and additionally add it to the 'smart' samples array
 		samples.push({
+			ref: samples,
 			sound_name: name,
 			index: j,
 			value: raw_samples[j],
@@ -65,17 +67,21 @@ Synth.GetSamples = function(sound){
 			setValue: function(value){
 				this.value = value;
 				//now actually set the raw sample value so that it's updated in the audio buffer!!
-				var sample_container = Synth.samples_collection[this.sound_name];
-				sample_container.raw_samples[this.index] = this.value;
+				this.ref.raw_samples[this.index] = this.value;
 				//set it the same for the rest of the channels' samples!!! (if there are any)
-				for (var i = 0; i < sample_container.other_channel_raw_samples.length; i++){
-					sample_container.other_channel_raw_samples[i][this.index] = this.value;
+				for (var i = 0; i < this.ref.other_channel_raw_samples.length; i++){
+					this.ref.other_channel_raw_samples[i][this.index] = this.value;
 				}
 			},
 		});
 	}
 	
-	Synth.samples_collection[name] = { raw_samples: raw_samples, samples: samples, other_channel_raw_samples: other_channel_raw_samples };
+	if (!ignore_cache)
+		Synth.samples_collection[name] = { raw_samples: raw_samples, samples: samples, other_channel_raw_samples: other_channel_raw_samples };
+	else{
+		samples.raw_samples = raw_samples;
+		samples.other_channel_raw_samples = other_channel_raw_samples;
+	}
 	return samples;
 }
 Synth.indexed_samples_collection = {};

@@ -1,0 +1,214 @@
+<xml>
+  <block type="mediacomp_run" id="921" x="52" y="13">
+    <statement name="DO">
+      <block type="variables_set" id="922" inline="true">
+        <field name="VAR">samples</field>
+        <value name="VALUE">
+          <block type="synth_getSamples" id="923" inline="false">
+            <value name="SOUND">
+              <block type="synth_defaultInstruments" id="924">
+                <field name="NAME">OOT_LensOfTruth_On.wav</field>
+              </block>
+            </value>
+          </block>
+        </value>
+        <next>
+          <block type="synth_blockPlaySound" id="925" inline="true">
+            <value name="SOUND">
+              <block type="synth_defaultInstruments" id="926">
+                <field name="NAME">OOT_LensOfTruth_On.wav</field>
+              </block>
+            </value>
+            <next>
+              <block type="variables_set" id="927" inline="true">
+                <field name="VAR">index</field>
+                <value name="VALUE">
+                  <block type="math_number" id="928">
+                    <field name="NUM">29056</field>
+                  </block>
+                </value>
+                <next>
+                  <block type="controls_for" id="929" inline="true">
+                    <field name="VAR">i</field>
+                    <field name="RUN_FAST">TRUE</field>
+                    <value name="FROM">
+                      <block type="variables_get" id="930">
+                        <field name="VAR">index</field>
+                      </block>
+                    </value>
+                    <value name="TO">
+                      <block type="lists_length" id="931" inline="false">
+                        <value name="VALUE">
+                          <block type="variables_get" id="932">
+                            <field name="VAR">samples</field>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                    <value name="BY">
+                      <block type="math_number" id="933">
+                        <field name="NUM">1</field>
+                      </block>
+                    </value>
+                    <statement name="DO">
+                      <block type="variables_set" id="934" inline="true">
+                        <field name="VAR">sample</field>
+                        <value name="VALUE">
+                          <block type="lists_getIndex" id="935" inline="true">
+                            <mutation statement="false" at="true"></mutation>
+                            <field name="MODE">GET</field>
+                            <field name="WHERE">FROM_START</field>
+                            <value name="VALUE">
+                              <block type="variables_get" id="936">
+                                <field name="VAR">samples</field>
+                              </block>
+                            </value>
+                            <value name="AT">
+                              <block type="variables_get" id="937">
+                                <field name="VAR">i</field>
+                              </block>
+                            </value>
+                          </block>
+                        </value>
+                        <next>
+                          <block type="variables_set" id="938" inline="true">
+                            <field name="VAR">sample2</field>
+                            <value name="VALUE">
+                              <block type="lists_getIndex" id="939" inline="true">
+                                <mutation statement="false" at="true"></mutation>
+                                <field name="MODE">GET</field>
+                                <field name="WHERE">FROM_START</field>
+                                <value name="VALUE">
+                                  <block type="variables_get" id="940">
+                                    <field name="VAR">samples</field>
+                                  </block>
+                                </value>
+                                <value name="AT">
+                                  <block type="math_arithmetic" id="941" inline="true">
+                                    <field name="OP">ADD</field>
+                                    <value name="A">
+                                      <block type="math_arithmetic" id="942" inline="true">
+                                        <field name="OP">MINUS</field>
+                                        <value name="A">
+                                          <block type="variables_get" id="943">
+                                            <field name="VAR">i</field>
+                                          </block>
+                                        </value>
+                                        <value name="B">
+                                          <block type="variables_get" id="944">
+                                            <field name="VAR">index</field>
+                                          </block>
+                                        </value>
+                                      </block>
+                                    </value>
+                                    <value name="B">
+                                      <block type="math_number" id="945">
+                                        <field name="NUM">1</field>
+                                      </block>
+                                    </value>
+                                  </block>
+                                </value>
+                              </block>
+                            </value>
+                            <next>
+                              <block type="synth_setSampleValue" id="946" inline="true">
+                                <value name="SAMPLE">
+                                  <block type="variables_get" id="947">
+                                    <field name="VAR">sample2</field>
+                                  </block>
+                                </value>
+                                <value name="VALUE">
+                                  <block type="synth_getSampleValue" id="948" inline="false">
+                                    <value name="SAMPLE">
+                                      <block type="variables_get" id="949">
+                                        <field name="VAR">sample</field>
+                                      </block>
+                                    </value>
+                                  </block>
+                                </value>
+                              </block>
+                            </next>
+                          </block>
+                        </next>
+                      </block>
+                    </statement>
+                    <next>
+                      <block type="controls_for" id="950" inline="true">
+                        <field name="VAR">j</field>
+                        <field name="RUN_FAST">TRUE</field>
+                        <value name="FROM">
+                          <block type="variables_get" id="951">
+                            <field name="VAR">index</field>
+                          </block>
+                        </value>
+                        <value name="TO">
+                          <block type="lists_length" id="952" inline="false">
+                            <value name="VALUE">
+                              <block type="variables_get" id="953">
+                                <field name="VAR">samples</field>
+                              </block>
+                            </value>
+                          </block>
+                        </value>
+                        <value name="BY">
+                          <block type="math_number" id="954">
+                            <field name="NUM">1</field>
+                          </block>
+                        </value>
+                        <statement name="DO">
+                          <block type="variables_set" id="955" inline="true">
+                            <field name="VAR">sample</field>
+                            <value name="VALUE">
+                              <block type="lists_getIndex" id="956" inline="true">
+                                <mutation statement="false" at="true"></mutation>
+                                <field name="MODE">GET</field>
+                                <field name="WHERE">FROM_START</field>
+                                <value name="VALUE">
+                                  <block type="variables_get" id="957">
+                                    <field name="VAR">samples</field>
+                                  </block>
+                                </value>
+                                <value name="AT">
+                                  <block type="variables_get" id="958">
+                                    <field name="VAR">j</field>
+                                  </block>
+                                </value>
+                              </block>
+                            </value>
+                            <next>
+                              <block type="synth_setSampleValue" id="959" inline="true">
+                                <value name="SAMPLE">
+                                  <block type="variables_get" id="960">
+                                    <field name="VAR">sample</field>
+                                  </block>
+                                </value>
+                                <value name="VALUE">
+                                  <block type="math_number" id="961">
+                                    <field name="NUM">0</field>
+                                  </block>
+                                </value>
+                              </block>
+                            </next>
+                          </block>
+                        </statement>
+                        <next>
+                          <block type="synth_blockPlaySound" id="962" inline="true">
+                            <value name="SOUND">
+                              <block type="synth_defaultInstruments" id="963">
+                                <field name="NAME">OOT_LensOfTruth_On.wav</field>
+                              </block>
+                            </value>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+</xml>

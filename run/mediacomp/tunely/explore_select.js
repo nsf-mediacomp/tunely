@@ -4,7 +4,7 @@ Synth.EXPLORER.Selector.init = function(){
 	Synth.EXPLORER.Selector.canvas_id = 0;
 	Synth.EXPLORER.Selector.selected = 0;
 	
-	setInterval(Synth.EXPLORER.Selector.updateSelectBoxCanvases, 1000);
+	setInterval(Synth.EXPLORER.Selector.updateSelectBoxCanvases, 10000);
 };
 Synth.EXPLORER.CreateSelector = function(explorer){
 	var id = Synth.EXPLORER.Selector.canvas_id;
