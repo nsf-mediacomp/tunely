@@ -3,8 +3,6 @@ Synth.EXPLORER.Selector.init = function(){
 	Synth.EXPLORER.Selector.explorers = [];
 	Synth.EXPLORER.Selector.canvas_id = 0;
 	Synth.EXPLORER.Selector.selected = 0;
-	
-	setInterval(Synth.EXPLORER.Selector.updateSelectBoxCanvases, 10000);
 };
 Synth.EXPLORER.CreateSelector = function(explorer){
 	var id = Synth.EXPLORER.Selector.canvas_id;
@@ -14,6 +12,8 @@ Synth.EXPLORER.CreateSelector = function(explorer){
 	
 	Synth.EXPLORER.Selector.addSelectBox(id, explorer.sound.name);
 	Synth.EXPLORER.Selector.select(id);
+	
+	Synth.EXPLORER.Selector.updateSelectBoxCanvas(id);
 	
 	BlockIt.InitWorkspace();
 	BlockIt.RefreshWorkspace();
@@ -109,19 +109,34 @@ Synth.EXPLORER.Selector.getCanvas = function(id){
     return $("#canvas_" + id)[0];
 };
 
+Synth.EXPLORER.Selector.updateSelectBoxCanvas = function(id){
+	try{
+	    var boxes = document.getElementsByClassName("canvas_select_box");
+		var ctx = boxes[id].getElementsByTagName("canvas")[0].getContext('2d');
+		var w = ctx.canvas.width;
+		var h = ctx.canvas.height;
+		
+		Synth.EXPLORER.Selector.explorers[id].explorer.bigCanvas.drawToCanvas(ctx, 0, 0, w, h);
+	}catch(e){
+		//console.log(e);
+		window.setTimeout(function(){
+			Synth.EXPLORER.Selector.updateSelectBoxCanvas(id);
+		}, 100);
+	}
+};
+Synth.EXPLORER.Selector.exploreSounds = function(){
+	console.log(Synth.EXPLORER.Selector.explorers.length);
+	for (var i = 0; i < Synth.EXPLORER.Selector.explorers.length; i++){
+		Synth.EXPLORER.Selector.explorers[i].explorer.ExploreMySound();
+	}
+}
 Synth.EXPLORER.Selector.updateSelectBoxCanvases = function(){
 	//TODO
     var boxes = document.getElementsByClassName("canvas_select_box");
     for(var i=0; i<boxes.length; ++i){
-		//try{
-			if (boxes[i].style.display === "none") continue;
-			var ctx = boxes[i].getElementsByTagName("canvas")[0].getContext('2d');
-			var w = ctx.canvas.width;
-			var h = ctx.canvas.height;
-			
-			Synth.EXPLORER.Selector.explorers[i].explorer.ExploreMySound();
-			Synth.EXPLORER.Selector.explorers[i].explorer.bigCanvas.drawToCanvas(ctx, 0, 0, w, h);
-		//}catch(e){}
+		var ctx = boxes[i].getElementsByTagName("canvas")[0].getContext('2d');
+		var w = ctx.canvas.width;
+		var h = ctx.canvas.height;
     }
 };
 

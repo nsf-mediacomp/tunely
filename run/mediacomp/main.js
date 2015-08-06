@@ -225,6 +225,7 @@ Main.Reset = function(){
 }
 	
 Main.runButton = true;
+Main.update_display_interval_id;
 Main.RunButton = function(){
 	// Prevent double-clicks or double-taps.
 	$("#runButton")[0].disabled = true;
@@ -234,6 +235,12 @@ Main.RunButton = function(){
 		$("#runButtonText")[0].innerHTML = "Stop Program";
 		$("#runButtonImg")[0].style.backgroundPosition = "-63px 0px";
 		Main.RunCode();
+		
+		Main.update_display_interval_id = setInterval(function(){
+			Synth.EXPLORER.Selector.exploreSounds();
+			clearInterval(Main.update_display_interval_id);
+			Main.update_display_interval_id = setInterval(Synth.EXPLORER.Selector.exploreSounds, 10000);
+		}, 1000);
 	}else{
 		$("#runButtonText")[0].innerHTML = "Run Program";
 		$("#runButtonImg")[0].style.backgroundPosition = "-63px -21px";
@@ -248,15 +255,20 @@ Main.RunCode = function(){
 	window.setTimeout(function(){
 		document.getElementById("spinner").style.visibility = "";
 		if (!BlockIt.IterateThroughBlocks(function(){
-			Main.RunButton();
+			$("#runButtonText")[0].innerHTML = "Run Program";
+			$("#runButtonImg")[0].style.backgroundPosition = "-63px -21px";
+			document.getElementById('spinner').style.visibility = 'hidden';
+			clearInterval(Main.update_display_interval_id);
+			Main.runButton = !Main.runButton;
 		})){
-			document.getElementById("runButton").click();
+			Main.RunButton();
 		}
 	}, 0);
 }
 Main.StopCode = function(){	
 	BlockIt.StopIteration();
 	Synth.Stop();
+	clearInterval(Main.update_display_interval_id);
 
 	document.getElementById('spinner').style.visibility = 'hidden';
 }

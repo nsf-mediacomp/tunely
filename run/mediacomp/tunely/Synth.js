@@ -45,11 +45,13 @@ Synth.GetSamples = function(sound, ignore_cache){
 	if (ignore_cache === undefined) ignore_cache = false;
 	if (sound === null || sound === undefined) return null;
 	var name = sound.name;
-	if (Synth.samples_collection[name] !== undefined && !ignore_cache)
+	if (Synth.samples_collection[name] !== undefined && !ignore_cache){
 		return Synth.samples_collection[name].samples;
+	}
 	
 	var raw_samples = sound.getChannelData(0);
 	var samples = [];
+	var samples_container = {};
 	
 	//now set the raw_samples of channel 1 to the combination of all channels
 	var other_channel_raw_samples = [];
@@ -59,7 +61,7 @@ Synth.GetSamples = function(sound, ignore_cache){
 	for (var j = 0; j < raw_samples.length; j++){					
 		//and additionally add it to the 'smart' samples array
 		samples.push({
-			ref: samples,
+			ref: samples_container,
 			sound_name: name,
 			index: j,
 			value: raw_samples[j],
@@ -68,6 +70,16 @@ Synth.GetSamples = function(sound, ignore_cache){
 				this.value = value;
 				//now actually set the raw sample value so that it's updated in the audio buffer!!
 				this.ref.raw_samples[this.index] = this.value;
+				/*if (this.ref.explorer === undefined){
+					for (var i in Synth.EXPLORER.Selector.explorers){
+						var explorer = Synth.EXPLORER.Selector.explorers[i];
+						if (explorer.name === this.sound_name){
+							this.ref.explorer = explorer.explorer;
+							break;
+						}
+					}
+				}
+				//this.ref.explorer.ExploreSample(this.index);*/
 				//set it the same for the rest of the channels' samples!!! (if there are any)
 				for (var i = 0; i < this.ref.other_channel_raw_samples.length; i++){
 					this.ref.other_channel_raw_samples[i][this.index] = this.value;
@@ -76,12 +88,11 @@ Synth.GetSamples = function(sound, ignore_cache){
 		});
 	}
 	
+	samples_container.raw_samples = raw_samples;
+	samples_container.samples = samples;
+	samples_container.other_channel_raw_samples = other_channel_raw_samples;
 	if (!ignore_cache)
-		Synth.samples_collection[name] = { raw_samples: raw_samples, samples: samples, other_channel_raw_samples: other_channel_raw_samples };
-	else{
-		samples.raw_samples = raw_samples;
-		samples.other_channel_raw_samples = other_channel_raw_samples;
-	}
+		Synth.samples_collection[name] = samples_container;
 	return samples;
 }
 Synth.indexed_samples_collection = {};

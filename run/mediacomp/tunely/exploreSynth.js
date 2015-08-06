@@ -289,6 +289,7 @@ Synth.EXPLORER.CreateSoundExploration = function(sound){
 	
 	//NOW SET UP EVENT HANDLERS FOR THE NEW SYNTH EXPLORER
 	var explorer = new Synth.EXPLORER();
+	explorer.id = id;
 	explorer.init(
 		sound,
 		explore_playSound,
@@ -356,6 +357,43 @@ Synth.EXPLORER.prototype.ExploreMySound = function(){
 	}
 	
 	this.UpdateSampleIndexSection();
+	Synth.EXPLORER.Selector.updateSelectBoxCanvas(this.id);
+}
+Synth.EXPLORER.prototype.ExploreSample = function(index){
+	this.sound = Synth.GetSound(this.sound.name);
+	this.samples = Synth.GetSamples(this.sound);
+	var samples = this.samples;
+	
+	var canvas = this.bigCanvas;
+	var width = samples.length*this.scale_x;
+	canvas.setWidth(width);
+	var height = 200;
+	canvas.setHeight(height);
+	var y_size = this.scale_y;//32768;
+	var base_y = height/2;
+	
+	//REPAINT THE CANVS
+	canvas.ctx.fillStyle = "#000000";
+	if (~~(index * this.scale_x) % 1 === 0)
+		canvas.fillRect(index*this.scale_x, 0, 1, height, true);
+	//now start drawing the samples of the sound
+	canvas.ctx.fillStyle = "#00ff00";
+	//needs minus since y axis is inverted for canvas
+	var y = base_y - ((samples[index].getValue() / y_size)*base_y);
+	var draw_y = y;
+	//draw a dot in the calculated location
+	canvas.fillRect(index/*this.scale_x*/, y, 1, 1, false);
+	
+	this.zoomOutButton.disabled = false;
+	this.zoomInButton.disabled = false;
+	if ((1 / this.scale_x) >= 128){
+		this.zoomOutButton.disabled = true;
+	}
+	if ((1 / this.scale_x) <= 1){
+		this.zoomInButton.disabled = true;
+	}
+	
+	this.UpdateSampleIndexSection();
 }
 
 Synth.EXPLORER.prototype.UpdateSampleIndexSection = function(){
@@ -404,8 +442,8 @@ Synth.EXPLORER.prototype.UpdateSampleIndexSection = function(){
 	//relocate the scroll position of the canvas container to the appropriate index value
 	var container = this.bigCanvas.container;
 	//that's just what i set the width of the canvas container to :)
-	var width = 800; 
-	var offset = 100;
+	var width = 460; 
+	var offset = 220;
 	
 	if (container.scrollLeft + width < arrow_x){
 		container.scrollLeft += (arrow_x - (container.scrollLeft + width));
@@ -499,7 +537,7 @@ Synth.EXPLORER.prototype.PlayAfter = function(){
 		samples[i-after_index].setValue(samples[i].getValue());
 	}
 	//erase the values of the samples we dont wanna play
-	for (var i = after_index; i < sample_length; i++){
+	for (var i = sample_length - after_index; i < sample_length; i++){
 		samples[i].setValue(0.0);
 	}
 

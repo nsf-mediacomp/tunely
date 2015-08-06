@@ -85,7 +85,7 @@ Main.openProject = function(){
 				Main.loaded_xml = xml;
 				//Main.loaded_images = [];
 				Main.loaded_sounds = [];
-				Main.loaded_selected = CanvasSelect.selected;
+				Main.loaded_selected = Synth.EXPLORER.Selector.selected;
 			});
 		}
 	});
@@ -118,7 +118,7 @@ Main.openProject = function(){
 				Synth.LoadSound(Main.loaded_sounds[i]);
 			}
 		}
-		CanvasSelect.select(Main.loaded_selected);
+		Synth.EXPLORER.Selector.select(Main.loaded_selected);
 	}, Blockly.Msg.PROJECT_MANAGEMENT, Blockly.Msg.LOAD_PROJECT);
 	Dialog.AddElement(message[0]);
 }
