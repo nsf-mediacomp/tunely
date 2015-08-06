@@ -125,13 +125,11 @@ Synth.EXPLORER.Selector.updateSelectBoxCanvas = function(id){
 	}
 };
 Synth.EXPLORER.Selector.exploreSounds = function(){
-	console.log(Synth.EXPLORER.Selector.explorers.length);
 	for (var i = 0; i < Synth.EXPLORER.Selector.explorers.length; i++){
 		Synth.EXPLORER.Selector.explorers[i].explorer.ExploreMySound();
 	}
 }
 Synth.EXPLORER.Selector.updateSelectBoxCanvases = function(){
-	//TODO
     var boxes = document.getElementsByClassName("canvas_select_box");
     for(var i=0; i<boxes.length; ++i){
 		var ctx = boxes[i].getElementsByTagName("canvas")[0].getContext('2d');

@@ -3,6 +3,34 @@
 Blockly.synth_block_colour = 60;
 // Extensions to Blockly's language and JavaScript generator.
 
+Blockly.Blocks['synth_createSound'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("create")
+        .appendField(new Blockly.FieldTextInput("sound_name"), "NAME");
+    this.appendValueInput("SAMPLES")
+        .setCheck("Array")
+        .appendField("with samples");
+    this.setInputsInline(true);
+    this.setOutput(true);
+    this.setColour(90);
+    this.setTooltip('');
+    this.setHelpUrl('http://www.example.com/');
+  }
+};
+Blockly.JavaScript['synth_createSound'] = function(block){
+	var sound_name = block.getFieldValue('NAME');
+	var samples = Blockly.JavaScript.valueToCode(block, 'SAMPLES', Blockly.JavaScript.ORDER_ATOMIC);
+  	var code = 'Synth.CreateSound("' + sound_name + '", ' + samples + ')';
+  	
+  	return [code, Blockly.JavaScript.ORDER_NONE];
+}
+BlockIt['synth_createSound'] = function(block, samples){
+	if (samples === undefined) samples = [];
+	var sound_name = block.getFieldValue('NAME');
+	return Synth.CreateSound(sound_name, samples);
+}
+
 Blockly.Blocks['synth_exploreSound'] = {
 	init: function(){
 		this.setColour(Blockly.synth_block_colour);

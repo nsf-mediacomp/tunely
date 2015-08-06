@@ -260,6 +260,7 @@ Main.RunCode = function(){
 			document.getElementById('spinner').style.visibility = 'hidden';
 			clearInterval(Main.update_display_interval_id);
 			Main.runButton = !Main.runButton;
+			Synth.EXPLORER.Selector.exploreSounds();
 		})){
 			Main.RunButton();
 		}
@@ -268,6 +269,7 @@ Main.RunCode = function(){
 Main.StopCode = function(){	
 	BlockIt.StopIteration();
 	Synth.Stop();
+	Synth.EXPLORER.Selector.exploreSounds();
 	clearInterval(Main.update_display_interval_id);
 
 	document.getElementById('spinner').style.visibility = 'hidden';

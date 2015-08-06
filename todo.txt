@@ -1,3 +1,6 @@
+4. needs to have a clone sound block (also clone canvas for pixly)
+    a. should act like variables and create sound into the sound dropdown???
+    b. should just act like a variable and not have a name defined besides its variable??b
+        -if so, we cannot cache into the Synth.sounds dictionary
 2. update landing page to be tunely...
 3. should have error messages for incorrectly uploading sounds (or images as sounds)
-4. needs to have a clone sound block (also clone canvas for pixly)
