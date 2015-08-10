@@ -1,6 +1,8 @@
-4. needs to have a clone sound block (also clone canvas for pixly)
-    a. should act like variables and create sound into the sound dropdown???
-    b. should just act like a variable and not have a name defined besides its variable??b
-        -if so, we cannot cache into the Synth.sounds dictionary
+1. in drop down option for default sounds, should have a rename & new variable option (which will create a new audiobuffer in the Synth.originalSounds cache???)
+    A. should also have a local storage for the changed names of default sounds???
+
+    B. should also have a "set sound duration (seconds)" or something that will fill the sound with the appropriate number of samples (channel array)
 2. update landing page to be tunely...
 3. should have error messages for incorrectly uploading sounds (or images as sounds)
+
+4. Html pdf tutorial for tune and pixel

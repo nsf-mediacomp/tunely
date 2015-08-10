@@ -3,6 +3,71 @@
 Blockly.synth_block_colour = 60;
 // Extensions to Blockly's language and JavaScript generator.
 
+//DEFAULT INSTRUMENTS
+Blockly.Blocks['synth_defaultInstruments'] = {
+	init: function(){
+		this.setColour(90);
+		var SOUND_NAMES =[
+			["piano", 'piano']
+		];
+		for (var sound in Synth.sounds) {
+			if (Synth.sounds.hasOwnProperty(sound) && sound !== "piano") {
+				SOUND_NAMES.push([sound, sound]);
+			}
+		}
+		
+		this.appendDummyInput()
+			.appendField(
+				new Blockly.FieldVariable(Blockly.Msg.VARIABLES_GET_ITEM),
+				//new Blockly.FieldDropdown(SOUND_NAMES), 
+				'NAME'
+			);
+		this.setOutput(true, "Sound");
+		this.setTooltip('Creates a new sound object by cloning a default instrument sounds.');
+		this.contextMenuMsg_ = Blockly.Msg.VARIABLES_GET_CREATE_SET;
+		this.contextMenuType_ = 'variables_set';
+	},
+	getVars: function(){
+		return [this.getFieldValue('NAME')];
+	},
+	renameVar: function(oldName, newName){
+		if (Blockly.Names.equals(oldName, this.getFieldValue('NAME'))){
+			this.setFieldValue(newName, 'NAME');
+			if (Synth.sounds[oldName] !== undefined){
+				var sound = Synth.sounds[oldName];
+				delete Synth.sounds[oldName];
+				Synth.sounds[newName] = sound;
+				
+				sound = Synth.originalSounds[oldName];
+				delete Synth.originalSounds[oldName];
+				Synth.originalSounds[newName] = sound;
+			}
+		}
+	},
+	customContextMenu: function(options){
+		var option = {enabled: true};
+		var name = this.getFieldValue("NAME");
+		option.text = this.contextMenuMsg_.replace('%1', name);
+		var xmlField = goog.dom.createDom('field', null, name);
+		xmlField.setAttribute('name', 'NAME');
+		var xmlBlock = goog.dom.createDom('block', null, xmlField);
+		xmlBlock.setAttribute('type', this.contextMenuType_);
+		option.callback = Blockly.ContextMenu.callbackFactory(this, xmlBlock);
+		options.push(options);
+	}
+	
+};
+Blockly.JavaScript['synth_defaultInstruments'] = function(block){
+	var name = block.getFieldValue('NAME');
+	return ["Synth.GetSound('"+name+"')", Blockly.JavaScript.ORDER_NONE];
+};
+BlockIt['synth_defaultInstruments'] = function(block){
+	//with field drop down objects, still must do the default blockly fetching
+	var name = block.getFieldValue('NAME');
+	return Synth.GetSound(name);
+}
+
+
 Blockly.Blocks['synth_createSound'] = {
   init: function() {
     this.appendDummyInput()
@@ -50,35 +115,6 @@ Blockly.JavaScript['synth_exploreSound'] = function(block){
 };
 BlockIt['synth_exploreSound'] = function(block, sound){
 	Synth.EXPLORER.OpenExploreWindow(sound);
-}
-
-//DEFAULT INSTRUMENTS
-Blockly.Blocks['synth_defaultInstruments'] = {
-	init: function(){
-		this.setColour(90);
-		var SOUND_NAMES =[
-			["piano", 'piano']
-		];
-		for (var sound in Synth.sounds) {
-			if (Synth.sounds.hasOwnProperty(sound) && sound !== "piano") {
-				SOUND_NAMES.push([sound, sound]);
-			}
-		}
-		
-		this.appendDummyInput()
-			.appendField(new Blockly.FieldDropdown(SOUND_NAMES), 'NAME');
-		this.setOutput(true, "Sound");
-		this.setTooltip('Creates a new sound object by cloning a default instrument sounds.');
-	}
-};
-Blockly.JavaScript['synth_defaultInstruments'] = function(block){
-	var name = block.getFieldValue('NAME');
-	return ["Synth.GetSound('"+name+"')", Blockly.JavaScript.ORDER_NONE];
-};
-BlockIt['synth_defaultInstruments'] = function(block){
-	//with field drop down objects, still must do the default blockly fetching
-	var name = block.getFieldValue('NAME');
-	return Synth.GetSound(name);
 }
 
 //Clone an audio buffer and return the clone!!
