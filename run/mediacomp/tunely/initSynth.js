@@ -37,12 +37,35 @@ Synth.CreateSound = function(sound_name, samples){
     return newBuffer;
 }
 
+Synth.ChangeSoundName = function(oldName, newName){
+  if (Synth.sounds[oldName] !== undefined){
+		var sound = Synth.sounds[oldName];
+		delete Synth.sounds[oldName];
+		Synth.sounds[newName] = sound;
+		
+		sound = Synth.originalSounds[oldName];
+		delete Synth.originalSounds[oldName];
+		Synth.originalSounds[newName] = sound;
+		
+		//change it in explorer select
+		var explorers = Synth.EXPLORER.Selector.explorers;
+		for (var i = 0; i < explorers.length; i++){
+		  if (explorers[i].name === oldName){
+		    explorers[i].name = newName;
+		    explorers[i].explorer.sound.name = newName;
+		    explorers[i].explorer.UpdateName();
+		    break;
+		  }
+		}
+	}
+};
+
 Synth.GetSound = function(sound_name){
 	var buffer = Synth.sounds[sound_name];
 	if (buffer === undefined || buffer === null) return;
 	buffer.name = sound_name;
 	return buffer;
-}
+};
 
 Synth.UploadSound = function(e){
 	var files = e.target.files;
@@ -127,7 +150,7 @@ Synth.isDefaultSoundName = function(name){
 }
 
 Synth.distributeSampleValuesEvenlyAcrossChannels = function(sound){
-	if (sound === null || sound === undefined || sound.numberOfChannels === 1) 
+	if (sound === null || sound === undefined || sound.numberOfChannels === 1)
 		return;
 	var channel0 = sound.getChannelData(0);
 	var other_channels = [];
@@ -216,7 +239,7 @@ Synth.LoadSound = function(obj){
 	for (var i = 0; i < obj.numberOfChannels; i++){
 		var channel = sound.getChannelData(i);
 		var mem_channel = obj["channel" + i];
-		mem_channel = new Float32Array(mem_channel);	
+		mem_channel = new Float32Array(mem_channel);
 		channel.set(mem_channel);
 	}
 	

@@ -21,7 +21,7 @@ Synth.EXPLORER.CreateSelector = function(explorer){
 
 Synth.EXPLORER.Selector.resetAll = function(){
     for(var i=0; i < Synth.EXPLORER.Selector.explorers.length; ++i){
-		Synth.ResetSound(Synth.EXPLORER.Selector.explorers[i].name);
+		  Synth.ResetSound(Synth.EXPLORER.Selector.explorers[i].name);
     }
 };
 
@@ -57,7 +57,7 @@ Synth.EXPLORER.Selector.addSelectBox = function(id, name){
 	var new_box = '<div class="canvas_select_box" id="canvas_select_$id" onclick="Synth.EXPLORER.Selector.select($id)">';
 	if (id > 4){
 		new_box += "<div id='canvas_select_delete_$id' style='margin-left:65px;text-align:right;margin-top:-8px;cursor:pointer;font-size:16px;color:red;' onclick=\"(function(){ " +
-			"Dialog.Confirm('Really remove this uploaded sound?', function(){  Synth.EXPLORER.Selector.removeSound($id); }, 'Delete Sound?', 'Yes');" + 
+			"Dialog.Confirm('Really remove this uploaded sound?', function(){  Synth.EXPLORER.Selector.removeSound($id); }, 'Delete Sound?', 'Yes');" +
 		"})()\">x</div>";
 	}
 	new_box	+=

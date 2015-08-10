@@ -2,7 +2,14 @@
     A. should also have a local storage for the changed names of default sounds???
 
     B. should also have a "set sound duration (seconds)" or something that will fill the sound with the appropriate number of samples (channel array)
+
+1.5 3. Save manipulated sound to a file (write) (from exploration area)
+
 2. update landing page to be tunely...
 3. should have error messages for incorrectly uploading sounds (or images as sounds)
 
 4. Html pdf tutorial for tune and pixel
+
+???5. Use the mediaThingObject for combining audio buffers into a longer sound??? (music track???)
+
+6. example program should use the sine wave note generation to play an arpeggio???

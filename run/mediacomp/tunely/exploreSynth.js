@@ -1,6 +1,8 @@
-Synth.EXPLORER = function(){	
+Synth.EXPLORER = function(){
 	this.sound = null;
 	this.samples = [];
+	
+	this.title = null;
 	
 	this.playSoundButton = null;
 	this.playBeforeButton = null;
@@ -32,9 +34,11 @@ Synth.EXPLORER = function(){
 };
 Synth.EXPLORER.counter = 0;
 
-Synth.EXPLORER.prototype.init = function(sound, playSoundButton, playBeforeButton, playAfterButton, stopButton, playSelectionButton, clearSelectionButton, startIndexField, stopIndexField, canvas, arrowIndexImg, selectionHighlighter, firstIndexButton, prevIndexButton, currIndexField, sampleValueField, nextIndexButton, lastIndexButton, samplesPerPixelField, zoomOutButton, zoomInButton){	
+Synth.EXPLORER.prototype.init = function(sound, title, playSoundButton, playBeforeButton, playAfterButton, stopButton, playSelectionButton, clearSelectionButton, startIndexField, stopIndexField, canvas, arrowIndexImg, selectionHighlighter, firstIndexButton, prevIndexButton, currIndexField, sampleValueField, nextIndexButton, lastIndexButton, samplesPerPixelField, zoomOutButton, zoomInButton){
 	this.sound = sound;
 	this.samples = Synth.GetSamples(this.sound);
+	
+	this.title = title;
 	
 	this.playSoundButton = playSoundButton;
 	this.playSoundButton.onclick = this.PlaySound.bind(this);
@@ -292,6 +296,7 @@ Synth.EXPLORER.CreateSoundExploration = function(sound){
 	explorer.id = id;
 	explorer.init(
 		sound,
+		title,
 		explore_playSound,
 		explore_playBefore,
 		explore_playAfter,
@@ -316,9 +321,13 @@ Synth.EXPLORER.CreateSoundExploration = function(sound){
 	explorer.ExploreMySound();
 	Synth.EXPLORER.CreateSelector(explorer);
 }
+Synth.EXPLORER.prototype.UpdateName = function(){
+  this.title.innerHTML = this.sound.name;
+}
 Synth.EXPLORER.prototype.ExploreMySound = function(){
 	this.sound = Synth.GetSound(this.sound.name);
 	this.samples = Synth.GetSamples(this.sound);
+	//this.title.innerHTML = this.sound.name;
 	var samples = this.samples;
 	
 	var canvas = this.bigCanvas;
@@ -442,7 +451,7 @@ Synth.EXPLORER.prototype.UpdateSampleIndexSection = function(){
 	//relocate the scroll position of the canvas container to the appropriate index value
 	var container = this.bigCanvas.container;
 	//that's just what i set the width of the canvas container to :)
-	var width = 460; 
+	var width = 460;
 	var offset = 220;
 	
 	if (container.scrollLeft + width < arrow_x){

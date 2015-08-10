@@ -18,14 +18,11 @@ Blockly.Blocks['synth_defaultInstruments'] = {
 		
 		this.appendDummyInput()
 			.appendField(
-				new Blockly.FieldVariable(Blockly.Msg.VARIABLES_GET_ITEM),
-				//new Blockly.FieldDropdown(SOUND_NAMES), 
+				new Blockly.FieldVariable("piano"),
 				'NAME'
 			);
 		this.setOutput(true, "Sound");
 		this.setTooltip('Creates a new sound object by cloning a default instrument sounds.');
-		this.contextMenuMsg_ = Blockly.Msg.VARIABLES_GET_CREATE_SET;
-		this.contextMenuType_ = 'variables_set';
 	},
 	getVars: function(){
 		return [this.getFieldValue('NAME')];
@@ -33,29 +30,9 @@ Blockly.Blocks['synth_defaultInstruments'] = {
 	renameVar: function(oldName, newName){
 		if (Blockly.Names.equals(oldName, this.getFieldValue('NAME'))){
 			this.setFieldValue(newName, 'NAME');
-			if (Synth.sounds[oldName] !== undefined){
-				var sound = Synth.sounds[oldName];
-				delete Synth.sounds[oldName];
-				Synth.sounds[newName] = sound;
-				
-				sound = Synth.originalSounds[oldName];
-				delete Synth.originalSounds[oldName];
-				Synth.originalSounds[newName] = sound;
-			}
+			Synth.ChangeSoundName(oldName, newName);
 		}
-	},
-	customContextMenu: function(options){
-		var option = {enabled: true};
-		var name = this.getFieldValue("NAME");
-		option.text = this.contextMenuMsg_.replace('%1', name);
-		var xmlField = goog.dom.createDom('field', null, name);
-		xmlField.setAttribute('name', 'NAME');
-		var xmlBlock = goog.dom.createDom('block', null, xmlField);
-		xmlBlock.setAttribute('type', this.contextMenuType_);
-		option.callback = Blockly.ContextMenu.callbackFactory(this, xmlBlock);
-		options.push(options);
 	}
-	
 };
 Blockly.JavaScript['synth_defaultInstruments'] = function(block){
 	var name = block.getFieldValue('NAME');
@@ -193,7 +170,7 @@ Blockly.JavaScript['synth_getSampleValue'] = function(block){
 	return [value, Blockly.JavaScript.ORDER_NONE];
 }
 BlockIt['synth_getSampleValue'] = function(block, sample){
-	if (sample === undefined) 
+	if (sample === undefined)
 		sample = { value: 0 };
 	return sample.value;
 }
@@ -341,7 +318,7 @@ Blockly.Blocks['javascript_consoleLog'] = {
 Blockly.JavaScript['javascript_consoleLog'] = function(block){
 	//Logging output to console
 	var x = Blockly.JavaScript.valueToCode(block, 'X', Blockly.JavaScript.ORDER_NONE) || '';
-	return "console.log(" + x + ")"; 
+	return "console.log(" + x + ")";
 }
 BlockIt['javascript_consoleLog'] = function(block, x){
 	console.log(x);

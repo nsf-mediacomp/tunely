@@ -1,15 +1,6 @@
 TRUE TODO::
-----------------------	
+----------------------
 1. Should probably make JavaScript look more like the Java from ppt examples
-		
-2. Fix the mains (javascript code with multiple main event programs)
-	
-3. Save manipulated sound to a file (write);
-???4. Use the mediaThingObject for combining audio buffers into a longer sound??? (music track???)
-
-5. ADD LINK SHARING (hm...)
-
-6. Add languages?
 
 ****SADLY: does not work in IE :(
 	(IE doesn't support audio buffers as far as I know...
