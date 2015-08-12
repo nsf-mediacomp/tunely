@@ -1,9 +1,8 @@
-1. in drop down option for default sounds, should have a rename & new variable option (which will create a new audiobuffer in the Synth.originalSounds cache???)
-    A. should also have a local storage for the changed names of default sounds???
+B. should also have a "set sound duration (seconds)" or something that will fill the sound with the appropriate number of samples (channel array)
 
-    B. should also have a "set sound duration (seconds)" or something that will fill the sound with the appropriate number of samples (channel array)
-
-1.5 3. Save manipulated sound to a file (write) (from exploration area)
+0. WHEN SOUNDS ARE DELETED FROM X THEY SHOULD BE DELETED FROM CANVAS???
+	-and also all variable block references in the workspace should be removed??? (hm)
+3. Save manipulated sound to a file (write) (from exploration area)
 
 2. update landing page to be tunely...
 3. should have error messages for incorrectly uploading sounds (or images as sounds)

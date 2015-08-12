@@ -18,7 +18,7 @@ Blockly.Blocks['synth_defaultInstruments'] = {
 		
 		this.appendDummyInput()
 			.appendField(
-				new Blockly.FieldVariable("piano"),
+				new Blockly.FieldSound(Object.keys(Synth.originalSounds)[0]),
 				'NAME'
 			);
 		this.setOutput(true, "Sound");
@@ -27,10 +27,9 @@ Blockly.Blocks['synth_defaultInstruments'] = {
 	getVars: function(){
 		return [this.getFieldValue('NAME')];
 	},
-	renameVar: function(oldName, newName){
+	renameSound: function(oldName, newName){
 		if (Blockly.Names.equals(oldName, this.getFieldValue('NAME'))){
 			this.setFieldValue(newName, 'NAME');
-			Synth.ChangeSoundName(oldName, newName);
 		}
 	}
 };

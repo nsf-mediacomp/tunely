@@ -2,12 +2,24 @@ function Synth(){}
 
 Synth.appstart_time = new Date().getTime();
 
-Synth.default_sounds_count = 0;
 Synth.defaultSounds = {};
 Synth.originalSounds = {};
 Synth.sounds = {};
 
 Synth.uploaded_sounds = [];
+
+
+Synth.context = null;
+if (typeof AudioContext !== "undefined") {
+  Synth.context = new AudioContext();
+} else if (typeof webkitAudioContext !== "undefined") {
+  Synth.context = new webkitAudioContext();
+} else {
+  domready(function() {
+    alert("No WebAudio");
+  })
+  throw new Error("No WebAudio!");
+}
 
 Synth.CreateSound = function(sound_name, samples){
 	if (Synth.sounds[sound_name] !== undefined)
@@ -37,69 +49,12 @@ Synth.CreateSound = function(sound_name, samples){
     return newBuffer;
 }
 
-Synth.ChangeSoundName = function(oldName, newName){
-  if (Synth.sounds[oldName] !== undefined){
-		var sound = Synth.sounds[oldName];
-		delete Synth.sounds[oldName];
-		Synth.sounds[newName] = sound;
-		
-		sound = Synth.originalSounds[oldName];
-		delete Synth.originalSounds[oldName];
-		Synth.originalSounds[newName] = sound;
-		
-		//change it in explorer select
-		var explorers = Synth.EXPLORER.Selector.explorers;
-		for (var i = 0; i < explorers.length; i++){
-		  if (explorers[i].name === oldName){
-		    explorers[i].name = newName;
-		    explorers[i].explorer.sound.name = newName;
-		    explorers[i].explorer.UpdateName();
-		    break;
-		  }
-		}
-	}
-};
-
 Synth.GetSound = function(sound_name){
 	var buffer = Synth.sounds[sound_name];
 	if (buffer === undefined || buffer === null) return;
 	buffer.name = sound_name;
 	return buffer;
 };
-
-Synth.UploadSound = function(e){
-	var files = e.target.files;
-	for (var i = 0; i < files.length; i++){
-		var file = files[i];
-		var name = file.name;
-		var reader = new FileReader();
-		reader.onload = (function(ev){
-			console.log(name);
-			console.log(ev.target.result);
-			Synth.addToOriginalSounds(ev.target.result, name,
-				function(sound){
-					Synth.StoreSoundMemory(name, sound);
-					BlockIt.RefreshWorkspace();
-					Dialog.Alert("Sound uploaded! (Should appear in instrument drop down)");
-				}
-			);
-		});
-		reader.readAsArrayBuffer(file);
-	}
-};
-
-Synth.RemoveUploadedSound = function(index){
-	var name = Synth.uploaded_sounds[index].name;
-	localStorage.removeItem(name);
-	var memory = JSON.parse(getCookie("soundMemory"));
-	
-	Synth.uploaded_sounds.splice(index, 1);
-	
-	index = memory.indexOf(name);
-	memory.splice(index, 1);
-	setCookie("soundMemory", JSON.stringify(memory));
-	BlockIt.RefreshWorkspace();
-}
 
 //http://stackoverflow.com/questions/12484052/how-can-i-reverse-playback-in-web-audio-api-but-keep-a-forward-version-as-well
 Synth.CloneSound = function(audioBuffer){
@@ -126,27 +81,6 @@ Synth.CloneSound = function(audioBuffer){
 	Synth.name_counter++;
 
     return newBuffer;
-}
-
-Synth.context = null;
-if (typeof AudioContext !== "undefined") {
-  Synth.context = new AudioContext();
-} else if (typeof webkitAudioContext !== "undefined") {
-  Synth.context = new webkitAudioContext();
-} else {
-  domready(function() {
-    alert("No WebAudio");
-  })
-  throw new Error("No WebAudio!");
-}
-
-Synth.default_sound_names = [];
-Synth.isDefaultSoundName = function(name){
-	for (var i = 0; i < Synth.default_sound_names.length; i++){
-		if (Synth.default_sound_names[i] === name)
-			return true;
-	}
-	return false;
 }
 
 Synth.distributeSampleValuesEvenlyAcrossChannels = function(sound){
@@ -178,7 +112,6 @@ Synth.loadFileIntoVoiceBuffer = function(url, name, callback){
 	request.open('GET', url, true);
 	request.responseType = 'arraybuffer';
 	request.onload = function(){
-		Synth.default_sounds_count++;
 		Synth.addToOriginalSounds(request.response, name, function(buffer){
 			Synth.defaultSounds[name] = Synth.originalSounds[name];
 			if (callback !== undefined)
@@ -186,49 +119,6 @@ Synth.loadFileIntoVoiceBuffer = function(url, name, callback){
 		});
 	}
 	request.send();
-}
-
-Synth.StoreSoundMemory = function(name, sound){
-	var obj = {};
-	obj.name = name;
-	obj.numberOfChannels = sound.numberOfChannels;
-	obj.length = sound.length;
-	obj.sampleRate = sound.sampleRate;
-	for (var i = 0; i < sound.numberOfChannels; i++){
-		var channel = sound.getChannelData(0);
-		channel = Array.prototype.slice.call(channel);
-		obj["channel" + i] = channel;
-	}
-	
-	Synth.uploaded_sounds.push(obj);
-	
-	//store the names in cookies so know what to remember
-	var memory = getCookie("soundMemory");
-	if (memory === undefined)
-		memory = [];
-	else memory = JSON.parse(memory);
-	if (memory.indexOf(name) < 0)
-		memory.push(name);
-	setCookie("soundMemory", JSON.stringify(memory));
-	
-	localStorage.setItem(name, JSON.stringify(obj));
-}
-
-Synth.RememberSoundsFromMemory = function(){
-	var memory = getCookie("soundMemory");
-	if (memory === undefined)
-		memory = [];
-	else memory = JSON.parse(memory);
-	
-	for (var i = 0; i < memory.length; i++){
-		Synth.RememberSound(memory[i]);
-	}
-}
-
-Synth.RememberSound = function(name){
-	var json = localStorage.getItem(name);
-	var obj = JSON.parse(json);
-	Synth.LoadSound(obj);
 }
 
 Synth.LoadSound = function(obj){

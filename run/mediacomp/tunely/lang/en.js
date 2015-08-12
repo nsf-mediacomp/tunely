@@ -12,3 +12,9 @@ Blockly.Msg.FILENAME = "Filename: ";
 Blockly.Msg.PROJECT_XML = "TunelyProject.xml";
 
 Blockly.Msg.EXAMPLE_SINE_WAVE = "Sine wave";
+
+Blockly.Msg.RENAME_SOUND = "Rename Sound";
+Blockly.Msg.NEW_SOUND = "New Sound";
+
+Blockly.Msg.RENAME_SOUND_TITLE = "Rename the '%1' sound to:";
+Blockly.Msg.NEW_SOUND_TITLE = "Create a new sound with the name:";

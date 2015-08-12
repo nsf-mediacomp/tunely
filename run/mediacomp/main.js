@@ -21,7 +21,6 @@ Main.init = function(){
 	
 	//load the sound samples
 	var default_sounds = ["piano"];
-	Synth.default_sound_names = default_sounds;
 	Synth.loadFileIntoVoiceBuffer("mediacomp/tunely/samples/piano.wav", "piano", function(){
 		Synth.RememberSoundsFromMemory();
 	});

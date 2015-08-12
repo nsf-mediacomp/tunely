@@ -8,9 +8,9 @@ Synth.EXPLORER.CreateSelector = function(explorer){
 	var id = Synth.EXPLORER.Selector.canvas_id;
 	Synth.EXPLORER.Selector.canvas_id++;
 	
-	Synth.EXPLORER.Selector.explorers.push({name: explorer.sound.name, explorer: explorer, id: id});
+	var select_box = Synth.EXPLORER.Selector.addSelectBox(id, explorer.sound.name);
 	
-	Synth.EXPLORER.Selector.addSelectBox(id, explorer.sound.name);
+	Synth.EXPLORER.Selector.explorers.push({name: explorer.sound.name, explorer: explorer, id: id, select_box: select_box});
 	Synth.EXPLORER.Selector.select(id);
 	
 	Synth.EXPLORER.Selector.updateSelectBoxCanvas(id);
@@ -63,12 +63,12 @@ Synth.EXPLORER.Selector.addSelectBox = function(id, name){
 	new_box	+=
 		/*'    <!--img src="images/cat_attendant.jpg" width="75px" height="75px"/><br/-->' +*/
 		'    <canvas width="75px" height="75px"></canvas><br/>' +
-		'    $name' +
+		'    <span id="canvas_select_box_$id_title">$name</span>' +
 		'</div>';
 	new_box = new_box.interpolate({id: id, name: name});
 	$("#canvas_select")[0].innerHTML += new_box;
 	
-    return id;
+    return $("#canvas_select_" + id)[0];
 };
 
 Synth.EXPLORER.Selector.removeSound = function(id){

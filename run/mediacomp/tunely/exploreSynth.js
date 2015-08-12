@@ -531,7 +531,6 @@ Synth.EXPLORER.prototype.PlayBefore = function(){
 	
 	this.UpdatePlayButtons(false);
 }
-//TODO:: why not working after more than one play??
 Synth.EXPLORER.prototype.PlayAfter = function(){
 	var sound = Synth.CloneSound(this.sound);
 	var samples = Synth.GetSamples(sound, true);
@@ -540,7 +539,6 @@ Synth.EXPLORER.prototype.PlayAfter = function(){
 	if (this.curr_selection_start < this.curr_selection_end)
 		after_index = this.curr_selection_end + 1;
 		
-	console.log(after_index);
 	//offset the samples over to the correct position
 	for (var i = after_index; i < sample_length; i++){
 		samples[i-after_index].setValue(samples[i].getValue());
