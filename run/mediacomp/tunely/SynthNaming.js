@@ -119,3 +119,16 @@ Synth.renameSound = function(oldName, newName, workspace) {
 		}
 	}
 };
+
+Synth.newSoundName = function(newName, duration, workspace){
+	var sampleRate = 44100;
+	var length = Math.round(sampleRate * duration);
+	
+	var buffer = Synth.context.createBuffer(1, length, sampleRate);
+	Synth.originalSounds[newName] = buffer;
+	Synth.sounds[newName] = Synth.CloneSound(buffer);
+	Synth.sounds[newName].name = newName;
+	
+	//OPEN UP THE EXPLORER WINDOW (should add to canvas select as well)
+	Synth.EXPLORER.CreateSoundExploration(Synth.sounds[newName]);
+}

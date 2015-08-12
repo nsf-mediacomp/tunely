@@ -21,34 +21,6 @@ if (typeof AudioContext !== "undefined") {
   throw new Error("No WebAudio!");
 }
 
-Synth.CreateSound = function(sound_name, samples){
-	if (Synth.sounds[sound_name] !== undefined)
-		return Synth.GetSound(sound_name);
-	
-	var channels = [], numChannels = 1;
-
-    //clone the underlying Float32Arrays
-    for (var i = 0; i < numChannels; i++){
-    	channels[i] = new Float32Array(samples);
-    }
-
-    //create the new AudioBuffer (assuming AudioContext variable is in scope)
-    var newBuffer = Synth.context.createBuffer(
-                        numChannels,
-                        audioBuffer.length,
-                        audioBuffer.sampleRate
-                    );
-
-    //copy the cloned arrays to the new AudioBuffer
-    for (var i = 0; i < numChannels; i++){
-        newBuffer.getChannelData(i).set(channels[i]);
-    }
-	newBuffer.name = audioBuffer.name + "__" + (Synth.name_counter);
-	Synth.name_counter++;
-
-    return newBuffer;
-}
-
 Synth.GetSound = function(sound_name){
 	var buffer = Synth.sounds[sound_name];
 	if (buffer === undefined || buffer === null) return;

@@ -1,3 +1,5 @@
+1. On Run Program... it shouldn't hit the RESET Program button until manually... and pressing reset program should reset all the sounds back to their original state (sorry Pixly :,(???
+	
 B. should also have a "set sound duration (seconds)" or something that will fill the sound with the appropriate number of samples (channel array)
 
 0. WHEN SOUNDS ARE DELETED FROM X THEY SHOULD BE DELETED FROM CANVAS???

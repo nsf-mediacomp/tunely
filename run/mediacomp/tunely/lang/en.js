@@ -18,3 +18,5 @@ Blockly.Msg.NEW_SOUND = "New Sound";
 
 Blockly.Msg.RENAME_SOUND_TITLE = "Rename the '%1' sound to:";
 Blockly.Msg.NEW_SOUND_TITLE = "Create a new sound with the name:";
+Blockly.Msg.NEW_SOUND_DURATION_TITLE = "New sound's duration (in seconds): ";
+Blockly.Msg.NEW_SOUND_DURATION_TITLE_ERROR = "Duration must be a number (in seconds): ";

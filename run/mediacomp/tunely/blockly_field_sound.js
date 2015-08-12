@@ -183,13 +183,18 @@ Blockly.FieldSound.dropdownChange = function(text) {
       Synth.renameSound(oldVar, text, workspace);
     }
     return null;
-  } else if (text == Blockly.Msg.NEW_SOUND) {
+  } else if (text == Blockly.Msg.NEW_SOUND) { //TODO
     text = promptName(Blockly.Msg.NEW_SOUND_TITLE, '');
+	var duration = prompt(Blockly.Msg.NEW_SOUND_DURATION_TITLE, '');
+	while (isNaN(duration)){
+		duration = prompt(Blockly.Msg.NEW_SOUND_DURATION_TITLE_ERROR, '');
+	}
+	duration = Number(duration);
     // Since sounds are case-insensitive, ensure that if the new sound
     // matches with an existing sound, the new case prevails throughout.
     if (text) {
-      Synth.renameSound(text, text, workspace);
-      return text;
+		Synth.newSoundName(text, duration, workspace);
+		return text;
     }
     return null;
   }
