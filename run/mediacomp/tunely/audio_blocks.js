@@ -48,26 +48,35 @@ BlockIt['synth_defaultInstruments'] = function(block){
 	return Synth.GetSound(name);
 }
 
-
-Blockly.Blocks['synth_exploreSound'] = {
-	init: function(){
-		this.setColour(Blockly.synth_block_colour);
-		this.appendValueInput("SOUND")
-			.setCheck("Sound")
-			.appendField("explore");
-		this.setInputsInline(true);
-		this.setPreviousStatement(true);
-		this.setNextStatement(true);
-		this.setTooltip('Explores a sound (by opening up a pop up window visualizing the sound and its all its samples).');
-	}
+//SET DURATION OF SOUND
+Blockly.Blocks['synth_setDuration'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("set sound");
+    this.appendValueInput("SOUND");
+    this.appendDummyInput()
+        .appendField("duration to");
+    this.appendValueInput("DURATION")
+        .setCheck("Number");
+    this.appendDummyInput()
+        .appendField("seconds");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true);
+    this.setNextStatement(true);
+    this.setColour(90);
+    this.setTooltip('');
+    this.setHelpUrl('http://www.example.com/');
+  }
 };
-Blockly.JavaScript['synth_exploreSound'] = function(block){
-	//Generate JavaScript for playing a sounde
-	var sound = Blockly.JavaScript.valueToCode(block, "SOUND", Blockly.JavaScript.ORDER_NONE) || null;
-	return "Synth.EXPLORER.OpenExploreWindow(" + sound + ");\n";
+Blockly.JavaScript['synth_setDuration'] = function(block) {
+  var value_sound = Blockly.JavaScript.valueToCode(block, 'SOUND', Blockly.JavaScript.ORDER_ATOMIC);
+  var value_duration = Blockly.JavaScript.valueToCode(block, 'DURATION', Blockly.JavaScript.ORDER_ATOMIC);
+ 
+  var code = 'Synth.SetDuration(' + value_sound + ", " + value_duration + ");\n";
+  return code;
 };
-BlockIt['synth_exploreSound'] = function(block, sound){
-	Synth.EXPLORER.OpenExploreWindow(sound);
+BlockIt['synth_setDuration'] = function(block, sound, duration){
+	Synth.SetDuration(sound, duration);
 }
 
 //Clone an audio buffer and return the clone!!
@@ -83,7 +92,10 @@ Blockly.Blocks['synth_cloneAudio'] = {
 }
 Blockly.JavaScript['synth_cloneAudio'] = function(block){
 	var sound = Blockly.JavaScript.valueToCode(block, "SOUND", Blockly.JavaScript.ORDER_NONE) || null;
-	return "Synth.CloneSound(" + sound + ");\n";
+	return ["Synth.CloneSound(" + sound + ")", Blockly.JavaScript.ORDER_NONE];
+}
+BlockIt['synth_cloneAudio'] = function(block, sound){
+	return Synth.CloneSound(sound);
 }
 
 //SET THE INSTRUMENT

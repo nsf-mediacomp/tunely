@@ -1,11 +1,8 @@
 NOW:
 ---------------------------------------------------------------	
-B. should also have a "set sound duration (seconds)" or something that will fill the sound with the appropriate number of samples (channel array)
-
-D. Add a checkbox that will disable/enable explore synth synching for better play
-
 2. update landing page to be tunely...
 3. should have error messages for incorrectly uploading sounds (or images as sounds)
+D. Add a checkbox that will disable/enable explore synth synching for better play
 
 ===============================================================
 LATER:

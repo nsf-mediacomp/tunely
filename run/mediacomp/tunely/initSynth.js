@@ -21,12 +21,34 @@ if (typeof AudioContext !== "undefined") {
   throw new Error("No WebAudio!");
 }
 
+//FUNCTION DEFINITIONS
+
+
 Synth.GetSound = function(sound_name){
 	var buffer = Synth.sounds[sound_name];
 	if (buffer === undefined || buffer === null) return;
 	buffer.name = sound_name;
 	return buffer;
 };
+
+Synth.SetDuration = function(sound, duration){
+	var name = sound.name;
+	
+	var sampleRate = sound.sampleRate;
+	var length = Math.round(sampleRate * duration);
+	
+	var newSound = Synth.context.createBuffer(1, length, sampleRate);
+	
+	var samples = Array.prototype.slice.call(sound.getChannelData(0));
+	while (samples.length < length){
+		samples.push(0);
+	}
+	if (samples.length > length)
+		samples.splice(length);
+	
+	//finalize
+	newSound.copyChannelData(new Float32Array(samples), 0)
+}
 
 //http://stackoverflow.com/questions/12484052/how-can-i-reverse-playback-in-web-audio-api-but-keep-a-forward-version-as-well
 Synth.CloneSound = function(audioBuffer){
