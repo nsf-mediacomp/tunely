@@ -116,10 +116,12 @@ Synth.LoadSound = function(obj){
 	BlockIt.RefreshWorkspace();
 }
 
+//decodes audio data
 Synth.addToOriginalSounds = function(audiobuffer, name, callback){
 	Synth.context.decodeAudioData(audiobuffer, function(buffer){
 		Synth.distributeSampleValuesEvenlyAcrossChannels(buffer);
 		Synth.originalSounds[name] = buffer;
+		Synth.originalSounds[name].name = name;
 		Synth.sounds[name] = Synth.CloneSound(buffer);
 		Synth.sounds[name].name = name;
 		
@@ -131,6 +133,19 @@ Synth.addToOriginalSounds = function(audiobuffer, name, callback){
 	}, function(err){
 		console.log("Error loading sound", name, ":", err);
 	});
+}
+
+//audio buffer already exists
+Synth.AddToOriginalSounds = function(buffer, name, callback){
+	Synth.originalSounds[name] = buffer;
+	Synth.originalSounds[name].name = name;
+	Synth.sounds[name] = Synth.CloneSound(buffer);
+	Synth.sounds[name].name = name;
+	
+	Synth.EXPLORER.CreateSoundExploration(Synth.sounds[name]);
+	
+	if (callback !== undefined)
+		callback(buffer);
 }
 
 Synth.createSource = function(buffer){

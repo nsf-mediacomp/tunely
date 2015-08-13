@@ -27,12 +27,33 @@ Synth.UploadSound = function(e){
 					Synth.StoreSoundMemory(name, sound);
 					BlockIt.RefreshWorkspace();
 					Dialog.Alert("Sound uploaded! (Should appear in instrument drop down)");
+					Synth.EXPLORER.Selector.exploreSounds();
 				}
 			);
 		});
 		reader.readAsArrayBuffer(file);
 	}
 };
+
+
+Synth.RemoveUploadedSoundByName = function(name){
+	localStorage.removeItem(name);
+	var memory = JSON.parse(Synth.getMemory("soundMemory"));
+	
+	var index = 0;
+	for (var i = 0; i < Synth.uploaded_sounds.length; i++){
+		if (Synth.uploaded_sounds[i].name === name){
+			index = i;
+			break;
+		}
+	}
+	Synth.uploaded_sounds.splice(index, 1);
+	
+	index = memory.indexOf(name);
+	memory.splice(index, 1);
+	Synth.setMemory("soundMemory", JSON.stringify(memory));
+	BlockIt.RefreshWorkspace();
+}
 
 Synth.RemoveUploadedSound = function(index){
 	var name = Synth.uploaded_sounds[index].name;
@@ -68,28 +89,6 @@ Synth.RenameSoundMemory = function(oldName, newName){
 	Synth.setMemory("soundMemory", JSON.stringify(memory));
 }
 
-Synth.RenameDefaultSoundMemory = function(oldName, newName){
-	//first check if the default sound has already been renamed???
-	var memory = Synth.getMemory("defaultSoundRenames");
-	if (memory === undefined || memory === null)
-		memory = [];
-	else memory = JSON.parse(memory);
-	
-	var foundOldName = false;
-	for (var i = 0; i < memory.length; i++){
-		if (memory[i].newName === oldName){
-			foundOldName = true;
-			memory[i].newName = newName;
-			break;
-		}
-	}
-	if (!foundOldName){
-		//need to remember the old name (e.g. 'piano') and the rename (e.g. 'piano note C')
-		memory.push({oldName: oldName, newName: newName});
-	}
-	Synth.setMemory("defaultSoundRenames", JSON.stringify(memory));
-}
-
 Synth.StoreSoundMemory = function(name, sound){
 	var obj = {};
 	obj.name = name;
@@ -123,17 +122,6 @@ Synth.RememberSoundsFromMemory = function(){
 	else memory = JSON.parse(memory);
 	for (var i = 0; i < memory.length; i++){
 		Synth.RememberSound(memory[i]);
-	}
-	
-	//also try to rename defaultSounds!!!
-	memory = Synth.getMemory("defaultSoundRenames");
-	if (memory === undefined || memory === null)
-		memory = [];
-	else memory = JSON.parse(memory);
-	for (i = 0; i < memory.length; i++){
-		//explicitly pass workspace as undefined so
-		//Synth.renameSound will know that we are loading from memory
-		Synth.renameSound(memory[i].oldName, memory[i].newName, undefined);
 	}
 }
 

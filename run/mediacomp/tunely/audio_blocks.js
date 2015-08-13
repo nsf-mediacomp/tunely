@@ -31,6 +31,11 @@ Blockly.Blocks['synth_defaultInstruments'] = {
 		if (Blockly.Names.equals(oldName, this.getFieldValue('NAME'))){
 			this.setFieldValue(newName, 'NAME');
 		}
+	},
+	removeSound: function(name){
+		if (Blockly.Names.equals(name, this.getFieldValue('NAME'))){
+			this.setFieldValue('piano', 'NAME');
+		}
 	}
 };
 Blockly.JavaScript['synth_defaultInstruments'] = function(block){

@@ -55,7 +55,7 @@ Synth.EXPLORER.Selector.addSelectBox = function(id, name){
 	//var id = boxes.length;
 
 	var new_box = '<div class="canvas_select_box" id="canvas_select_$id" onclick="Synth.EXPLORER.Selector.select($id)">';
-	if (id > 4){
+	if (id > 0){
 		new_box += "<div id='canvas_select_delete_$id' style='margin-left:65px;text-align:right;margin-top:-8px;cursor:pointer;font-size:16px;color:red;' onclick=\"(function(){ " +
 			"Dialog.Confirm('Really remove this uploaded sound?', function(){  Synth.EXPLORER.Selector.removeSound($id); }, 'Delete Sound?', 'Yes');" +
 		"})()\">x</div>";
@@ -69,36 +69,6 @@ Synth.EXPLORER.Selector.addSelectBox = function(id, name){
 	$("#canvas_select")[0].innerHTML += new_box;
 	
     return $("#canvas_select_" + id)[0];
-};
-
-Synth.EXPLORER.Selector.removeSound = function(id){
-	var uploaded_sounds = Synth.EXPLORER.Selector.uploaded_sounds.slice();
-	uploaded_sounds.splice(id-Synth.default_sounds_count, 1);
-	Synth.EXPLORER.Selector.clearUploadedSounds();
-	Synth.EXPLORER.Selector.explorers.splice(id, 1);
-	
-	var snd_num = id;
-	while (localStorage.getItem("uploaded_sound_"+snd_num) !== null){
-		localStorage.removeItem("uploaded_sound_"+snd_num);
-		snd_num++;
-	}
-
-	var selected = Synth.EXPLORER.Selector.selected;
-	Synth.EXPLORER.Selector.uploaded_sounds = [];
-	Synth.EXPLORER.Selector.canvas_id = Synth.default_sounds_count;
-	
-	for (var i = 0; i < uploaded_sounds.length; i++){
-		Synth.EXPLORER.Selector.restoreUploadedSound(uploaded_sounds[i]);
-		localStorage.setItem("uploaded_sound_"+(i+Synth.default_sounds_count), uploaded_sounds[i]);
-	}
-	Synth.EXPLORER.Selector.updateSelectBoxCanvases();
-	
-	Synth.EXPLORER.Selector.selected = selected;
-	while (Synth.EXPLORER.Selector.selected >= $(".canvas_select_box").length){
-		Synth.EXPLORER.Selector.selected--;
-	}
-	Synth.EXPLORER.Selector.select(Synth.EXPLORER.Selector.selected);
-	BlockIt.RefreshWorkspace();
 };
 
 Synth.EXPLORER.Selector.getSelectBox = function(id){
@@ -155,4 +125,57 @@ Synth.EXPLORER.Selector.select = function(id){
 	}catch(e){
 		console.log(e);
 	}
+};
+
+
+Synth.EXPLORER.Selector.removeSound = function(id){ //TODO
+	selected = Synth.EXPLORER.Selector.selected;
+	var sound_name = $("#canvas_select_box_" + id + "_title")[0].innerHTML;
+	console.log(sound_name);
+	var sounds = [];
+	var all_sounds = Object.keys(Synth.originalSounds);
+	var default_sound_count = 0;
+	for (var i = 0; i < all_sounds.length; i++){
+		if (!Synth.isDefaultSoundName(all_sounds[i]) && all_sounds[i] !== sound_name){
+			sounds.push(Synth.originalSounds[all_sounds[i]]);
+		}else if (Synth.isDefaultSoundName(all_sounds[i]))
+			default_sound_count++;
+	}
+	console.log(sounds);
+	
+	//empty the dom
+	$("#visualization").children().slice(1).remove();
+	$("#canvas_select").children().slice(2).remove();
+	
+	//erase the explorers
+	Synth.EXPLORER.Selector.explorers = Synth.EXPLORER.Selector.explorers.slice(0, 1);
+	
+	//clear memory
+	Synth.RemoveUploadedSoundByName(sound_name);
+	
+	//remove all block references to deleted sound
+	var blocks = Blockly.mainWorkspace.getAllBlocks();
+	// Iterate through every block.
+	for (var x = 0; x < blocks.length; x++) {
+		var func = blocks[x].removeSound;
+		if (func) {
+			func.call(blocks[x], sound_name);
+		}
+	}
+	
+	//now restore non deleted uploaded sounds!!!
+	Synth.EXPLORER.Selector.canvas_id = default_sound_count;
+	for (i = 0; i < sounds.length; i++){
+		Synth.AddToOriginalSounds(sounds[i], sounds[i].name);
+		
+	}
+	
+	//finalize
+	Synth.EXPLORER.Selector.selected = selected;
+	while (Synth.EXPLORER.Selector.selected >= $(".canvas_select_box").length){
+		Synth.EXPLORER.Selector.selected--;
+	}
+	Synth.EXPLORER.Selector.select(Synth.EXPLORER.Selector.selected);
+	Synth.EXPLORER.Selector.updateSelectBoxCanvases();
+	BlockIt.RefreshWorkspace();
 };

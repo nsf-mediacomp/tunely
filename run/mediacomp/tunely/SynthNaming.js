@@ -62,21 +62,11 @@ Synth.generateUniqueName = function(workspace) {
  * @param {!Blockly.Workspace} workspace Workspace rename variables in.
  */
 Synth.renameSound = function(oldName, newName, workspace) {	
-	//don't try to rename memory if we are loading from memory (and therefore passed undefined workspace)
-	if (workspace !== undefined){
-		if (Synth.isDefaultSoundName(oldName)){
-			var default_sound_names = Object.keys(Synth.defaultSounds);
-			for (var i = 0; i < default_sound_names.length; i++){
-				if (default_sound_names[i] === oldName){
-					var sound = Synth.defaultSounds[oldName];
-					delete Synth.defaultSounds[oldName];
-					Synth.defaultSounds[newName] = sound;
-					Synth.RenameDefaultSoundMemory(oldName, newName);
-				}
-			}
-		}else{
-			Synth.RenameSoundMemory(oldName, newName);
-		}
+	if (Synth.isDefaultSoundName(oldName)){
+		alert("can't rename default sound");
+		return;
+	}else{
+		Synth.RenameSoundMemory(oldName, newName);
 	}
 	if (Synth.sounds[oldName] !== undefined){
 		var sound = Synth.sounds[oldName];
@@ -86,13 +76,6 @@ Synth.renameSound = function(oldName, newName, workspace) {
 		sound = Synth.originalSounds[oldName];
 		delete Synth.originalSounds[oldName];
 		Synth.originalSounds[newName] = sound;
-		
-		//if we passed undefined workspace that means that we also need to change default name sounds!!
-		if (workspace === undefined){
-			sound = Synth.defaultSounds[oldName];
-			delete Synth.defaultSounds[oldName];
-			Synth.defaultSounds[newName] = sound;
-		}
 		
 		//change it in explorer select
 		var explorers = Synth.EXPLORER.Selector.explorers;
@@ -108,14 +91,12 @@ Synth.renameSound = function(oldName, newName, workspace) {
 		}
 	}
 	
-	if (workspace !== undefined){
-		var blocks = workspace.getAllBlocks();
-		// Iterate through every block.
-		for (var x = 0; x < blocks.length; x++) {
-			var func = blocks[x].renameSound;
-			if (func) {
-				func.call(blocks[x], oldName, newName);
-			}
+	var blocks = workspace.getAllBlocks();
+	// Iterate through every block.
+	for (var x = 0; x < blocks.length; x++) {
+		var func = blocks[x].renameSound;
+		if (func) {
+			func.call(blocks[x], oldName, newName);
 		}
 	}
 };
@@ -131,4 +112,7 @@ Synth.newSoundName = function(newName, duration, workspace){
 	
 	//OPEN UP THE EXPLORER WINDOW (should add to canvas select as well)
 	Synth.EXPLORER.CreateSoundExploration(Synth.sounds[newName]);
+	
+	//remember
+	Synth.StoreSoundMemory(newName, buffer);
 }

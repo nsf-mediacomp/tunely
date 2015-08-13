@@ -74,7 +74,7 @@ Main.init = function(){
 	//////////////////////////////////////////////////////////
     // Setup dom buttons
 	$("#runButton").click(Main.RunButton);
-	$("#resetButton").click(Main.Reset);
+	$("#pauseButton").click(Main.Pause);
 
 	$("#codeButton").click(function(){
 		BlockIt.DisableFloatingBlocks();
@@ -254,12 +254,8 @@ Main.RunCode = function(){
 	window.setTimeout(function(){
 		document.getElementById("spinner").style.visibility = "";
 		if (!BlockIt.IterateThroughBlocks(function(){
-			$("#runButtonText")[0].innerHTML = "Run Program";
-			$("#runButtonImg")[0].style.backgroundPosition = "-63px -21px";
-			document.getElementById('spinner').style.visibility = 'hidden';
-			clearInterval(Main.update_display_interval_id);
-			Main.runButton = !Main.runButton;
 			Synth.EXPLORER.Selector.exploreSounds();
+			document.getElementById('spinner').style.visibility = 'hidden';
 		})){
 			Main.RunButton();
 		}
@@ -268,6 +264,7 @@ Main.RunCode = function(){
 Main.StopCode = function(){	
 	BlockIt.StopIteration();
 	Synth.Stop();
+	Synth.EXPLORER.Selector.resetAll();
 	Synth.EXPLORER.Selector.exploreSounds();
 	clearInterval(Main.update_display_interval_id);
 

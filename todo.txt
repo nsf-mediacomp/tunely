@@ -1,16 +1,15 @@
-1. On Run Program... it shouldn't hit the RESET Program button until manually... and pressing reset program should reset all the sounds back to their original state (sorry Pixly :,(???
-	
+NOW:
+---------------------------------------------------------------	
 B. should also have a "set sound duration (seconds)" or something that will fill the sound with the appropriate number of samples (channel array)
 
-0. WHEN SOUNDS ARE DELETED FROM X THEY SHOULD BE DELETED FROM CANVAS???
-	-and also all variable block references in the workspace should be removed??? (hm)
-3. Save manipulated sound to a file (write) (from exploration area)
+D. Add a checkbox that will disable/enable explore synth synching for better play
 
 2. update landing page to be tunely...
 3. should have error messages for incorrectly uploading sounds (or images as sounds)
 
+===============================================================
+LATER:
+---------------------------------------------------------------
 4. Html pdf tutorial for tune and pixel
-
 ???5. Use the mediaThingObject for combining audio buffers into a longer sound??? (music track???)
-
 6. example program should use the sine wave note generation to play an arpeggio???

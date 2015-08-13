@@ -177,13 +177,18 @@ Blockly.FieldSound.dropdownChange = function(text) {
   var workspace = this.sourceBlock_.workspace;
   if (text == Blockly.Msg.RENAME_SOUND) {
     var oldVar = this.getText();
+	if (Synth.isDefaultSoundName(oldVar)){
+		Blockly.hideChaff();
+		alert("can't rename default sound");
+		return oldVar;
+	}
     text = promptName(Blockly.Msg.RENAME_SOUND_TITLE.replace('%1', oldVar),
                       oldVar);
     if (text) {
       Synth.renameSound(oldVar, text, workspace);
     }
     return null;
-  } else if (text == Blockly.Msg.NEW_SOUND) { //TODO
+  } else if (text == Blockly.Msg.NEW_SOUND) { 
     text = promptName(Blockly.Msg.NEW_SOUND_TITLE, '');
 	var duration = prompt(Blockly.Msg.NEW_SOUND_DURATION_TITLE, '');
 	while (isNaN(duration)){
@@ -194,7 +199,8 @@ Blockly.FieldSound.dropdownChange = function(text) {
     // matches with an existing sound, the new case prevails throughout.
     if (text) {
 		Synth.newSoundName(text, duration, workspace);
-		return text;
+		Synth.renameSound(text, text, workspace);
+		return text; //TODO why no select?
     }
     return null;
   }
