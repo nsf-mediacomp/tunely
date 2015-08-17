@@ -430,11 +430,12 @@ Synth.EXPLORER.prototype.UpdateSampleIndexSection = function(){
 	this.sampleValueField.value = sample_value;
 	this.samplesPerPixelField.value = '' + (1 / this.scale_x);
 	
+	var y_size = this.scale_y;
 	//move the arrow graphic to point at the sample index as well
 	//-8 to make the center of the arrow be pointing at the correct pixel (not the edge)
 	var arrow_x = ~~(this.curr_index_value * this.scale_x - 8);
 	//middle of canvas + (calculated samplevalue with scale) - height of arrow - y offset
-	var arrow_y = ~~(100 - (sample_value * this.scale_y) - 32 - 4);
+	var arrow_y = ~~(100 - ((sample_value / y_size)*100)) - 32;
 	//~~ cuts off decimal values from int and is faster than floor or ceil
 	this.arrowIndexImg.style.top = (arrow_y) + "px";
 	this.arrowIndexImg.style.left = (arrow_x) + "px";

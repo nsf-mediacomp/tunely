@@ -254,6 +254,7 @@ Main.RunCode = function(){
 	window.setTimeout(function(){
 		document.getElementById("spinner").style.visibility = "";
 		if (!BlockIt.IterateThroughBlocks(function(){
+			clearInterval(Main.update_display_interval_id);
 			Synth.EXPLORER.Selector.exploreSounds();
 			document.getElementById('spinner').style.visibility = 'hidden';
 		})){

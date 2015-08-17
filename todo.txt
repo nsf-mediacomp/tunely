@@ -1,12 +1,20 @@
 NOW:
 ---------------------------------------------------------------	
+0. Dynamically created sound problems:
+	A.should flush newly emptied sounds by playing them once??? 
+		(try sine wave example with empty sound and removing the play command at the top)	
+	B. exporting/importing projects with dynamically created blank sounds doesn't currently work
+		(need to create similar fix as for uploaded sounds)
+	C. creating a new sound shouldn't white out mini canvas display
+	
 2. update landing page to be tunely...
+	A. Make new tutorial video
+	B. Make html tutorial/manual
 3. should have error messages for incorrectly uploading sounds (or images as sounds)
 D. Add a checkbox that will disable/enable explore synth synching for better play
 
 ===============================================================
 LATER:
 ---------------------------------------------------------------
-4. Html pdf tutorial for tune and pixel
 ???5. Use the mediaThingObject for combining audio buffers into a longer sound??? (music track???)
 6. example program should use the sine wave note generation to play an arpeggio???
