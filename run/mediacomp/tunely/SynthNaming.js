@@ -107,11 +107,15 @@ Synth.newSoundName = function(newName, duration, workspace){
 	
 	var buffer = Synth.context.createBuffer(1, length, sampleRate);
 	Synth.originalSounds[newName] = buffer;
-	Synth.sounds[newName] = Synth.CloneSound(buffer);
+	
+	buffer = Synth.CloneSound(buffer);
+	Synth.sounds[newName] = buffer
 	Synth.sounds[newName].name = newName;
 	
 	//OPEN UP THE EXPLORER WINDOW (should add to canvas select as well)
-	Synth.EXPLORER.CreateSoundExploration(Synth.sounds[newName]);
+	Synth.EXPLORER.CreateSoundExploration(buffer);
+	BlockIt.RefreshWorkspace();
+	Synth.EXPLORER.Selector.exploreSounds();
 	
 	//remember
 	Synth.StoreSoundMemory(newName, buffer);

@@ -105,15 +105,9 @@ Main.openProject = function(){
 		var xml = Main.loaded_xml;
 		Blockly.mainWorkspace.clear();
 		Main.loadBlocks(xml);
-		
-		/*if (Main.loaded_images.length > 0){
-			CanvasSelect.clearUploadedImages();
-			for (var i = 0; i < Main.loaded_images.length; i++){
-				CanvasSelect.restoreUploadedImage(Main.loaded_images[i]);
-			}
-		}*/
+
 		if (Main.loaded_sounds.length > 0){
-			Synth.clearUploadedSounds();
+			Synth.RemoveUploadedSounds();
 			for (var i = 0; i < Main.loaded_sounds.length; i++){
 				Synth.LoadSound(Main.loaded_sounds[i]);
 			}

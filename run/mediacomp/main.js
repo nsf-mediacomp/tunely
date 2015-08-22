@@ -231,7 +231,7 @@ Main.RunButton = function(){
 	setTimeout(function() {$("#runButton")[0].disabled = false;}, Main.DOUBLE_CLICK_TIME);
 	
 	if (Main.runButton){
-		$("#runButtonText")[0].innerHTML = "Stop Program";
+		$("#runButtonText")[0].innerHTML = "Stop/Reset";
 		$("#runButtonImg")[0].style.backgroundPosition = "-63px 0px";
 		Main.RunCode();
 		
@@ -268,6 +268,7 @@ Main.StopCode = function(){
 	Synth.EXPLORER.Selector.resetAll();
 	Synth.EXPLORER.Selector.exploreSounds();
 	clearInterval(Main.update_display_interval_id);
+	Synth.EXPLORER.Selector.exploreSounds();
 
 	document.getElementById('spinner').style.visibility = 'hidden';
 }

@@ -35,6 +35,12 @@ Synth.UploadSound = function(e){
 	}
 };
 
+Synth.RemoveUploadedSounds = function(){
+	for (var i = Synth.uploaded_sounds.length-1; i >= 0; i--){
+		Synth.RemoveUploadedSound(i);
+	}
+}
+
 
 Synth.RemoveUploadedSoundByName = function(name){
 	localStorage.removeItem(name);

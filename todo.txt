@@ -1,11 +1,6 @@
 NOW:
 ---------------------------------------------------------------	
-0. Dynamically created sound problems:
-	A.should flush newly emptied sounds by playing them once??? 
-		(try sine wave example with empty sound and removing the play command at the top)	
-	B. exporting/importing projects with dynamically created blank sounds doesn't currently work
-		(need to create similar fix as for uploaded sounds)
-	C. creating a new sound shouldn't white out mini canvas display
+1. delete sound isn't working
 	
 2. update landing page to be tunely...
 	A. Make new tutorial video
