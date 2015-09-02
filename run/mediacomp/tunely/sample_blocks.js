@@ -25,10 +25,10 @@ BlockIt['synth_getSamples'] = function(block, sound){
 //GET A SINGLE SAMPLE
 Blockly.Blocks['synth_getSampleAtIndex'] = {
   init: function() {
-    this.appendValueInput("INDEX")
+    this.appendValueInput("SOUND")
         .setCheck("Sound")
         .appendField("get sample of sound");
-    this.appendValueInput("SOUND")
+    this.appendValueInput("INDEX")
         .setCheck("Number")
         .appendField("at index");
     this.setInputsInline(true);
