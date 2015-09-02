@@ -74,6 +74,7 @@ Main.init = function(){
 	//////////////////////////////////////////////////////////
     // Setup dom buttons
 	$("#runButton").click(Main.RunButton);
+	$("#resetButton").click(Synth.EXPLORER.Selector.reset);
 	$("#pauseButton").click(Main.Pause);
 
 	$("#codeButton").click(function(){
@@ -95,17 +96,12 @@ Main.init = function(){
 	});
 	
 	$("#captureButton").click(function(){
-		var canvas = Drawr.getCtx(CanvasSelect.selected).canvas;
-		$("#downloadImageLink")[0].href = canvas.toDataURL();
-		$("#downloadImageLink")[0].download = "tunely_sound_"+CanvasSelect.selected+".png"
-		$("#downloadImageLink")[0].click();
+		var worker = new Worker("lib/recorderWorker.js");
+		
+		worker.postMessage({
+			
+		});
 	});
-	
-	/*$("#uploadcanvas")[0].addEventListener("change", CanvasSelect.upload, false);
-	$("#uploadImageButton")[0].addEventListener("click", 
-		function(){$("#uploadcanvas")[0].click(); }, 
-		false
-	);*/
 	
 	//LOAD UP EVERYTHING	
 	Main.loadWorkspaceFromLocalStorage();
@@ -231,8 +227,6 @@ Main.RunButton = function(){
 	setTimeout(function() {$("#runButton")[0].disabled = false;}, Main.DOUBLE_CLICK_TIME);
 	
 	if (Main.runButton){
-		$("#runButtonText")[0].innerHTML = "Stop/Reset";
-		$("#runButtonImg")[0].style.backgroundPosition = "-63px 0px";
 		Main.RunCode();
 		
 		Main.update_display_interval_id = setInterval(function(){
@@ -241,31 +235,32 @@ Main.RunButton = function(){
 			Main.update_display_interval_id = setInterval(Synth.EXPLORER.Selector.exploreSounds, 10000);
 		}, 1000);
 	}else{
-		$("#runButtonText")[0].innerHTML = "Run Program";
-		$("#runButtonImg")[0].style.backgroundPosition = "-63px -21px";
 		Main.StopCode();
 	}
 	Main.runButton = !Main.runButton;
 }
 Main.RunCode = function(){		
+	$("#runButtonText")[0].innerHTML = "Stop Program";
+	$("#runButtonImg")[0].style.backgroundPosition = "-63px 0px";
 	//document.getElementById('spinner').style.visibility = 'visible';
 
 	//window.setInterval(function(){ Drawr.flushCache(); }, 10);
 	window.setTimeout(function(){
 		document.getElementById("spinner").style.visibility = "";
 		if (!BlockIt.IterateThroughBlocks(function(){
-			clearInterval(Main.update_display_interval_id);
-			Synth.EXPLORER.Selector.exploreSounds();
-			document.getElementById('spinner').style.visibility = 'hidden';
+			Main.RunButton();
 		})){
 			Main.RunButton();
 		}
 	}, 0);
 }
 Main.StopCode = function(){	
+	$("#runButtonText")[0].innerHTML = "Run Program";
+	$("#runButtonImg")[0].style.backgroundPosition = "-63px -21px";
+
 	BlockIt.StopIteration();
 	Synth.Stop();
-	Synth.EXPLORER.Selector.resetAll();
+	//Synth.EXPLORER.Selector.resetAll();
 	Synth.EXPLORER.Selector.exploreSounds();
 	clearInterval(Main.update_display_interval_id);
 	Synth.EXPLORER.Selector.exploreSounds();

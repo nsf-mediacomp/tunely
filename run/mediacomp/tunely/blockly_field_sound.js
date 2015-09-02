@@ -199,8 +199,10 @@ Blockly.FieldSound.dropdownChange = function(text) {
     // matches with an existing sound, the new case prevails throughout.
     if (text) {
 		Synth.newSoundName(text, duration, workspace);
+		// Since variables are case-insensitive, ensure that if the new variable
+		// matches with an existing variable, the new case prevails throughout.
 		Synth.renameSound(text, text, workspace);
-		return text; //TODO why no select?
+		return text;
     }
     return null;
   }

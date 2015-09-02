@@ -51,24 +51,38 @@ Synth.EXPLORER.Selector.onresize = function(){
 };
 
 Synth.EXPLORER.Selector.addSelectBox = function(id, name){
-    var boxes = document.getElementsByClassName("canvas_select_box");
-	//var id = boxes.length;
-
-	var new_box = '<div class="canvas_select_box" id="canvas_select_$id" onclick="Synth.EXPLORER.Selector.select($id)">';
-	if (id > 0){
-		new_box += "<div id='canvas_select_delete_$id' style='margin-left:65px;text-align:right;margin-top:-8px;cursor:pointer;font-size:16px;color:red;' onclick=\"(function(){ " +
-			"Dialog.Confirm('Really remove this uploaded sound?', function(){  Synth.EXPLORER.Selector.removeSound($id); }, 'Delete Sound?', 'Yes');" +
-		"})()\">x</div>";
-	}
-	new_box	+=
-		/*'    <!--img src="images/cat_attendant.jpg" width="75px" height="75px"/><br/-->' +*/
-		'    <canvas width="75px" height="75px"></canvas><br/>' +
-		'    <span id="canvas_select_box_$id_title">$name</span>' +
-		'</div>';
-	new_box = new_box.interpolate({id: id, name: name});
-	$("#canvas_select")[0].innerHTML += new_box;
+	var new_box = document.createElement("div");
+	new_box.className = "canvas_select_box";
+	new_box.id = "canvas_select_" + id;
+	new_box.onclick = (function(id){ Synth.EXPLORER.Selector.select(id); }.bind(this, id));
 	
-    return $("#canvas_select_" + id)[0];
+	if (id > 0){
+		var delete_button = document.createElement("div");
+		delete_button.id = "canvas_select_delete_" + id;
+		delete_button.className = "canvas_select_delete";
+		delete_button.onclick = (function(id){
+			Dialog.Confirm('Really remove this uploaded sound?', function(){
+				Synth.EXPLORER.Selector.removeSound(id);
+			}, 'Delete Sound?', 'Yes');
+		}.bind(this,id));
+		delete_button.innerHTML = "x";
+		
+		new_box.appendChild(delete_button);
+	}
+	var canvas = document.createElement("canvas");
+	canvas.style.width = "75px";
+	canvas.style.height = "75px";
+	var span = document.createElement("span");
+	span.id = "canvas_select_box_" + id + "_title";
+	span.innerHTML = name;
+	
+	new_box.appendChild(canvas);
+	new_box.appendChild(document.createElement("br"));
+	new_box.appendChild(span);
+	
+	$("#canvas_select")[0].appendChild(new_box);
+	
+	return new_box;
 };
 
 Synth.EXPLORER.Selector.getSelectBox = function(id){
@@ -96,7 +110,7 @@ Synth.EXPLORER.Selector.updateSelectBoxCanvas = function(id){
 };
 Synth.EXPLORER.Selector.exploreSounds = function(){
 	for (var i = 0; i < Synth.EXPLORER.Selector.explorers.length; i++){
-		Synth.EXPLORER.Selector.explorers[i].explorer.ExploreMySound();
+		window.setTimeout(function(i){Synth.EXPLORER.Selector.explorers[i].explorer.ExploreMySound()}.bind(this, i), i*100);
 	}
 }
 Synth.EXPLORER.Selector.updateSelectBoxCanvases = function(){
@@ -129,26 +143,29 @@ Synth.EXPLORER.Selector.select = function(id){
 
 
 Synth.EXPLORER.Selector.removeSound = function(id){ //TODO
-	selected = Synth.EXPLORER.Selector.selected;
 	var sound_name = $("#canvas_select_box_" + id + "_title")[0].innerHTML;
-	console.log(sound_name);
 	var sounds = [];
 	var all_sounds = Object.keys(Synth.originalSounds);
 	var default_sound_count = 0;
 	for (var i = 0; i < all_sounds.length; i++){
 		if (!Synth.isDefaultSoundName(all_sounds[i]) && all_sounds[i] !== sound_name){
+			var name = all_sounds[i];
+			var sound = Synth.originalSounds[name];
+			sound.name = name;
 			sounds.push(Synth.originalSounds[all_sounds[i]]);
 		}else if (Synth.isDefaultSoundName(all_sounds[i]))
 			default_sound_count++;
 	}
-	console.log(sounds);
 	
-	//empty the dom
-	$("#visualization").children().slice(1).remove();
-	$("#canvas_select").children().slice(2).remove();
-	
-	//erase the explorers
-	Synth.EXPLORER.Selector.explorers = Synth.EXPLORER.Selector.explorers.slice(0, 1);
+	//erase the explorer object
+	var index = 0;
+	for (var i = 0; i < Synth.EXPLORER.Selector.explorers.length; i++){
+		if (Synth.EXPLORER.Selector.explorers[i].id === id){
+			index = i;
+			break;
+		}
+	}
+	Synth.EXPLORER.Selector.explorers.splice(index, 1);
 	
 	//clear memory
 	Synth.RemoveUploadedSoundByName(sound_name);
@@ -163,19 +180,16 @@ Synth.EXPLORER.Selector.removeSound = function(id){ //TODO
 		}
 	}
 	
-	//now restore non deleted uploaded sounds!!!
-	Synth.EXPLORER.Selector.canvas_id = default_sound_count;
-	for (i = 0; i < sounds.length; i++){
-		Synth.AddToOriginalSounds(sounds[i], sounds[i].name);
-		
-	}
+	//remove from dom
+	$("#canvas_" + id).remove();
+	$("#canvas_select_" + id).remove();
+	
+	//actually delete sound from the dictionaries
+	delete Synth.originalSounds[sound_name];
+	delete Synth.sounds[sound_name];
 	
 	//finalize
-	Synth.EXPLORER.Selector.selected = selected;
-	while (Synth.EXPLORER.Selector.selected >= $(".canvas_select_box").length){
-		Synth.EXPLORER.Selector.selected--;
-	}
+	Synth.EXPLORER.Selector.selected = 0;
 	Synth.EXPLORER.Selector.select(Synth.EXPLORER.Selector.selected);
-	Synth.EXPLORER.Selector.updateSelectBoxCanvases();
 	BlockIt.RefreshWorkspace();
 };

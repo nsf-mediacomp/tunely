@@ -58,7 +58,6 @@ Synth.RemoveUploadedSoundByName = function(name){
 	index = memory.indexOf(name);
 	memory.splice(index, 1);
 	Synth.setMemory("soundMemory", JSON.stringify(memory));
-	BlockIt.RefreshWorkspace();
 }
 
 Synth.RemoveUploadedSound = function(index){
@@ -71,7 +70,6 @@ Synth.RemoveUploadedSound = function(index){
 	index = memory.indexOf(name);
 	memory.splice(index, 1);
 	Synth.setMemory("soundMemory", JSON.stringify(memory));
-	BlockIt.RefreshWorkspace();
 }
 
 Synth.RenameSoundMemory = function(oldName, newName){
@@ -127,7 +125,7 @@ Synth.RememberSoundsFromMemory = function(){
 		memory = [];
 	else memory = JSON.parse(memory);
 	for (var i = 0; i < memory.length; i++){
-		Synth.RememberSound(memory[i]);
+		window.setTimeout(function(i){Synth.RememberSound(memory[i])}.bind(this, i), i*100);
 	}
 }
 

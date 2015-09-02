@@ -212,6 +212,15 @@ button.notext {
     border-width: 1px 1px 0px 1px;
 }
 
+.canvas_select_delete{
+	margin-left:65px;
+	text-align:right;
+	margin-top:-8px;
+	cursor:pointer;
+	font-size:16px;
+	color:red;
+}
+
 #canvas_select{
     display: inline-block;
     width: 440px;

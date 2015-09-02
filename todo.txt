@@ -1,15 +1,22 @@
 NOW:
----------------------------------------------------------------	
-1. delete sound isn't working
-	
+---------------------------------------------------------------
+0. write sound to file
+1. save/export sounds based on their current state??? (in addition to original state?)
 2. update landing page to be tunely...
 	A. Make new tutorial video
 	B. Make html tutorial/manual
-3. should have error messages for incorrectly uploading sounds (or images as sounds)
+3. Large sounds break Tunely (what is the limit?? should have a failcheck)
+
+(bugs/improvements??)
+--------------------------------------------
+B. when only piano, sinewave example changed original sound???
+	-try running program, deleting a sound, then reseting
 D. Add a checkbox that will disable/enable explore synth synching for better play
 
 ===============================================================
 LATER:
 ---------------------------------------------------------------
+3. should have error messages for incorrectly uploading sounds (or images as sounds)
+1. why does selecting new sound not auto select the new sound in the block? (minor)
 ???5. Use the mediaThingObject for combining audio buffers into a longer sound??? (music track???)
 6. example program should use the sine wave note generation to play an arpeggio???

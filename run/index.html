@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Tunely: Media Computation</title>
+  <title>Tunely</title>
   <link rel="icon" type="image/ico" href="../favicon.ico">
   <!--JQUERY-->
   <script type="text/javascript" src="lib/jquery.js"></script>
@@ -55,6 +55,7 @@
   	<!--tunely blockly block definitions/javascript generators-->
   <script src="mediacomp/tunely/blockly_field_sound.js"></script>
 	<script src="mediacomp/tunely/audio_blocks.js"></script>
+	<script src="mediacomp/tunely/sample_blocks.js"></script>
   
   <script src="mediacomp/utils.js"></script>
   <script src="mediacomp/main.js"></script>
@@ -64,7 +65,7 @@
 </head>
 <body>
 	<table><tr>
-	<td><h1 style="font-size: 200%;margin-top:-3px;margin-bottom:3px;"><span id="title">Tunely: Media Computation</span></h1></td>
+	<td><h1 style="font-size: 200%;margin-top:-3px;margin-bottom:3px;"><span id="title">Tunely: Audio Manipulation</span></h1></td>
 	<td><button id="importButton" class="primary" style="margin-top: -3px;margin-left:59px;">
 		<img src="mediacomp/css/folder.png" width="21" height="21" class="foldericon">
 		Import Project
@@ -87,14 +88,18 @@
             <button id="runButton" class="primary" title="Makes the canvas do what the blocks say.">
                 <img id="runButtonImg" src="blockly/media/1x1.gif" class="run icon21"><span id="runButtonText">Run Program</span>
             </button>
+			
+			<button id="resetButton" class="primary">
+                <img src="blockly/media/1x1.gif" class="icon21 turtleImg"> Reset Sound
+            </button>
+			<br/>
               
 			<button id="codeButton" class="notext" title="See generated JavaScript code.">
                 <img src='blockly/media/1x1.gif' class="code icon21">
             </button>
-            <button class="notext" id="captureButton" title="Save the selected canvas.">
+            <button class="notext" id="captureButton" title="Save the selected sound.">
                 <img src='blockly/media/1x1.gif' class="img icon21">
             </button>
-            <a id="downloadImageLink" href="" download="pixly_canvas.png" target="_blank"></a>
         </td>
     </tr>
     </table>
@@ -129,52 +134,52 @@
   <xml id="toolbox" style="display: none">
   
 	<category name="Sounds">
-			<block type="synth_defaultInstruments"></block>
-			<block type="synth_playSound">
-				<value name="SOUND">
-					<block type="synth_defaultInstruments"></block>
-				</value>
-			</block>
-			<block type="synth_blockPlaySound">
-				<value name="SOUND">
-					<block type="synth_defaultInstruments"></block>
-				</value>
-			</block>
-			<block type="synth_setDuration"></block>
-			<block type="synth_getSamples">
-				<value name="SOUND">
-					<block type="synth_defaultInstruments"></block>
-				</value>
-			</block>
-			<block type="synth_getSampleValue">
-			</block>
-			<block type="synth_setSampleValue">
-			</block>
-			<!--<block type="synth_setInstrument">
-				<value name="SOUND">
-					<block type="synth_defaultInstruments"></block>
-				</value>
-			</block>
-			<block type="synth_playNote">
-				<value name="NOTE">
-					<block type="text">
-						<field name="TEXT">C4</field>
-					</block>
-				</value>
-			</block>
-			<block type="synth_blockPlayNote">
-				<value name="NOTE">
-					<block type="text">
-						<field name="TEXT">C4</field>
-					</block>
-				</value>
-			</block>-->
-			<!--<block type="synth_exploreSound">
-				<value name="SOUND">
-					<block type="synth_defaultInstruments"></block>
-				</value>
-			</block>-->
-		</category>
+		<block type="synth_defaultInstruments"></block>
+		<block type="synth_playSound"></block>
+		<block type="synth_blockPlaySound"></block>
+		<block type="synth_restartSound"></block>
+		<block type="synth_setDuration"></block>
+	</category>
+	<category name="Samples">
+		<block type="synth_getSamples">
+			<value name="SOUND">
+				<block type="synth_defaultInstruments"></block>
+			</value>
+		</block>
+		<block type="synth_getSampleAtIndex">
+			<value name="SOUND">
+				<block type="synth_defaultInstruments"></block>
+			</value>
+		</block>
+		<block type="synth_getSampleValue">
+		</block>
+		<block type="synth_setSampleValue">
+		</block>
+		<!--<block type="synth_setInstrument">
+			<value name="SOUND">
+				<block type="synth_defaultInstruments"></block>
+			</value>
+		</block>
+		<block type="synth_playNote">
+			<value name="NOTE">
+				<block type="text">
+					<field name="TEXT">C4</field>
+				</block>
+			</value>
+		</block>
+		<block type="synth_blockPlayNote">
+			<value name="NOTE">
+				<block type="text">
+					<field name="TEXT">C4</field>
+				</block>
+			</value>
+		</block>-->
+		<!--<block type="synth_exploreSound">
+			<value name="SOUND">
+				<block type="synth_defaultInstruments"></block>
+			</value>
+		</block>-->
+	</category>
 	<category name="Events">
 	  <block type="mediacomp_run"></block>
 	  <block type="javascript_consoleLog"></block>
