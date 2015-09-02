@@ -95,12 +95,27 @@ Main.init = function(){
 		Main.saveProject();
 	});
 	
+	//http://stackoverflow.com/questions/22560413/html5-web-audio-convert-audio-buffer-into-wav-file
 	$("#captureButton").click(function(){
-		var worker = new Worker("lib/recorderWorker.js");
+		//check for functions in utils
 		
-		worker.postMessage({
-			
-		});
+		var buffer = Synth.GetSelectedSound();
+		var buf = buffer.getChannelData(0),      // buf = a Float32Array of data
+		  sr = buffer.sampleRate    //sample rate of the data
+		;
+
+		var dataview = encodeWAV(buf, sr);
+		var blob = new Blob([dataview], { type: 'audio/wav' });
+
+		// do something with audioBlob, may be provide it as link to be downloaded
+		var a = document.createElement("a");
+		document.body.appendChild(a);
+		a.style = "display: none";
+		var url = window.URL.createObjectURL(blob);
+		a.href = url;
+		a.download = buffer.name + ".wav";
+		a.click();
+		window.URL.revokeObjectURL(url);
 	});
 	
 	//LOAD UP EVERYTHING	

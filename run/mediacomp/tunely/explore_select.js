@@ -4,6 +4,11 @@ Synth.EXPLORER.Selector.init = function(){
 	Synth.EXPLORER.Selector.canvas_id = 0;
 	Synth.EXPLORER.Selector.selected = 0;
 };
+
+Synth.GetSelectedSound = function(){
+	return Synth.GetSound(Synth.EXPLORER.Selector.explorers[Synth.EXPLORER.Selector.selected].name);
+}
+
 Synth.EXPLORER.CreateSelector = function(explorer){
 	var id = Synth.EXPLORER.Selector.canvas_id;
 	Synth.EXPLORER.Selector.canvas_id++;
@@ -27,6 +32,8 @@ Synth.EXPLORER.Selector.resetAll = function(){
 
 Synth.EXPLORER.Selector.reset = function(){
 	Synth.ResetSound(Synth.EXPLORER.Selector.explorers[Synth.EXPLORER.Selector.selected].name);
+	Synth.EXPLORER.Selector
+		.explorers[Synth.EXPLORER.Selector.selected].explorer.ExploreMySound();
 };
 
 Synth.EXPLORER.Selector.onresize = function(){

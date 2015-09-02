@@ -1,14 +1,9 @@
 NOW:
 ---------------------------------------------------------------
-0. write sound to file
-1. save/export sounds based on their current state??? (in addition to original state?)
-2. update landing page to be tunely...
-	A. Make new tutorial video
-	B. Make html tutorial/manual
-3. Large sounds break Tunely (what is the limit?? should have a failcheck)
-
 (bugs/improvements??)
 --------------------------------------------
+1. save/export sounds based on their current state??? (in addition to original state?)
+3. Large sounds break Tunely (what is the limit?? should have a failcheck)
 B. when only piano, sinewave example changed original sound???
 	-try running program, deleting a sound, then reseting
 D. Add a checkbox that will disable/enable explore synth synching for better play

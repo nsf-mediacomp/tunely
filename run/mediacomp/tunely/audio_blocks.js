@@ -48,7 +48,7 @@ Blockly.Blocks['synth_defaultInstruments'] = {
 		this.setOutput(true, "Sound");
 		this.setTooltip('Creates a new sound object by cloning a default instrument sounds.');
 	},
-	getVars: function(){
+	getSoundVars: function(){
 		return [this.getFieldValue('NAME')];
 	},
 	renameSound: function(oldName, newName){
