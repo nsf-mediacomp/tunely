@@ -93,7 +93,8 @@ try{
 	if (async === undefined) async = true;
 	
 	if (BlockIt.stop_iteration || block === null){
-		BlockIt.final_callback();
+		if (typeof BlockIt.final_callback == "function")
+			BlockIt.final_callback();
 		BlockIt.StopIteration();
 		return;
 	}
