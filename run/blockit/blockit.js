@@ -535,7 +535,8 @@ try{
 	}
 }catch(e){
 	alert(e);
-	BlockIt.final_callback();
+	if (typeof BlockIt.final_callback == "function")
+		BlockIt.final_callback();
 	BlockIt.StopIteration();
 }
 }
