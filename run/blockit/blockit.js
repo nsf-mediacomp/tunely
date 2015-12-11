@@ -73,7 +73,7 @@ BlockIt.ResetIteration = function(){
 	BlockIt.ResetLoopIterators();
 }
 BlockIt.StopIteration = function(){
-	BlockIt.final_callback = {};
+	BlockIt.final_callback = function(){};
 	BlockIt.EnableFloatingBlocks();
 	BlockIt.ResetIteration();
 	BlockIt.RefreshWorkspace();
